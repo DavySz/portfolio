@@ -1,0 +1,19 @@
+<svg width="505" height="504" viewBox="0 0 505 504" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="233.725" width="271.237" height="270.275" rx="10" fill="#D9D9D9"/>
+<rect y="53.8624" width="216.412" height="216.412" rx="10" fill="#D9D9D9"/>
+<rect x="233.725" y="287.587" width="216.412" height="216.412" rx="10" fill="#D9D9D9"/>
+<rect x="39.4351" y="287.587" width="176.977" height="176.015" rx="10" fill="#D9D9D9"/>
+<g filter="url(#filter0_b_0_258)">
+<rect x="162.55" y="216.412" width="107.725" height="107.725" rx="53.8626" fill="white" fill-opacity="0.2"/>
+</g>
+<rect x="178.901" y="232.763" width="75.0229" height="75.0229" rx="37.5115" fill="white"/>
+<path d="M209.879 260.703C209.763 260.634 209.63 260.597 209.494 260.596C209.358 260.595 209.224 260.629 209.106 260.697C208.988 260.764 208.89 260.861 208.822 260.979C208.754 261.096 208.718 261.229 208.718 261.365V279.183C208.718 279.319 208.754 279.453 208.822 279.57C208.89 279.687 208.988 279.785 209.106 279.852C209.224 279.919 209.358 279.954 209.494 279.953C209.63 279.952 209.763 279.914 209.879 279.845L224.913 270.936C225.028 270.868 225.123 270.771 225.19 270.655C225.256 270.539 225.29 270.408 225.29 270.274C225.29 270.141 225.256 270.01 225.19 269.894C225.123 269.778 225.028 269.681 224.913 269.613L209.879 260.703Z" fill="black" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<defs>
+<filter id="filter0_b_0_258" x="157.55" y="211.412" width="117.725" height="117.725" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImageFix" stdDeviation="2.5"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_0_258"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_0_258" result="shape"/>
+</filter>
+</defs>
+</svg>
