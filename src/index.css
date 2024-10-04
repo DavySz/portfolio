@@ -2,10 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  td,
+  th {
+    @apply px-[50px] py-[40px];
+  }
+}
+
 * {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
