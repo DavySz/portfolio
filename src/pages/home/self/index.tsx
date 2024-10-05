@@ -3,7 +3,10 @@ import SelfTemp from "../../../assets/my-temp.svg";
 
 export const Self: React.FC = () => {
   return (
-    <div className="flex w-full gap-24 items-center justify-center mb-[158px] px-[100px]">
+    <div
+      id="self"
+      className="flex w-full gap-24 items-center justify-center mb-[158px] px-[100px] pt-[179px]"
+    >
       <div>
         <img src={SelfTemp} />
       </div>

@@ -8,7 +8,7 @@ export const Statistics: React.FC = () => {
   };
 
   return (
-    <div className="mx-[205px] items-center justify-center flex mb-[179px] px-[100px]">
+    <div className="mx-[205px] items-center justify-center flex px-[100px]">
       <div className="flex gap-[102px]">
         <div className="flex items-center justify-center w-[160px] gap-2">
           <p className="font-poppins font-bold text-6xl text-[#7041CF]">

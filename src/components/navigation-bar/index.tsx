@@ -1,6 +1,11 @@
+import { CONTACTS } from "../../shared/constants";
 import { LINKS } from "./constants";
 
 export const NavigationBar: React.FC = () => {
+  const openLinkedin = () => {
+    window.open(CONTACTS.LINKEDIN, "_blank");
+  };
+
   return (
     <div className="flex gap-8 w-full items-center justify-end py-8 px-[100px]">
       {LINKS.map((link, index) => (
@@ -8,7 +13,10 @@ export const NavigationBar: React.FC = () => {
           {link.label}
         </a>
       ))}
-      <button className="py-2 px-8 rounded-3xl bg-gradient-to-r from-[#7947DF] to-[#311961] items-center justify-center">
+      <button
+        className="py-2 px-8 rounded-3xl bg-gradient-to-r from-[#7947DF] to-[#311961] items-center justify-center"
+        onClick={openLinkedin}
+      >
         <p className="font-poppins font-semibold text-white text-xl">
           Hire Me!
         </p>

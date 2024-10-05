@@ -4,15 +4,23 @@ export const LINKS = [
     label: "Home",
   },
   {
-    href: "/",
-    label: "About Us",
+    href: "#self",
+    label: "About Me",
   },
   {
-    href: "/",
+    href: "#services",
     label: "Services",
   },
   {
-    href: "/",
+    href: "#skills",
+    label: "Skills",
+  },
+  {
+    href: "#contact",
     label: "Contact",
+  },
+  {
+    href: "#projects",
+    label: "Projects",
   },
 ];

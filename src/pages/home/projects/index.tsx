@@ -2,7 +2,10 @@ import { ProjectCard } from "../../../components/project-card";
 
 export const Projects: React.FC = () => {
   return (
-    <div className="px-[100px] flex flex-col items-center justify-center mb-[112px]">
+    <div
+      id="projects"
+      className="px-[100px] flex flex-col items-center justify-center mb-[112px] pt-[112px]"
+    >
       <h1 className="font-poppins font-bold text-4xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent mb-4">
         Selected Projects
       </h1>

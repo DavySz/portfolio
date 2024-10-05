@@ -1,6 +1,9 @@
 export const Contact: React.FC = () => {
   return (
-    <div className="flex flex-col px-[100px] items-center justify-center bg-[#F6F3FC] py-[94px] mb-[112px]">
+    <div
+      id="contact"
+      className="flex flex-col px-[100px] items-center justify-center bg-[#F6F3FC] py-[94px]"
+    >
       <div className="flex flex-col justify-center w-[545px] rounded-[20px] bg-white p-[34px] pb-[47px]">
         <h1 className="font-poppins font-bold text-4xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent mb-4">
           Let's work together!

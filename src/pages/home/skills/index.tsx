@@ -3,7 +3,10 @@ import { SKILLS } from "./constants";
 
 export const Skills: React.FC = () => {
   return (
-    <div className="flex flex-col items-center justify-center px-[100px] mb-[115px]">
+    <div
+      id="skills"
+      className="flex flex-col items-center justify-center px-[100px] mb-[115px] pt-[114px]"
+    >
       <h1 className="font-poppins font-bold text-4xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent mb-4">
         My Skills
       </h1>
