@@ -1,8 +1,20 @@
 import { MdOutlineFileDownload } from "react-icons/md";
 import { SOCIALS } from "./constants";
 import HeroTemp from "../../../assets/hero-temp.svg";
+import { usePDF } from "../../../hooks/use-pdf";
+import { CV_PATH } from "../../../shared/constants";
 
 export const Hero: React.FC = () => {
+  const { download } = usePDF();
+
+  const openLink = (href: string) => {
+    window.open(href, "_blank");
+  };
+
+  const handleDownLoadCV = () => {
+    download(CV_PATH);
+  };
+
   return (
     <div className="flex w-full gap-16 items-center justify-center mb-14 px-[100px]">
       <div className="flex flex-col">
@@ -21,7 +33,10 @@ export const Hero: React.FC = () => {
           </p>
         </div>
         <div className="flex">
-          <button className="flex gap-2 py-2 px-8 rounded-3xl bg-transparent items-center justify-center border border-[#7544D7] mr-7">
+          <button
+            className="flex gap-2 py-2 px-8 rounded-3xl bg-transparent items-center justify-center border border-[#7544D7] mr-7"
+            onClick={handleDownLoadCV}
+          >
             <p className="font-poppins font-semibold text-[#7041CF] text-xl">
               Dowload CV
             </p>
@@ -31,6 +46,7 @@ export const Hero: React.FC = () => {
             {SOCIALS.map((social, index) => (
               <button
                 className="flex p-4 rounded-full bg-transparent items-center justify-center border border-[#7544D7]"
+                onClick={() => openLink(social.href)}
                 key={index}
               >
                 {social.icon}

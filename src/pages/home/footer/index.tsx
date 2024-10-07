@@ -2,6 +2,8 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { LuPhone } from "react-icons/lu";
 import { FaGithubAlt, FaLinkedin } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
+import { LINKS } from "./constants";
+import { Link } from "../../../components/link";
 
 export const Footer: React.FC = () => {
   return (
@@ -38,27 +40,11 @@ export const Footer: React.FC = () => {
       <div className="w-full h-[0.5px] bg-white mb-12" />
       <div className="flex items-center justify-between">
         <div className="flex gap-8">
-          <span className="uppercase font-normal text-white text-base font-poppins">
-            home
-          </span>
-          <span className="uppercase font-normal text-white text-base font-poppins">
-            statistics
-          </span>
-          <span className="uppercase font-normal text-white text-base font-poppins">
-            about me
-          </span>
-          <span className="uppercase font-normal text-white text-base font-poppins">
-            services
-          </span>
-          <span className="uppercase font-normal text-white text-base font-poppins">
-            skills
-          </span>
-          <span className="uppercase font-normal text-white text-base font-poppins">
-            work together
-          </span>
-          <span className="uppercase font-normal text-white text-base font-poppins">
-            projects
-          </span>
+          {LINKS.map((link, index) => (
+            <Link href={link.href} key={index} variant="secondary">
+              {link.label}
+            </Link>
+          ))}
         </div>
         <span className="text-base font-normal font-poppins text-[#5F5F5F]">
           © All Right Reserved
