@@ -16,6 +16,7 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({ data }) => {
       <tbody>
         {data.map(({ description, isHighlighted, title }, index) => (
           <tr
+            key={index}
             className={clsx({
               "bg-gradient-to-r from-[#7947DF] to-[#311961]": isHighlighted,
               "bg-transparent": !isHighlighted,

@@ -1,4 +1,5 @@
 import { CONTACTS } from "../../shared/constants";
+import { Button } from "../button";
 import { Link } from "../link";
 import { LINKS } from "./constants";
 
@@ -14,14 +15,7 @@ export const NavigationBar: React.FC = () => {
           {link.label}
         </Link>
       ))}
-      <button
-        className="py-2 px-8 rounded-3xl bg-gradient-to-r from-[#7947DF] to-[#311961] items-center justify-center"
-        onClick={openLinkedin}
-      >
-        <p className="font-poppins font-semibold text-white text-xl">
-          Hire Me!
-        </p>
-      </button>
+      <Button onClick={openLinkedin}>Hire Me!</Button>
     </div>
   );
 };

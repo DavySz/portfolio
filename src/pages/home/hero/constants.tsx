@@ -4,11 +4,11 @@ import { CONTACTS } from "../../../shared/constants";
 
 export const SOCIALS = [
   {
-    icon: <FaGithubAlt size={24} color="#7041CF" />,
+    icon: FaGithubAlt,
     href: CONTACTS.GITHUB,
   },
   {
-    icon: <FaLinkedin size={24} color="#7041CF" />,
+    icon: FaLinkedin,
     href: CONTACTS.LINKEDIN,
   },
 ];

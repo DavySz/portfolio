@@ -14,8 +14,8 @@ export const Projects: React.FC = () => {
         inspires you and your client.
       </p>
       <div className="flex gap-6 flex-wrap items-center justify-center">
-        {[1, 2, 3, 4].map(() => (
-          <ProjectCard />
+        {[1, 2, 3, 4].map((value) => (
+          <ProjectCard key={value} />
         ))}
       </div>
     </div>

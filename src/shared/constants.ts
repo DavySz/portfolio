@@ -4,6 +4,7 @@ export const CONTACTS = {
   INSTAGRAM: "https://instagram.com/davy_sz",
   GITHUB: "https://github.com/davysz",
   PHONE: "(92) 992939794",
+  GMAIL: "davydesouzabar@gmail.com",
 };
 
 export const CV_PATH = "/public/pdfs/davy-de-souza-assuncao-curriculum.pdf";

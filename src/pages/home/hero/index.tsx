@@ -3,6 +3,7 @@ import { SOCIALS } from "./constants";
 import HeroTemp from "../../../assets/hero-temp.svg";
 import { usePDF } from "../../../hooks/use-pdf";
 import { CV_PATH } from "../../../shared/constants";
+import { Button } from "../../../components/button";
 
 export const Hero: React.FC = () => {
   const { download } = usePDF();
@@ -32,25 +33,22 @@ export const Hero: React.FC = () => {
             and transform lives.
           </p>
         </div>
-        <div className="flex">
-          <button
-            className="flex gap-2 py-2 px-8 rounded-3xl bg-transparent items-center justify-center border border-[#7544D7] mr-7"
+        <div className="flex gap-7">
+          <Button
+            icon={MdOutlineFileDownload}
             onClick={handleDownLoadCV}
+            variant="secondary"
           >
-            <p className="font-poppins font-semibold text-[#7041CF] text-xl">
-              Dowload CV
-            </p>
-            <MdOutlineFileDownload size={24} color="#7041CF" />
-          </button>
+            Dowload CV
+          </Button>
           <div className="flex gap-5 items-center">
             {SOCIALS.map((social, index) => (
-              <button
-                className="flex p-4 rounded-full bg-transparent items-center justify-center border border-[#7544D7]"
+              <Button
                 onClick={() => openLink(social.href)}
+                variant="secondary"
+                icon={social.icon}
                 key={index}
-              >
-                {social.icon}
-              </button>
+              />
             ))}
           </div>
         </div>

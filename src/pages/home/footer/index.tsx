@@ -1,11 +1,15 @@
 import { MdOutlineMailOutline } from "react-icons/md";
 import { LuPhone } from "react-icons/lu";
-import { FaGithubAlt, FaLinkedin } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { LINKS } from "./constants";
+import { LINKS, SOCIALS } from "./constants";
 import { Link } from "../../../components/link";
+import { CONTACTS } from "../../../shared/constants";
+import { Button } from "../../../components/button";
 
 export const Footer: React.FC = () => {
+  const openLink = (link: string) => {
+    window.open(link, "_blank");
+  };
+
   return (
     <footer className="px-[320px] py-[50px] flex flex-col justify-center bg-[#2A1454]">
       <div className="flex justify-between pb-16">
@@ -21,19 +25,24 @@ export const Footer: React.FC = () => {
           <div className="flex gap-5 items-center">
             <MdOutlineMailOutline size={20} color="#ffff" />
             <span className="font-poppins font-normal text-base text-white">
-              davydesouzabar@gmail.com
+              {CONTACTS.GMAIL}
             </span>
           </div>
           <div className="flex gap-5 items-center">
             <LuPhone size={20} color="#ffff" />
             <span className="font-poppins font-normal text-base text-white">
-              (92) 992939794
+              {CONTACTS.PHONE}
             </span>
           </div>
           <div className="flex gap-5 items-center">
-            <FaGithubAlt size={24} color="#ffff" />
-            <FaLinkedin size={24} color="#ffff" />
-            <FaInstagram size={24} color="#ffff" />
+            {SOCIALS.map((social, index) => (
+              <Button
+                onClick={() => openLink(social.href)}
+                variant="tertiary"
+                icon={social.icon}
+                key={index}
+              />
+            ))}
           </div>
         </div>
       </div>
