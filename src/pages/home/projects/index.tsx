@@ -1,4 +1,5 @@
 import { ProjectCard } from "../../../components/project-card";
+import { PROJECTS } from "./constants";
 
 export const Projects: React.FC = () => {
   return (
@@ -13,9 +14,9 @@ export const Projects: React.FC = () => {
         I turn your idea, and thus your dream, into a unique project that
         inspires you and your client.
       </p>
-      <div className="flex gap-6 flex-wrap items-center justify-center">
-        {[1, 2, 3, 4].map((value) => (
-          <ProjectCard key={value} />
+      <div className="grid gap-6 justify-center grid-cols-2">
+        {PROJECTS.map((project, index) => (
+          <ProjectCard {...project} key={index} />
         ))}
       </div>
     </div>
