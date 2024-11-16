@@ -103,7 +103,7 @@ export const Contact: React.FC = () => {
             name="message"
             id="message"
           />
-          <div className="mt-[14px]">
+          <div className="mt-[14px] self-end">
             <Button type="submit" disabled={!(formik.isValid && formik.dirty)}>
               Send Message
             </Button>

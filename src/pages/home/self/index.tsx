@@ -20,7 +20,7 @@ export const Self: React.FC = () => {
       </div>
       <div className="w-[579px]">
         <h1 className="font-poppins font-bold text-4xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent mb-4">
-          About My Self
+          About Myself
         </h1>
         <p className="font-poppins font-normal text-xl text-[#5F5F5F] mb-10">
           With extensive experience and expertise in various software

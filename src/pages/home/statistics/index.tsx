@@ -27,7 +27,7 @@ export const Statistics: React.FC = () => {
         <div className="flex items-center justify-center w-[160px] gap-2">
           <p className="font-poppins font-bold text-6xl text-[#7041CF]">1</p>
           <p className="font-poppins font-normal text-[#5F5F5F] text-base">
-            Public Contributions
+            Npm Contributions
           </p>
         </div>
         <div className="flex items-center justify-center w-[160px] gap-2">

@@ -1,9 +1,9 @@
 import { MdOutlineFileDownload } from "react-icons/md";
 import { SOCIALS } from "./constants";
-import HeroTemp from "../../../assets/hero-temp.svg";
 import { usePDF } from "../../../hooks/use-pdf";
 import { CV_PATH } from "../../../shared/constants";
 import { Button } from "../../../components/button";
+import UserPhoto from "../../../assets/user.jpeg";
 
 export const Hero: React.FC = () => {
   const { download } = usePDF();
@@ -20,7 +20,7 @@ export const Hero: React.FC = () => {
     <div className="flex w-full gap-16 items-center justify-center mb-14 px-[100px]">
       <div className="flex flex-col">
         <p className="font-poppins font-semibold text-[#2A1454] text-2xl mb-6">
-          I am Davy
+          I am Davy de Souza Assunção
         </p>
         <div className="w-[610px] mb-9">
           <h1 className="font-poppins font-bold text-6xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent">
@@ -53,8 +53,8 @@ export const Hero: React.FC = () => {
           </div>
         </div>
       </div>
-      <div>
-        <img src={HeroTemp} />
+      <div className="h-[500px] w-[500px] rounded-3xl overflow-hidden">
+        <img className="object-cover h-full w-full " src={UserPhoto} />
       </div>
     </div>
   );
