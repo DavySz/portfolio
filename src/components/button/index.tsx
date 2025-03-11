@@ -57,7 +57,7 @@ export const Button: React.FC<ButtonProps> = ({
       {children && (
         <p
           className={clsx(
-            "font-poppins font-semibold text-xl",
+            "font-poppins font-semibold xl:text-xl text-base",
             getTextVariant()
           )}
         >
