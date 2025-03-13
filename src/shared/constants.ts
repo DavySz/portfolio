@@ -8,3 +8,5 @@ export const CONTACTS = {
 };
 
 export const CV_PATH = "/pdfs/davy-de-souza-assuncao-curriculum.pdf";
+
+export const INIT_WORK_DATE = "2022-02-01";

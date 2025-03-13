@@ -17,13 +17,13 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col-reverse xl:flex-row w-full gap-16 items-center justify-center mb-14 px-6 xl:px-[100px]">
+    <section className="flex flex-col-reverse xl:flex-row w-full gap-16 items-center justify-center mb-14 px-6 xl:px-[100px]">
       <div className="flex flex-col items-center xl:items-start">
         <p className="font-poppins font-semibold text-[#2A1454] text-xl xl:text-2xl mb-6">
           I am Davy de Souza Assunção
         </p>
         <div className="xl:w-[610px] mb-9">
-          <h1 className="text-center xl:text-start font-poppins font-bold text-3xl  xl:text-6xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent">
+          <h1 className="text-center xl:text-start font-poppins font-bold text-3xl xl:text-6xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent">
             Full Stack Software Developer
           </h1>
         </div>
@@ -53,9 +53,9 @@ export const Hero: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden">
+      <div className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden">
         <img className="object-cover h-full w-full " src={UserPhoto} />
       </div>
-    </div>
+    </section>
   );
 };

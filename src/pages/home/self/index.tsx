@@ -6,23 +6,23 @@ import { CV_PATH } from "../../../shared/constants";
 export const Self: React.FC = () => {
   const { download } = usePDF();
 
-  const handleDownLoadCV = () => {
+  const handleDownLoadCV = (): void => {
     download(CV_PATH);
   };
 
   return (
-    <div
-      className="flex w-full gap-24 items-center justify-center mb-[158px] px-[100px] pt-[179px]"
+    <section
+      className="flex flex-col lg:flex-row w-full gap-6 xl:gap-24 items-center justify-center mb-[100px] md:mb-[158px] px-6 xl:px-[100px] pt-[100px] md:pt-[179px]"
       id="self"
     >
-      <div>
+      <div className="hidden lg:flex">
         <img src={SelfTemp} />
       </div>
-      <div className="w-[579px]">
-        <h1 className="font-poppins font-bold text-4xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent mb-4">
+      <div className="flex flex-col items-center justify-center lg:items-start max-w-[579px]">
+        <h1 className="font-poppins font-bold text-3xl md:text-4xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent mb-4">
           About Myself
         </h1>
-        <p className="font-poppins font-normal text-xl text-[#5F5F5F] mb-10">
+        <p className="text-center lg:text-start font-poppins font-normal text-base md:text-xl text-[#5F5F5F] mb-10">
           With extensive experience and expertise in various software
           development technologies, I have collaborated with a range of clients
           to create efficient and innovative digital solutions. I invite you to
@@ -39,6 +39,6 @@ export const Self: React.FC = () => {
           <MdOutlineFileDownload size={24} color="#7041CF" />
         </button>
       </div>
-    </div>
+    </section>
   );
 };

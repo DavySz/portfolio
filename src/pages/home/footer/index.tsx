@@ -11,10 +11,10 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="px-[320px] py-[50px] flex flex-col justify-center bg-[#2A1454]">
-      <div className="flex justify-between pb-16">
-        <div className="w-[500px]">
-          <p className="font-poppins font-normal text-base text-white">
+    <footer className="md:px-6 lg:px-[50px] px-6 xl:px-[100px] py-[50px] flex flex-col justify-center bg-[#2A1454]">
+      <div className="flex flex-col md:flex-row justify-between pb-16 gap-6 md:gap-0">
+        <div className="max-w-[500px]">
+          <p className="font-poppins font-normal text-sm md:text-base text-white">
             Welcome to my personal portfolio! I'm a software developer
             passionate about delivering creative and innovative solutions across
             various domains of development. Explore my projects to see how I
@@ -47,8 +47,8 @@ export const Footer: React.FC = () => {
         </div>
       </div>
       <div className="w-full h-[0.5px] bg-white mb-12" />
-      <div className="flex items-center justify-between">
-        <div className="flex gap-8">
+      <div className="flex items-center justify-between flex-wrap gap-8">
+        <div className="flex gap-8 flex-wrap">
           {LINKS.map((link, index) => (
             <Link href={link.href} key={index} variant="secondary">
               {link.label}

@@ -1,44 +1,28 @@
+import { ReactNode } from "react";
+import { STATISTICS } from "./constants";
+
 export const Statistics: React.FC = () => {
-  const getYearsOfExperience = (): number => {
-    const initial = new Date("2022-02-01");
-    const current = new Date();
-    const diff = current.getTime() - initial.getTime();
-    const years = diff / (1000 * 60 * 60 * 24 * 365);
-    return Math.round(years);
+  const renderStatistics = (): ReactNode[] => {
+    return STATISTICS.map((statistic, index) => (
+      <div
+        className="flex items-center justify-center max-w-[140px] xl:max-w-[160px] gap-1 xl:gap-2"
+        key={index}
+      >
+        <p className="font-poppins font-bold text-3xl md:text-6xl text-[#7041CF]">
+          {statistic.value}
+        </p>
+        <p className="text-center xl:text-start font-poppins font-normal text-[#5F5F5F] text-sm md:text-base">
+          {statistic.title}
+        </p>
+      </div>
+    ));
   };
 
   return (
-    <div className="mx-[205px] items-center justify-center flex px-[100px]">
-      <div className="flex gap-[102px]">
-        <div className="flex items-center justify-center w-[160px] gap-2">
-          <p className="font-poppins font-bold text-6xl text-[#7041CF]">
-            {getYearsOfExperience()}
-          </p>
-          <p className="font-poppins font-normal text-[#5F5F5F] text-base">
-            Years of Experience
-          </p>
-        </div>
-        <div className="flex items-center justify-center w-[160px] gap-2">
-          <p className="font-poppins font-bold text-6xl text-[#7041CF]">50+</p>
-          <p className="font-poppins font-normal text-[#5F5F5F] text-base">
-            Project Completed
-          </p>
-        </div>
-        <div className="flex items-center justify-center w-[160px] gap-2">
-          <p className="font-poppins font-bold text-6xl text-[#7041CF]">1</p>
-          <p className="font-poppins font-normal text-[#5F5F5F] text-base">
-            Npm Contributions
-          </p>
-        </div>
-        <div className="flex items-center justify-center w-[160px] gap-2">
-          <p className="font-poppins font-bold text-6xl text-[#7041CF]">
-            {getYearsOfExperience()}
-          </p>
-          <p className="font-poppins font-normal text-[#5F5F5F] text-base">
-            Years of Experience
-          </p>
-        </div>
+    <section className="flex items-center justify-center px-6 xl:mx-[205px]">
+      <div className="flex items-center justify-between md:justify-center flex-wrap gap-[8px] md:gap-[80px] xl:gap-[102px]">
+        {renderStatistics()}
       </div>
-    </div>
+    </section>
   );
 };

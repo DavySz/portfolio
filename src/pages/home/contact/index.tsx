@@ -6,9 +6,12 @@ import { buildValidationSchema } from "./validation";
 import { Input } from "../../../components/input";
 import { TextArea } from "../../../components/textarea";
 import { Button } from "../../../components/button";
+import { useMobile } from "../../../hooks/use-mobile";
 const env = import.meta.env;
 
 export const Contact: React.FC = () => {
+  const { isMobile } = useMobile();
+
   const showToast = (message: string, type: ToastVariant) => {
     toast[type](message, { duration: 4000 });
   };
@@ -58,15 +61,15 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <div
+    <section
       id="contact"
-      className="flex flex-col px-[100px] items-center justify-center bg-[#F6F3FC] py-[94px]"
+      className="flex flex-col lg:px-[100px] items-center justify-center bg-[#F6F3FC] py-[94px]"
     >
-      <div className="flex flex-col justify-center w-[545px] rounded-[20px] bg-white p-[34px] pb-[47px]">
-        <h1 className="font-poppins font-bold text-4xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent mb-4">
+      <div className="flex flex-col justify-center max-w-[545px] md:rounded-[20px] bg-white p-[34px] pb-[47px]">
+        <h1 className="font-poppins font-bold text-3xl md:text-4xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent mb-4">
           Let's work together!
         </h1>
-        <p className="font-poppins font-normal text-xl text-[#000000] text-start w-full pb-9">
+        <p className="font-poppins font-normal text-base lg:text-xl text-[#000000] text-start w-full pb-9">
           I create clean and elegant code for beautifully simple solutions, and
           I'm passionate about what I do. It's as simple as that!
         </p>
@@ -103,14 +106,18 @@ export const Contact: React.FC = () => {
             name="message"
             id="message"
           />
-          <div className="mt-[14px] self-end">
-            <Button type="submit" disabled={!(formik.isValid && formik.dirty)}>
+          <div className="w-full mt-[14px] flex justify-end">
+            <Button
+              disabled={!(formik.isValid && formik.dirty)}
+              full={isMobile}
+              type="submit"
+            >
               Send Message
             </Button>
           </div>
         </form>
       </div>
       <Toaster />
-    </div>
+    </section>
   );
 };

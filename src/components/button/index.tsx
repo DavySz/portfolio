@@ -3,6 +3,7 @@ import { ButtonProps, ButtonVariant } from "./types";
 
 export const Button: React.FC<ButtonProps> = ({
   variant = "primary",
+  full = false,
   icon: Icon,
   disabled,
   children,
@@ -49,7 +50,10 @@ export const Button: React.FC<ButtonProps> = ({
       className={clsx(
         "flex gap-2 rounded-3xl items-center justify-center",
         getButtonVariant(),
-        getButtonShape()
+        getButtonShape(),
+        {
+          "w-full": full,
+        }
       )}
       disabled={disabled}
       type="submit"
