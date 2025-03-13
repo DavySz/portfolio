@@ -17,12 +17,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     >
       <div className="flex flex-col justify-center">
         <img
-          className="object-cover h-[389px] w-full rounded-t-[20px]"
+          className="object-cover h-[200px] md:h-[389px] w-full rounded-t-[20px]"
           src={thumb}
         />
       </div>
-      <div className="py-8 px-14 flex flex-col gap-2">
-        <p className="font-poppins font-medium text-xl text-[#000000]">
+      <div className="py-4 md:py-8 px-4 md:px-14 flex flex-col gap-2">
+        <p className="font-poppins font-medium text-base md:text-xl text-[#000000]">
           {title}
         </p>
         <p className="font-poppins font-medium text-base text-[#5F5F5F]">

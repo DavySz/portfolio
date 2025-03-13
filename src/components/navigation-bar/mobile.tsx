@@ -50,7 +50,7 @@ export const MobileNavigationBar: React.FC = () => {
   return (
     <div
       className={clsx(
-        "flex flex-col gap-8 w-full items-end justify-center py-8 xl:px-[100px] px-6",
+        "flex flex-col gap-8 w-full items-end justify-center py-4 xl:px-[100px] px-6",
         {
           "h-screen": isVisible,
         }

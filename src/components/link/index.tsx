@@ -11,7 +11,7 @@ export const Link: React.FC<LinkProps> = ({
     <div className="group">
       <a href={href} onClick={onClick}>
         <p
-          className={clsx("font-poppins font-normal text-base md:text-xl", {
+          className={clsx("font-poppins font-normal text-base lg:text-xl", {
             "text-[#35205D]": variant === "primary",
             "text-[#FFFFFF]": variant === "secondary",
           })}
