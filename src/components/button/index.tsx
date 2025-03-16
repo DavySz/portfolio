@@ -1,8 +1,10 @@
 import clsx from "clsx";
 import { ButtonProps, ButtonVariant } from "./types";
+import { Loading } from "../loading";
 
 export const Button: React.FC<ButtonProps> = ({
   variant = "primary",
+  isLoading = false,
   full = false,
   icon: Icon,
   disabled,
@@ -58,7 +60,7 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       type="submit"
     >
-      {children && (
+      {children && !isLoading && (
         <p
           className={clsx(
             "font-poppins font-semibold xl:text-xl text-base",
@@ -68,7 +70,8 @@ export const Button: React.FC<ButtonProps> = ({
           {children}
         </p>
       )}
-      {Icon && <Icon size={24} color={getIconColor()} />}
+      {Icon && !isLoading && <Icon size={24} color={getIconColor()} />}
+      {isLoading && <Loading />}
     </button>
   );
 };

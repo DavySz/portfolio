@@ -108,7 +108,10 @@ export const Contact: React.FC = () => {
           />
           <div className="w-full mt-[14px] flex justify-end">
             <Button
-              disabled={!(formik.isValid && formik.dirty)}
+              disabled={
+                !(formik.isValid && formik.dirty) || formik.isSubmitting
+              }
+              isLoading={formik.isSubmitting}
               full={isMobile}
               type="submit"
             >
