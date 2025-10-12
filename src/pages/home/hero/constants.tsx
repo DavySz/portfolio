@@ -1,4 +1,4 @@
-import { FaLinkedin } from "react-icons/fa";
+import { FaLinkedin, FaMedium } from "react-icons/fa";
 import { FaGithubAlt } from "react-icons/fa";
 import { CONTACTS } from "../../../shared/constants";
 
@@ -10,5 +10,9 @@ export const SOCIALS = [
   {
     icon: FaLinkedin,
     href: CONTACTS.LINKEDIN,
+  },
+  {
+    icon: FaMedium,
+    href: CONTACTS.MEDIUM,
   },
 ];

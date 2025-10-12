@@ -1,4 +1,4 @@
-import { Contact } from "./contact";
+import { Articles } from "./articles";
 import { Footer } from "./footer";
 import { Hero } from "./hero";
 import { Projects } from "./projects";
@@ -13,8 +13,8 @@ export const Home: React.FC = () => {
       <Self />
       <Services />
       <Skills />
-      <Contact />
       <Projects />
+      <Articles />
       <Footer />
     </>
   );

@@ -1,6 +1,6 @@
 import { MdOutlineFileDownload } from "react-icons/md";
-import SelfTemp from "../../../assets/my-temp.svg";
-import { usePDF } from "../../../hooks/use-pdf";
+import SelfTemp from "../../../assets/portfolio.png";
+import { usePDF } from "../../../hooks/usePdf/use-pdf";
 import { CV_PATH } from "../../../shared/constants";
 
 export const Self: React.FC = () => {
@@ -15,8 +15,8 @@ export const Self: React.FC = () => {
       className="flex flex-col lg:flex-row w-full gap-6 xl:gap-24 items-center justify-center mb-[100px] md:mb-[158px] px-6 xl:px-[100px] pt-[100px] md:pt-[179px]"
       id="self"
     >
-      <div className="hidden lg:flex">
-        <img src={SelfTemp} />
+      <div className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden">
+        <img className="object-cover h-full w-full " src={SelfTemp} />
       </div>
       <div className="flex flex-col items-center justify-center lg:items-start max-w-[579px]">
         <h1 className="font-poppins font-bold text-3xl md:text-4xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent mb-4">

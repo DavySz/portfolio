@@ -31,15 +31,27 @@ export const MobileNavigationBar: React.FC = () => {
     if (isVisible) {
       document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+      document.body.style.height = "100%";
+      document.body.style.touchAction = "none";
     } else {
       document.documentElement.style.overflow = "auto";
       document.body.style.overflow = "auto";
+      document.body.style.position = "static";
+      document.body.style.width = "auto";
+      document.body.style.height = "auto";
+      document.body.style.touchAction = "auto";
     }
   }, [isVisible]);
 
   const enableScrollY = () => {
     document.documentElement.style.overflow = "auto";
     document.body.style.overflow = "auto";
+    document.body.style.position = "static";
+    document.body.style.width = "auto";
+    document.body.style.height = "auto";
+    document.body.style.touchAction = "auto";
   };
 
   useEffect(() => {

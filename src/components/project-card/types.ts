@@ -18,6 +18,7 @@ export type ProjectCategory =
   | "Mixed Reality"
   | "Quantum Computing"
   | "Big Data"
+  | "Article"
   | "Other";
 
 export interface ProjectCardProps {

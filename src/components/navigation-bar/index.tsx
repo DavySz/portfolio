@@ -1,4 +1,4 @@
-import { useMobile } from "../../hooks/use-mobile";
+import { useMobile } from "../../hooks";
 import { MobileNavigationBar } from "./mobile";
 import { WebNavigationBar } from "./web";
 

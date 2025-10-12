@@ -16,11 +16,11 @@ export const LINKS = [
     label: "Skills",
   },
   {
-    href: "#contact",
-    label: "Contact",
-  },
-  {
     href: "#projects",
     label: "Projects",
+  },
+  {
+    href: "#articles",
+    label: "Articles",
   },
 ];

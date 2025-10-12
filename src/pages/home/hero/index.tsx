@@ -1,9 +1,9 @@
 import { MdOutlineFileDownload } from "react-icons/md";
 import { SOCIALS } from "./constants";
-import { usePDF } from "../../../hooks/use-pdf";
+import { usePDF } from "../../../hooks/usePdf/use-pdf";
 import { CV_PATH } from "../../../shared/constants";
 import { Button } from "../../../components/button";
-import UserPhoto from "../../../assets/user.jpeg";
+import UserPhoto from "../../../assets/user.png";
 
 export const Hero: React.FC = () => {
   const { download } = usePDF();
@@ -33,7 +33,7 @@ export const Hero: React.FC = () => {
             and transform lives.
           </p>
         </div>
-        <div className="flex gap-2 xl:gap-7">
+        <div className="flex flex-col items-center gap-4 xl:flex-row xl:gap-7">
           <Button
             icon={MdOutlineFileDownload}
             onClick={handleDownLoadCV}
@@ -41,7 +41,7 @@ export const Hero: React.FC = () => {
           >
             Dowload CV
           </Button>
-          <div className="flex gap-1 xl:gap-5 items-center">
+          <div className="flex gap-4 xl:gap-5 items-center">
             {SOCIALS.map((social, index) => (
               <Button
                 onClick={() => openLink(social.href)}
