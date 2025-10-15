@@ -1,26 +1,28 @@
-export const LINKS = [
+import { TFunction } from "i18next";
+
+export const getLinks = (t: TFunction<"component", undefined>) => [
   {
     href: "/",
-    label: "Home",
+    label: t("navigation-bar.home"),
   },
   {
     href: "#self",
-    label: "About Me",
+    label: t("navigation-bar.about"),
   },
   {
     href: "#services",
-    label: "Services",
+    label: t("navigation-bar.services"),
   },
   {
     href: "#skills",
-    label: "Skills",
+    label: t("navigation-bar.skills"),
   },
   {
     href: "#projects",
-    label: "Projects",
+    label: t("navigation-bar.projects"),
   },
   {
     href: "#articles",
-    label: "Articles",
+    label: t("navigation-bar.articles"),
   },
 ];

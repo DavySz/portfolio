@@ -1,12 +1,15 @@
 import { MdOutlineMailOutline } from "react-icons/md";
 import { LuPhone } from "react-icons/lu";
-import { LINKS, SOCIALS } from "./constants";
+import { getLinks, SOCIALS } from "./constants";
 import { Link } from "../../../components/link";
 import { CONTACTS } from "../../../shared/constants";
 import { Button } from "../../../components/button";
+import { useTranslation } from "react-i18next";
 
 export const Footer: React.FC = () => {
-  const openLink = (link: string) => {
+  const { t } = useTranslation("home");
+
+  const openLink = (link: string): void => {
     window.open(link, "_blank");
   };
 
@@ -15,10 +18,7 @@ export const Footer: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between pb-16 gap-6 md:gap-0">
         <div className="max-w-[500px]">
           <p className="font-poppins font-normal text-sm md:text-base text-white">
-            Welcome to my personal portfolio! I'm a software developer
-            passionate about delivering creative and innovative solutions across
-            various domains of development. Explore my projects to see how I
-            bring ideas to life through code.
+            {t("footer.description")}
           </p>
         </div>
         <div className="flex flex-col gap-6">
@@ -49,14 +49,14 @@ export const Footer: React.FC = () => {
       <div className="w-full h-[0.5px] bg-white mb-12" />
       <div className="flex items-center justify-between flex-wrap gap-8">
         <div className="flex gap-8 flex-wrap">
-          {LINKS.map((link, index) => (
+          {getLinks(t).map((link, index) => (
             <Link href={link.href} key={index} variant="secondary">
               {link.label}
             </Link>
           ))}
         </div>
         <span className="text-base font-normal font-poppins text-[#5F5F5F]">
-          © All Right Reserved
+          {t("footer.copyright")}
         </span>
       </div>
     </footer>

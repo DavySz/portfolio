@@ -1,0 +1,81 @@
+{
+  "hero": {
+    "me": "Davy de Souza Assunção",
+    "role": "Desenvolvedor Full Stack",
+    "description": "Amo tecnologia, café e usar meu conhecimento para resolver problemas e transformar vidas.",
+    "download": "Baixar CV"
+  },
+  "self": {
+    "title": "Sobre Mim",
+    "description": "Com ampla experiência e expertise em diversas tecnologias de desenvolvimento de software, colaborei com diversos clientes para criar soluções digitais eficientes e inovadoras. Convido você a explorar este portfólio e descobrir como posso ajudar a transformar suas ideias em realidade através de código de alta qualidade.",
+    "download": "Baixar CV"
+  },
+  "services": {
+    "title": "Meus Serviços de Qualidade",
+    "description": "Transformo suas ideias e desejos em um projeto único que inspira você e seus clientes.",
+    "items": {
+      "mobile": {
+        "title": "Desenvolvimento Mobile",
+        "description": "Crio aplicativos móveis robustos que conectam milhões de pessoas, entregando soluções escaláveis e de alta performance."
+      },
+      "web": {
+        "title": "Desenvolvimento Web",
+        "description": "Desenvolvo soluções web seguras e escaláveis que aprimoram a experiência do usuário e fortalecem conexões globais."
+      },
+      "design": {
+        "title": "Design UI/UX",
+        "description": "Projete interfaces intuitivas e responsivas que promovem interações fluidas e priorizam a satisfação do usuário."
+      },
+      "backend": {
+        "title": "Desenvolvimento Backend",
+        "description": "Desenvolvo sistemas backend confiáveis que suportam bilhões de interações com segurança e escalabilidade."
+      }
+    }
+  },
+  "skills": {
+    "title": "Minhas Habilidades",
+    "description": "Transformo sua visão em uma experiência distinta que cativa você e seu público."
+  },
+  "projects": {
+    "title": "Projetos Selecionados",
+    "description": "Transformo sua ideia, e assim seu sonho, em um projeto único que inspira você e seu cliente.",
+    "items": {
+      "quezzy": {
+        "title": "Quezzy - App gamificado tornando o aprendizado interativo e envolvente."
+      },
+      "poker": {
+        "title": "Planning Poker - App gamificado para estimativa de tarefas em equipes ágeis."
+      },
+      "rentx": {
+        "title": "Rentx - App de reserva de carros com interface otimista e implementação Offline First."
+      },
+      "finances": {
+        "title": "Go Finances - App de controle financeiro para gerenciar transações e acompanhar receitas e despesas."
+      }
+    }
+  },
+  "articles": {
+    "title": "Artigos no Medium",
+    "description": "Transformo sua ideia, e assim seu sonho, em um projeto único que inspira você e seu cliente.",
+    "items": {
+      "bff": {
+        "title": "BFF – Por que o Frontend deveria liderar essa revolução?"
+      },
+      "enem": {
+        "title": "O Efeito ENEM no Código: Como estudar apenas para 'passar' criou uma geração de devs inseguros"
+      }
+    }
+  },
+  "footer": {
+    "description": "Bem-vindo ao meu portfólio pessoal! Sou um desenvolvedor de software apaixonado por entregar soluções criativas e inovadoras em diversos domínios de desenvolvimento. Explore meus projetos para ver como transformo ideias em realidade através do código.",
+    "copyright": "© Todos os direitos reservados",
+    "links": {
+      "home": "INÍCIO",
+      "about": "SOBRE MIM",
+      "services": "SERVIÇOS",
+      "skills": "HABILIDADES",
+      "projects": "PROJETOS",
+      "articles": "ARTIGOS"
+    }
+  }
+}

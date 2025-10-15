@@ -1,0 +1,81 @@
+{
+  "hero": {
+    "me": "I am Davy de Souza Assunção",
+    "role": "Full Stack Software Developer",
+    "description": "I love technology, coffee, and using my knowledge to solve problems and transform lives.",
+    "download": "Download CV"
+  },
+  "self": {
+    "title": "About Myself",
+    "description": "With extensive experience and expertise in various software development technologies, I have collaborated with a range of clients to create efficient and innovative digital solutions. I invite you to explore this portfolio and discover how I can help turn your ideas into reality through high-quality code.",
+    "download": "Download CV"
+  },
+  "services": {
+    "title": "My Quality Services",
+    "description": "I turn your ideas and thus your wishes into a unique project that inspires you and your customers.",
+    "items": {
+      "mobile": {
+        "title": "Mobile Development",
+        "description": "Build robust mobile applications that connect millions, delivering scalable and high-performance solutions."
+      },
+      "web": {
+        "title": "Web Development",
+        "description": "Create secure, scalable web solutions that enhance user experiences and empower global connections."
+      },
+      "design": {
+        "title": "UI/UX Design",
+        "description": "Design intuitive, responsive interfaces that drive seamless interactions and prioritize user satisfaction."
+      },
+      "backend": {
+        "title": "Backend Development",
+        "description": "Develop reliable backend systems that support billions of interactions with security and scalability."
+      }
+    }
+  },
+  "skills": {
+    "title": "My Skills",
+    "description": "I transform your vision into a distinctive experience that captivates both you and your audience."
+  },
+  "projects": {
+    "title": "Selected Projects",
+    "description": "I turn your idea, and thus your dream, into a unique project that inspires you and your client.",
+    "items": {
+      "quezzy": {
+        "title": "Quezzy - Gamified app making learning interactive and engaging."
+      },
+      "poker": {
+        "title": "Planning Poker - Gamified app for task estimation in Agile teams."
+      },
+      "rentx": {
+        "title": "Rentx - Car booking app with an optimistic interface and Offline First implementation."
+      },
+      "finances": {
+        "title": "Go Finances - Financial control app for managing transactions and tracking income and expenses."
+      }
+    }
+  },
+  "articles": {
+    "title": "Medium Articles",
+    "description": "I turn your idea, and thus your dream, into a unique project that inspires you and your client.",
+    "items": {
+      "bff": {
+        "title": "BFF – Why Should the Frontend Lead This Revolution?"
+      },
+      "enem": {
+        "title": "The ENEM Effect in Code: How Studying Just to 'Pass' Created a Generation of Insecure Devs"
+      }
+    }
+  },
+  "footer": {
+    "description": "Welcome to my personal portfolio! I'm a software developer passionate about delivering creative and innovative solutions across various domains of development. Explore my projects to see how I bring ideas to life through code.",
+    "copyright": "© All Right Reserved",
+    "links": {
+      "home": "HOME",
+      "about": "ABOUT ME",
+      "services": "SERVICES",
+      "skills": "SKILLS",
+      "projects": "PROJECTS",
+      "articles": "ARTICLES"
+    }
+  }
+}

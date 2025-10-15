@@ -2,13 +2,16 @@ import { useCallback, useEffect, useState } from "react";
 import { CONTACTS } from "../../shared/constants";
 import { Button } from "../button";
 import { Link } from "../link";
-import { LINKS } from "./constants";
+import { Toggle } from "../toogle";
+import { getLinks } from "./constants";
 import { FiMenu } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { AiOutlineClose } from "react-icons/ai";
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 
 export const MobileNavigationBar: React.FC = () => {
+  const { t } = useTranslation("component");
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleOptions = (): void => {
@@ -68,15 +71,18 @@ export const MobileNavigationBar: React.FC = () => {
         }
       )}
     >
-      <Button variant="secondary" icon={getIcon()} onClick={toggleOptions} />
+      <div className="flex items-center justify-between gap-4 w-full">
+        <Toggle />
+        <Button variant="secondary" icon={getIcon()} onClick={toggleOptions} />
+      </div>
       {isVisible && (
         <div className="flex flex-col w-full h-screen gap-12">
-          {LINKS.map((link, index) => (
+          {getLinks(t).map((link, index) => (
             <Link href={link.href} key={index} onClick={handleSelectOption}>
               {link.label}
             </Link>
           ))}
-          <Button onClick={openLinkedin}>Hire me!</Button>
+          <Button onClick={openLinkedin}>{t("navigation-bar.hire-me")}</Button>
         </div>
       )}
     </div>

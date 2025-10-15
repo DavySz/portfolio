@@ -1,28 +1,27 @@
+import { TFunction } from "i18next";
 import { ServiceTableProps } from "../../../components/service-table/types";
 
-export const SERVICES: ServiceTableProps["data"] = [
+export const getServices = (
+  t: TFunction<"home", undefined>
+): ServiceTableProps["data"] => [
   {
     isHighlighted: true,
-    title: "Mobile Development",
-    description:
-      "Build robust mobile applications that connect millions, delivering scalable and high-performance solutions.",
+    title: t("services.items.mobile.title"),
+    description: t("services.items.mobile.description"),
   },
   {
     isHighlighted: true,
-    title: "Web Development",
-    description:
-      "Create secure, scalable web solutions that enhance user experiences and empower global connections.",
+    title: t("services.items.web.title"),
+    description: t("services.items.web.description"),
   },
   {
     isHighlighted: false,
-    title: "UI/UX Design",
-    description:
-      "Design intuitive, responsive interfaces that drive seamless interactions and prioritize user satisfaction.",
+    title: t("services.items.design.title"),
+    description: t("services.items.design.description"),
   },
   {
     isHighlighted: false,
-    title: "Backend Development",
-    description:
-      "Develop reliable backend systems that support billions of interactions with security and scalability.",
+    title: t("services.items.backend.title"),
+    description: t("services.items.backend.description"),
   },
 ];
