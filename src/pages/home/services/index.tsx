@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { ServiceCards } from "../../../components/service-cards";
 import { ServiceTable } from "../../../components/service-table";
+import { Text } from "../../../components/text";
 import { getServices } from "./constants";
 
 export const Services: React.FC = () => {
@@ -9,14 +10,27 @@ export const Services: React.FC = () => {
   return (
     <section
       id="services"
-      className="flex flex-col items-center justify-center bg-[#F6F3FC] py-24 xl:px-[100px]"
+      className="flex flex-col items-center justify-center bg-secondary-50 py-16 md:py-24 px-6 xl:px-[100px]"
     >
-      <h1 className="text-center font-poppins font-bold text-3xl md:text-4xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent mb-4">
+      <Text
+        as="h1"
+        variant="sectionTitle"
+        color="gradient"
+        align="center"
+        className="text-display-sm md:text-display-md mb-6"
+      >
         {t("services.title")}
-      </h1>
-      <p className="px-4 font-poppins font-normal text-base lg:text-xl text-[#5F5F5F] text-center max-w-[764px] mb-16">
+      </Text>
+      <Text
+        as="p"
+        variant="sectionDescription"
+        color="secondary"
+        align="center"
+        className="text-body-md lg:text-body-xl mb-16 leading-relaxed"
+        maxWidth="764px"
+      >
         {t("services.description")}
-      </p>
+      </Text>
       <div className="hidden md:flex">
         <ServiceTable data={getServices(t)} />
       </div>

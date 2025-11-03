@@ -2,6 +2,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { LuPhone } from "react-icons/lu";
 import { getLinks, SOCIALS } from "./constants";
 import { Link } from "../../../components/link";
+import { Text } from "../../../components/text";
 import { CONTACTS } from "../../../shared/constants";
 import { Button } from "../../../components/button";
 import { useTranslation } from "react-i18next";
@@ -14,25 +15,40 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="md:px-6 lg:px-[50px] px-6 xl:px-[100px] py-[50px] flex flex-col justify-center bg-[#2A1454]">
+    <footer className="py-16 md:py-24 px-6 xl:px-[100px] flex flex-col justify-center bg-secondary-900">
       <div className="flex flex-col md:flex-row justify-between pb-16 gap-6 md:gap-0">
         <div className="max-w-[500px]">
-          <p className="font-poppins font-normal text-sm md:text-base text-white">
+          <Text
+            as="p"
+            variant="bodyText"
+            color="white"
+            className="text-body-sm md:text-body-md leading-relaxed"
+          >
             {t("footer.description")}
-          </p>
+          </Text>
         </div>
         <div className="flex flex-col gap-6">
           <div className="flex gap-5 items-center">
             <MdOutlineMailOutline size={20} color="#ffff" />
-            <span className="font-poppins font-normal text-base text-white">
+            <Text
+              as="span"
+              variant="bodyText"
+              color="white"
+              className="text-body-md"
+            >
               {CONTACTS.GMAIL}
-            </span>
+            </Text>
           </div>
           <div className="flex gap-5 items-center">
             <LuPhone size={20} color="#ffff" />
-            <span className="font-poppins font-normal text-base text-white">
+            <Text
+              as="span"
+              variant="bodyText"
+              color="white"
+              className="text-body-md"
+            >
               {CONTACTS.PHONE}
-            </span>
+            </Text>
           </div>
           <div className="flex gap-5 items-center">
             {SOCIALS.map((social, index) => (

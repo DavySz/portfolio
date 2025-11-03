@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { CONTACTS } from "../../shared/constants";
 import { Button } from "../button";
-import { Link } from "../link";
 import { Toggle } from "../toogle";
 import { getLinks } from "./constants";
 import { FiMenu } from "react-icons/fi";
@@ -13,6 +12,7 @@ import { useTranslation } from "react-i18next";
 export const MobileNavigationBar: React.FC = () => {
   const { t } = useTranslation("component");
   const [isVisible, setIsVisible] = useState(false);
+  const [activeLink, setActiveLink] = useState<string>("/");
 
   const toggleOptions = (): void => {
     setIsVisible((prev) => !prev);
@@ -26,7 +26,8 @@ export const MobileNavigationBar: React.FC = () => {
     return isVisible ? AiOutlineClose : FiMenu;
   };
 
-  const handleSelectOption = (): void => {
+  const handleSelectOption = (href: string): void => {
+    setActiveLink(href);
     toggleOptions();
   };
 
@@ -63,28 +64,89 @@ export const MobileNavigationBar: React.FC = () => {
   }, [disableScrollY]);
 
   return (
-    <div
-      className={clsx(
-        "flex flex-col gap-8 w-full items-end justify-center py-4 xl:px-[100px] px-6",
-        {
-          "h-screen": isVisible,
-        }
-      )}
-    >
-      <div className="flex items-center justify-between gap-4 w-full">
+    <>
+      {/* Header Bar */}
+      <div className="relative z-50 flex items-center justify-between w-full py-4 px-6 bg-white/95 backdrop-blur-sm border-b border-gray-100">
         <Toggle />
         <Button variant="secondary" icon={getIcon()} onClick={toggleOptions} />
       </div>
+
+      {/* Backdrop */}
       {isVisible && (
-        <div className="flex flex-col w-full h-screen gap-12">
-          {getLinks(t).map((link, index) => (
-            <Link href={link.href} key={index} onClick={handleSelectOption}>
-              {link.label}
-            </Link>
-          ))}
-          <Button onClick={openLinkedin}>{t("navigation-bar.hire-me")}</Button>
-        </div>
+        <div
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 
+                     transition-all duration-300 ease-out"
+          onClick={toggleOptions}
+        />
       )}
-    </div>
+
+      {/* Slide-in Menu Panel */}
+      <div
+        className={clsx(
+          "fixed top-0 right-0 h-full w-80 max-w-[90vw] z-50",
+          "bg-white shadow-2xl shadow-black/20",
+          "transform transition-all duration-300 ease-out",
+          {
+            "translate-x-0": isVisible,
+            "translate-x-full": !isVisible,
+          }
+        )}
+      >
+        {/* Menu Header */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-100">
+          <h3 className="text-lg font-semibold text-secondary-900">Menu</h3>
+          <Button
+            variant="tertiary"
+            icon={AiOutlineClose}
+            onClick={toggleOptions}
+          />
+        </div>
+
+        {/* Menu Content */}
+        <div className="flex flex-col h-full">
+          {/* Navigation Links */}
+          <nav className="flex-1 py-6">
+            <ul className="space-y-2">
+              {getLinks(t).map((link, index) => (
+                <li key={index}>
+                  <a
+                    href={link.href}
+                    onClick={() => handleSelectOption(link.href)}
+                    className={clsx(
+                      "flex items-center px-6 py-4 text-base font-medium transition-all duration-200",
+                      "hover:bg-primary-50 hover:text-primary-700",
+                      "border-l-4 transition-all duration-200",
+                      {
+                        "border-primary-500 bg-primary-50 text-primary-700":
+                          activeLink === link.href,
+                        "border-transparent text-gray-700 hover:border-primary-200":
+                          activeLink !== link.href,
+                      }
+                    )}
+                  >
+                    <span className="transform transition-transform duration-200 hover:translate-x-1">
+                      {link.label}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Footer Action */}
+          <div className="p-6 border-t border-gray-100 bg-gray-50">
+            <Button
+              onClick={() => {
+                openLinkedin();
+                toggleOptions();
+              }}
+              full
+            >
+              {t("navigation-bar.hire-me")}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };

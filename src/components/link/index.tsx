@@ -8,23 +8,40 @@ export const Link: React.FC<LinkProps> = ({
   href,
 }) => {
   return (
-    <div className="group">
+    <div className="group relative">
       <a href={href} onClick={onClick}>
         <p
-          className={clsx("font-poppins font-normal text-base lg:text-xl", {
-            "text-[#35205D]": variant === "primary",
-            "text-[#FFFFFF]": variant === "secondary",
-          })}
+          className={clsx(
+            "font-poppins font-normal text-base lg:text-xl transition-all duration-300 ease-out",
+            "relative z-10",
+            {
+              "text-secondary-900 hover:text-primary-600":
+                variant === "primary",
+              "text-white hover:text-primary-300": variant === "secondary",
+            }
+          )}
         >
           {children}
         </p>
       </a>
       <div
         className={clsx(
-          "h-[2px] scale-x-0 group-hover:scale-x-100 transform-origin-center rounded-full transition-transform duration-300",
+          "absolute bottom-0 left-0 h-[2px] w-0 group-hover:w-full rounded-full",
+          "transition-all duration-300 ease-out",
           {
-            "bg-[#35205D]": variant === "primary",
-            "bg-[#FFFFFF]": variant === "secondary",
+            "bg-primary-500": variant === "primary",
+            "bg-primary-300": variant === "secondary",
+          }
+        )}
+      />
+      {/* Hover background effect */}
+      <div
+        className={clsx(
+          "absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100",
+          "transition-opacity duration-300 ease-out -m-2 p-2",
+          {
+            "bg-primary-50": variant === "primary",
+            "bg-white/10": variant === "secondary",
           }
         )}
       />

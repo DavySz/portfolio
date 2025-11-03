@@ -3,6 +3,7 @@ import { SOCIALS } from "./constants";
 import { usePDF } from "../../../hooks/usePdf/use-pdf";
 import { CV_PATH } from "../../../shared/constants";
 import { Button } from "../../../components/button";
+import { Text } from "../../../components/text";
 import UserPhoto from "../../../assets/user.png";
 import { useTranslation } from "react-i18next";
 
@@ -19,22 +20,43 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col-reverse xl:flex-row w-full gap-16 items-center justify-center mb-14 px-6 xl:px-[100px]">
-      <div className="flex flex-col items-center xl:items-start">
-        <p className="text-center font-poppins font-semibold text-[#2A1454] text-xl xl:text-2xl mb-6">
+    <section className="flex flex-col-reverse xl:flex-row w-full gap-16 items-center justify-center py-12 md:py-16 px-6 xl:px-[100px]">
+      <div className="flex flex-col items-center xl:items-start animate-fade-in-left">
+        <Text
+          as="p"
+          variant="cardDescription"
+          color="accent"
+          align="center"
+          className="xl:text-left text-display-sm md:text-heading-xl mb-6 animate-fade-in-up font-semibold tracking-wide uppercase"
+        >
           {t("hero.me")}
-        </p>
+        </Text>
+
         <div className="xl:w-[610px] mb-9">
-          <h1 className="text-center xl:text-start font-poppins font-bold text-3xl xl:text-6xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent">
+          <Text
+            as="h1"
+            variant="heroTitle"
+            color="gradient"
+            align="center"
+            className="xl:text-left text-display-md md:text-display-xl animate-gradient animate-fade-in-up"
+          >
             {t("hero.role")}
-          </h1>
+          </Text>
         </div>
+
         <div className="xl:w-[518px] mb-10">
-          <p className="text-center xl:text-start font-poppins font-normal text-[#5F5F5F] text-xl">
+          <Text
+            as="p"
+            variant="heroSubtitle"
+            color="secondary"
+            align="center"
+            className="xl:text-left text-body-lg md:text-body-xl animate-fade-in-up"
+          >
             {t("hero.description")}
-          </p>
+          </Text>
         </div>
-        <div className="flex flex-col items-center gap-4 xl:flex-row xl:gap-7">
+
+        <div className="flex flex-col items-center gap-4 xl:flex-row xl:gap-7 animate-fade-in-up">
           <Button
             icon={MdOutlineFileDownload}
             onClick={handleDownLoadCV}
@@ -54,8 +76,11 @@ export const Hero: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden">
-        <img className="object-cover h-full w-full " src={UserPhoto} />
+      <div className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden animate-fade-in-right">
+        <img
+          className="object-cover h-full w-full animate-float"
+          src={UserPhoto}
+        />
       </div>
     </section>
   );

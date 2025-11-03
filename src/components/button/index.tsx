@@ -18,9 +18,9 @@ export const Button: React.FC<ButtonProps> = ({
 
     const variants: Record<ButtonVariant, string> = {
       primary:
-        "bg-gradient-to-r from-[#7947DF] to-[#311961] hover:from-[#8A5AE6] hover:to-[#3D206E] shadow-lg hover:shadow-xl",
+        "bg-gradient-to-r from-primary-500 to-primary-900 hover:from-primary-400 hover:to-primary-800 shadow-primary hover:shadow-primary-hover",
       secondary:
-        "bg-transparent border border-[#7544D7] hover:bg-[#7544D7]/10 hover:border-[#8A5AE6] hover:shadow-lg",
+        "bg-transparent border border-primary-500 hover:bg-primary-500/10 hover:border-primary-400 hover:shadow-primary",
       tertiary: "bg-transparent hover:bg-white/5",
     };
 
@@ -32,8 +32,8 @@ export const Button: React.FC<ButtonProps> = ({
 
     const variants: Record<ButtonVariant, string> = {
       primary: "text-white",
-      tertiary: "text-white hover:text-[#B197E8]",
-      secondary: "text-[#7041CF] hover:text-[#8A5AE6]",
+      tertiary: "text-white hover:text-primary-300",
+      secondary: "text-primary-700 hover:text-primary-600",
     };
 
     return variants[variant];
@@ -72,7 +72,7 @@ export const Button: React.FC<ButtonProps> = ({
         "flex gap-2 rounded-3xl items-center justify-center relative overflow-hidden group",
         "transition-all duration-300 ease-out",
         "transform hover:scale-105 active:scale-95",
-        "focus:outline-none focus:ring-2 focus:ring-[#7947DF]/50 focus:ring-offset-2 focus:ring-offset-transparent",
+        "focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 focus:ring-offset-transparent",
         getButtonVariant(),
         getButtonShape(),
         {

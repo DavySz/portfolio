@@ -4,6 +4,7 @@ import { usePDF } from "../../../hooks/usePdf/use-pdf";
 import { CV_PATH } from "../../../shared/constants";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../../components/button";
+import { Text } from "../../../components/text";
 
 export const Self: React.FC = () => {
   const { t } = useTranslation("home");
@@ -15,19 +16,33 @@ export const Self: React.FC = () => {
 
   return (
     <section
-      className="flex flex-col lg:flex-row w-full gap-6 xl:gap-24 items-center justify-center mb-[100px] md:mb-[158px] px-6 xl:px-[100px] pt-[100px] md:pt-[179px]"
+      className="flex flex-col lg:flex-row w-full gap-6 xl:gap-24 items-center justify-center py-16 md:py-24 px-6 xl:px-[100px]"
       id="self"
     >
       <div className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden">
         <img className="object-cover h-full w-full " src={SelfTemp} />
       </div>
       <div className="flex flex-col items-center justify-center lg:items-start max-w-[579px]">
-        <h1 className="text-center font-poppins font-bold text-3xl md:text-4xl bg-gradient-to-tr from-[#7947DF] to-[#311961] bg-clip-text text-transparent mb-4">
+        <Text
+          as="h1"
+          variant="sectionTitle"
+          color="gradient"
+          align="center"
+          className="lg:text-left text-display-sm md:text-display-md mb-6"
+        >
           {t("self.title")}
-        </h1>
-        <p className="text-center lg:text-start font-poppins font-normal text-base md:text-xl text-[#5F5F5F] mb-10">
+        </Text>
+
+        <Text
+          as="p"
+          variant="sectionDescription"
+          color="secondary"
+          align="center"
+          className="lg:text-left text-body-md md:text-body-xl mb-10 leading-relaxed"
+        >
           {t("self.description")}
-        </p>
+        </Text>
+
         <Button
           variant="secondary"
           icon={MdOutlineFileDownload}

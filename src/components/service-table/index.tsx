@@ -5,10 +5,20 @@ import { ServiceTableProps } from "./types";
 export const ServiceTable: React.FC<ServiceTableProps> = ({ data }) => {
   const getIcon = (isHighlighted: boolean) => {
     if (isHighlighted) {
-      return <GoArrowUpRight size={40} className="text-[#FFFFFF]" />;
+      return (
+        <GoArrowUpRight
+          size={40}
+          className="text-white transition-transform duration-300 group-hover:scale-110"
+        />
+      );
     }
 
-    return <GoArrowDownRight size={40} className="text-[#7947DF]" />;
+    return (
+      <GoArrowDownRight
+        size={40}
+        className="text-primary-500 transition-transform duration-300 group-hover:scale-110 group-hover:text-primary-600"
+      />
+    );
   };
 
   return (
@@ -17,18 +27,24 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({ data }) => {
         {data.map(({ description, isHighlighted, title }, index) => (
           <tr
             key={index}
-            className={clsx({
-              "bg-gradient-to-r from-[#7947DF] to-[#311961]": isHighlighted,
-              "bg-transparent": !isHighlighted,
-            })}
+            className={clsx(
+              "group cursor-pointer transition-all duration-300 ease-out",
+              {
+                "bg-gradient-to-r from-primary-500 to-primary-900 hover:from-primary-400 hover:to-primary-800":
+                  isHighlighted,
+                "bg-transparent hover:bg-primary-50": !isHighlighted,
+              }
+            )}
           >
             <td
               className={clsx(
-                "hidden xl:table-cell font-poppins font-semibold text-4xl",
+                "hidden xl:table-cell font-poppins font-semibold text-4xl transition-colors duration-300",
                 {
                   "text-white": isHighlighted,
-                  "text-[#7041CF]": !isHighlighted,
-                  "border-b border-[#A9A9A9]": !isHighlighted,
+                  "text-primary-700 group-hover:text-primary-800":
+                    !isHighlighted,
+                  "border-b border-gray-300 group-hover:border-primary-300":
+                    !isHighlighted,
                 }
               )}
             >
@@ -36,28 +52,35 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({ data }) => {
             </td>
             <td
               className={clsx(
-                "font-poppins font-bold md:text-[32px] text-[40px]",
+                "font-poppins font-bold md:text-[32px] text-[40px] transition-colors duration-300",
                 {
                   "text-white": isHighlighted,
-                  "text-[#7041CF]": !isHighlighted,
-                  "border-b border-[#A9A9A9]": !isHighlighted,
+                  "text-primary-700 group-hover:text-primary-800":
+                    !isHighlighted,
+                  "border-b border-gray-300 group-hover:border-primary-300":
+                    !isHighlighted,
                 }
               )}
             >
               {title}
             </td>
             <td
-              className={clsx("w-[525px] font-poppins font-normal text-xl", {
-                "text-white": isHighlighted,
-                "text-[#000000]": !isHighlighted,
-                "border-b border-[#A9A9A9]": !isHighlighted,
-              })}
+              className={clsx(
+                "w-[525px] font-poppins font-normal text-xl transition-colors duration-300",
+                {
+                  "text-white": isHighlighted,
+                  "text-gray-700 group-hover:text-gray-800": !isHighlighted,
+                  "border-b border-gray-300 group-hover:border-primary-300":
+                    !isHighlighted,
+                }
+              )}
             >
               {description}
             </td>
             <td
               className={clsx("hidden xl:table-cell", {
-                "border-b border-[#A9A9A9]": !isHighlighted,
+                "border-b border-gray-300 group-hover:border-primary-300":
+                  !isHighlighted,
               })}
             >
               {getIcon(isHighlighted)}
