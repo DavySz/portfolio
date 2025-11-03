@@ -3,6 +3,7 @@ import SelfTemp from "../../../assets/portfolio.png";
 import { usePDF } from "../../../hooks/usePdf/use-pdf";
 import { CV_PATH } from "../../../shared/constants";
 import { useTranslation } from "react-i18next";
+import { Button } from "../../../components/button";
 
 export const Self: React.FC = () => {
   const { t } = useTranslation("home");
@@ -27,15 +28,14 @@ export const Self: React.FC = () => {
         <p className="text-center lg:text-start font-poppins font-normal text-base md:text-xl text-[#5F5F5F] mb-10">
           {t("self.description")}
         </p>
-        <button
-          className="flex gap-2 py-2 px-8 rounded-3xl bg-transparent items-center justify-center border border-[#7544D7] mr-7"
+        <Button
+          variant="secondary"
+          icon={MdOutlineFileDownload}
           onClick={handleDownLoadCV}
+          className="mr-7"
         >
-          <p className="font-poppins font-semibold text-[#7041CF] text-xl">
-            {t("self.download")}
-          </p>
-          <MdOutlineFileDownload size={24} color="#7041CF" />
-        </button>
+          {t("self.download")}
+        </Button>
       </div>
     </section>
   );
