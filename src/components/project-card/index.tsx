@@ -28,9 +28,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
       <div className="flex flex-col justify-center relative">
         <img
-          className="object-cover h-[200px] md:h-[389px] w-full rounded-t-[20px]
-                     transition-transform duration-300 ease-out group-hover:scale-105"
           src={thumb}
+          alt={`${title} - ${category}`}
+          className="h-[200px] md:h-[389px] w-full rounded-t-[20px] transition-transform duration-300 ease-out group-hover:scale-105 object-cover"
+          loading="lazy"
         />
 
         <div

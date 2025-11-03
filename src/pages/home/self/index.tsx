@@ -20,7 +20,11 @@ export const Self: React.FC = () => {
       id="self"
     >
       <div className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden">
-        <img className="object-cover h-full w-full " src={SelfTemp} />
+        <img
+          src={SelfTemp}
+          alt="Davy de Souza Assunção - Portfolio workspace"
+          className="h-full w-full object-cover"
+        />
       </div>
       <div className="flex flex-col items-center justify-center lg:items-start max-w-[579px]">
         <Text

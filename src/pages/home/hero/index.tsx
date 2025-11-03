@@ -78,8 +78,9 @@ export const Hero: React.FC = () => {
       </div>
       <div className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden animate-fade-in-right">
         <img
-          className="object-cover h-full w-full animate-float"
           src={UserPhoto}
+          alt="Davy de Souza Assunção - Full Stack Developer"
+          className="h-full w-full animate-float object-cover"
         />
       </div>
     </section>

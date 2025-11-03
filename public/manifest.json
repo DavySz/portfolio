@@ -1,0 +1,19 @@
+{
+  "name": "Davy de Souza Assunção - Portfolio",
+  "short_name": "DavySz Portfolio",
+  "description": "Portfolio pessoal de Davy de Souza Assunção, desenvolvedor Full Stack especializado em React, React Native, TypeScript e Node.js",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#7947DF",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity"],
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    }
+  ]
+}
