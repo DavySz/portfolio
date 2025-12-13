@@ -1,14 +1,14 @@
 import { MdOutlineFileDownload } from "react-icons/md";
 import { SOCIALS } from "./constants";
 import { usePDF } from "../../../hooks/usePdf/use-pdf";
-import { CV_PATH } from "../../../shared/constants";
+import { EN_CV_PATH, PT_CV_PATH } from "../../../shared/constants";
 import { Button } from "../../../components/button";
 import { Text } from "../../../components/text";
 import UserPhoto from "../../../assets/user.png";
 import { useTranslation } from "react-i18next";
 
 export const Hero: React.FC = () => {
-  const { t } = useTranslation("home");
+  const { t, i18n } = useTranslation("home");
   const { download } = usePDF();
 
   const openLink = (href: string): void => {
@@ -16,7 +16,7 @@ export const Hero: React.FC = () => {
   };
 
   const handleDownLoadCV = (): void => {
-    download(CV_PATH);
+    download(i18n.language === "pt" ? PT_CV_PATH : EN_CV_PATH);
   };
 
   return (

@@ -1,17 +1,17 @@
 import { MdOutlineFileDownload } from "react-icons/md";
 import SelfTemp from "../../../assets/portfolio.png";
 import { usePDF } from "../../../hooks/usePdf/use-pdf";
-import { CV_PATH } from "../../../shared/constants";
+import { PT_CV_PATH, EN_CV_PATH } from "../../../shared/constants";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../../components/button";
 import { Text } from "../../../components/text";
 
 export const Self: React.FC = () => {
-  const { t } = useTranslation("home");
+  const { t, i18n } = useTranslation("home");
   const { download } = usePDF();
 
   const handleDownLoadCV = (): void => {
-    download(CV_PATH);
+    download(i18n.language === "pt" ? PT_CV_PATH : EN_CV_PATH);
   };
 
   return (
