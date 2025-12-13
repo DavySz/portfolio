@@ -63,6 +63,12 @@
       },
       "enem": {
         "title": "O Efeito ENEM no Código: Como estudar apenas para 'passar' criou uma geração de devs inseguros"
+      },
+      "testing": {
+        "title": "Testes Unitários no Frontend: A Arte de Testar o que Importa"
+      },
+      "micro": {
+        "title": "Micro Frontends: Dividir para Conquistar"
       }
     }
   },

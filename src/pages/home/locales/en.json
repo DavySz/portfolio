@@ -63,6 +63,12 @@
       },
       "enem": {
         "title": "The ENEM Effect in Code: How Studying Just to 'Pass' Created a Generation of Insecure Devs"
+      },
+      "testing": {
+        "title": "Unit Testing in Frontend: The Art of Testing What Matters"
+      },
+      "micro": {
+        "title": "Micro Frontends: Divide and Conquer"
       }
     }
   },
