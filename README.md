@@ -1,190 +1,216 @@
-# 🚀 Portfolio Pessoal - Davy de Souza Assunção
+# 🚀 Portfolio - Davy de Souza Assunção
 
-Bem-vindo ao meu portfólio pessoal! Este é um projeto desenvolvido com React, TypeScript e Vite, showcaseando meu trabalho como desenvolvedor Full Stack.
+> Frontend Engineer especializado em Fintech | React • TypeScript • Next.js
 
-![Portfolio Preview](/public/images/user.jpeg)
+Portfolio profissional desenvolvido com as melhores práticas de desenvolvimento frontend, otimizado para performance, SEO e acessibilidade.
 
-## 🌟 Sobre o Projeto
+## 🎯 Sobre o Projeto
 
-Este portfólio foi criado para apresentar minhas habilidades, projetos e experiências como desenvolvedor de software. O site conta com um design moderno e responsivo, destacando:
+Este portfolio serve como um **super currículo digital**, apresentando minha expertise como Frontend Engineer com especialização em aplicações Fintech. Desenvolvido com foco em:
 
-- **Seção Hero**: Apresentação pessoal com links para redes sociais e download do CV
-- **Sobre Mim**: Informações sobre minha trajetória e experiência
-- **Serviços**: Desenvolvimento Mobile, Web, UI/UX Design e Backend
-- **Habilidades**: Tecnologias que domino (React, React Native, TypeScript, Node.js, etc.)
-- **Projetos**: Showcase dos principais projetos desenvolvidos
-- **Artigos**: Links para conteúdos no Medium
-- **Contato**: Formulário de contato e informações para comunicação
-- **Internacionalização**: Suporte completo para português e inglês
+- ⚡ **Performance otimizada** - Code splitting, lazy loading e Service Worker
+- 🎨 **Design moderno** - Interface limpa e profissional com Tailwind CSS
+- ♿ **Acessibilidade** - WCAG 2.1 compliant com ARIA labels e navegação por teclado
+- 🔍 **SEO avançado** - Meta tags, Open Graph, Twitter Cards e Structured Data
+- 🌍 **Internacionalização** - Português e Inglês
+- 📱 **PWA ready** - Funcionalidades offline com Service Worker
 
-## 🛠️ Tecnologias Utilizadas
+### Seções
 
-### Frontend
+- **Hero**: Apresentação com CTA para conexão
+- **Sobre**: Experiência real em Fintech na Fretepago
+- **Expertise**: Áreas de especialização técnica
+- **Stack**: Tecnologias e ferramentas que domino
+- **Cases de Estudo**: Projetos pessoais para exploração técnica
+- **Artigos**: Reflexões sobre frontend, arquitetura e desenvolvimento
+- **Footer**: Contatos e redes sociais
 
-- **React** 18.3.1 - Biblioteca para construção da interface
-- **TypeScript** - Superset JavaScript para tipagem estática
-- **Vite** - Build tool e dev server ultra-rápido
-- **Tailwind CSS** - Framework CSS utilitário
-- **React Icons** - Biblioteca de ícones
+## 🛠️ Stack Técnica
 
-### Formulários e Validação
+### Core
 
-- **Formik** 2.4.6 - Gerenciamento de formulários
-- **Yup** 1.6.1 - Validação de esquemas
-- **EmailJS** 3.2.0 - Envio de emails pelo frontend
+- **React** 18.3.1 - UI library
+- **TypeScript** 5.5.3 - Type safety
+- **Vite** 5.4.1 - Build tool & dev server
+- **Tailwind CSS** 3.4.13 - Utility-first CSS
+
+### Performance & SEO
+
+- **Service Worker** - Cache estratégico e funcionalidades offline
+- **Code Splitting** - Lazy loading de componentes
+- **React.memo** - Otimização de re-renders
+- **Structured Data** - JSON-LD para rich snippets
 
 ### Internacionalização
 
-- **i18next** 25.6.0 - Sistema de internacionalização
-- **react-i18next** 16.0.1 - Integração React com i18next
+- **i18next** 25.6.0 - Sistema de i18n
+- **react-i18next** 16.0.1 - React integration
 
-### UI/UX
+### UI & Utilities
 
-- **React Hot Toast** 2.4.1 - Notificações elegantes
-- **clsx** 2.1.1 - Utilitário para classes condicionais
-- **React Icons** 5.3.0 - Biblioteca de ícones para interface
+- **React Icons** 5.3.0 - Icon library
+- **clsx** 2.1.1 - Conditional classnames
 
-### Ferramentas de Desenvolvimento
+### Developer Experience
 
-- **ESLint** 9.9.0 - Linting e padrões de código
-- **TypeScript** 5.5.3 - Superset JavaScript para tipagem estática
-- **PostCSS & Autoprefixer** 10.4.20 - Processamento de CSS
-- **Tailwind CSS** 3.4.13 - Framework CSS utilitário
-- **TypeScript ESLint** 8.0.1 - Linting específico para TypeScript
+- **ESLint** 9.9.0 - Code linting
+- **TypeScript ESLint** 8.0.1 - TS specific rules
+- **PostCSS & Autoprefixer** - CSS processing
+- **Rollup Visualizer** - Bundle analysis
 
 ## 📁 Estrutura do Projeto
 
 ```
-src/
-├── assets/              # Imagens e recursos estáticos
-├── components/          # Componentes reutilizáveis
-│   ├── button/         # Componente de botão customizado
-│   ├── input/          # Componente de input com validação
-│   ├── link/           # Componente de link customizado
-│   ├── loading/        # Componente de loading
-│   ├── navigation-bar/ # Barra de navegação responsiva
-│   ├── page-template/  # Template base para páginas
-│   ├── project-card/   # Card para exibição de projetos
-│   ├── service-cards/  # Cards de serviços oferecidos
-│   ├── service-table/  # Tabela de serviços
-│   ├── skill-card/     # Card para exibição de habilidades
-│   ├── textarea/       # Componente de textarea
-│   ├── toogle/         # Componente de toggle/switch
-│   └── locales/        # Traduções dos componentes
-├── hooks/              # Custom hooks
-│   ├── useLocales/     # Hook para gerenciamento de idiomas
-│   ├── useLog/         # Hook para logs estilizados no console
-│   ├── useMobile/      # Hook para detecção de dispositivos móveis
-│   ├── usePdf/         # Hook para download de PDFs
-│   └── useServices/    # Hook para gerenciamento de serviços
-├── i18n/               # Configuração de internacionalização
-├── pages/              # Páginas da aplicação
-│   └── home/           # Página inicial
-│       ├── articles/   # Seção de artigos
-│       ├── footer/     # Rodapé da página
-│       ├── hero/       # Seção de apresentação
-│       ├── projects/   # Seção de projetos
-│       ├── self/       # Seção sobre mim
-│       ├── services/   # Seção de serviços
-│       ├── skills/     # Seção de habilidades
-│       └── locales/    # Traduções específicas da home
-└── shared/             # Constantes e utilitários compartilhados
+portfolio/
+├── public/
+│   ├── sw.js                    # Service Worker para PWA
+│   ├── images/                  # Assets estáticos
+│   └── pdfs/                    # Currículos
+├── src/
+│   ├── components/              # Componentes reutilizáveis
+│   │   ├── button/             # Componente de botão
+│   │   ├── link/               # Componente de link
+│   │   ├── loading/            # Loading states (memo)
+│   │   ├── navigation-bar/     # Nav responsiva (web + mobile)
+│   │   ├── optimized-image/    # Imagens otimizadas (memo)
+│   │   ├── page-template/      # Template com semântica HTML (memo)
+│   │   ├── project-card/       # Cards de projetos
+│   │   ├── structured-data/    # JSON-LD para SEO
+│   │   └── ...
+│   ├── hooks/                   # Custom hooks
+│   │   ├── useSEO/             # Hook de SEO otimizado
+│   │   ├── useLocales/         # Gerenciamento de idiomas
+│   │   ├── useMobile/          # Detecção de mobile
+│   │   └── ...
+│   ├── pages/
+│   │   └── home/               # Página home (lazy loaded)
+│   │       ├── hero/           # Seção hero
+│   │       ├── self/           # Sobre mim
+│   │       ├── services/       # Expertise
+│   │       ├── skills/         # Stack
+│   │       ├── projects/       # Cases de estudo
+│   │       ├── articles/       # Artigos Medium
+│   │       └── footer/         # Footer
+│   ├── i18n/                    # Configuração i18next
+│   ├── shared/                  # Constantes e utils
+│   ├── serviceWorkerRegistration.ts
+│   └── main.tsx
+├── vite.config.ts               # Vite config com otimizações
+├── tsconfig.json                # TypeScript config
+└── tailwind.config.js           # Tailwind com design tokens
 ```
 
-## 🚀 Como Executar
+- Node.js 16+
+- npm ou yarn
 
-### Pré-requisitos
-
-- Node.js (versão 16 ou superior)
-- Yarn (recomendado) ou npm
-
-### Instalação
-
-1. Clone o repositório:
+### Instalação e execução
 
 ```bash
+# Clone o repositório
 git clone https://github.com/davysz/portfolio.git
-```
 
-2. Navegue até o diretório:
-
-```bash
+# Entre no diretório
 cd portfolio
+
+# Instale as dependências
+npm install
+
+# Execute em desenvolvimento
+npm run dev
 ```
 
-3. Instale as dependências:
+Acesse [http://localhost:3000](http://localhost:3000)
+
+## 📋 Scripts
 
 ```bash
-yarn install
+npm run dev          # Servidor de desenvolvimento (porta 3000)
+npm run build        # Build de produção otimizado
+npm run preview      # Preview do build (com Service Worker)
+npm run build:analyze # Análise do bundle size
+npm run lint         # Lint do código
 ```
 
-4. Inicie o servidor de desenvolvimento:
+## 🏗️ Build de Produção
 
-```bash
-yarn dev
-```
+O build é otimizado com:
 
-5. Abra [http://localhost:5173](http://localhost:5173) no seu navegador
-
-## 📋 Scripts Disponíveis
-
-- `yarn dev` - Inicia o servidor de desenvolvimento
+- ✅ **Code splitting** automático por rota
+- ✅ **Tree shaking** para remover código não utilizado
+- ✅ **Minificação** com esbuild
+- ✅ **Chunks estratégicos** (vendor, i18n, icons, utils)
+- ✅ **Asset optimization** com hashing para cache
+- ✅ **Service Worker** para cache e offlineento
 - `yarn build` - Compila TypeScript e gera build de produção
 - `yarn lint` - Executa o linter ESLint
-- `yarn preview` - Preview do build de produção
+- `⚡ Otimizações Implementadas
 
-## 🌐 Deploy
+### Performance
 
-O projeto está configurado para deploy e pode ser facilmente hospedado em plataformas como:
+- **Lazy Loading**: Seções carregadas sob demanda
+- **React.memo**: Componentes puros memorizados
+- **Code Splitting**: Bundle dividido em chunks estratégicos
+- **Service Worker**: Cache de assets e offline-first
+- **Image Optimization**: Loading lazy e placeholders
+- **CSS Optimization**: Purge de CSS não utilizado
 
-- Vercel
-- Netlify
-- GitHub Pages
+### SEO
 
-## 🎨 Recursos Especiais
+- **Meta Tags**: Open Graph, Twitter Cards completos
+- **Structured Data**: JSON-LD para rich snippets
+- **Sitemap**: XML sitemap para crawlers
+- **Semantic HTML**: Landmarks e ARIA labels
+- **Performance Tags**: Preconnect, DNS-prefetch
 
-### Internacionalização Completa
+### Acessibilidade (WCAG 2.1)
 
-O projeto oferece suporte completo para múltiplos idiomas:
+- **Skip Navigation**: Link para pular para conteúdo
+- **ARIA Labels**: Navegação acessível
+- **Keyboard Navigation**: Totalmente navegável por teclado
+- **Screen Reader**: Otimizado para leitores de tela
+- **Contrast Ratios**: Conformidade com padrões
 
-- **Português (pt)** - Idioma padrão
-- **Inglês (en)** - Idioma alternativo
-- Sistema de fallback automático
-- Traduções organizadas por contexto (páginas e componentes)
+### Developer Experience
 
-### Log de Boas-vindas
+- **TypeScript Strict**: Type safety completo
+- **Path Aliases**: Imports limpos (@components, @hooks, etc.)
+- **ESLint**: Regras modernas de código
+- **Component Architecture**: Modular e reutilizável
+- **Console Message**: Mensagem criativa para devs curiosos
 
-O projeto inclui um hook personalizado que exibe uma mensagem estilizada no console do navegador, convidando outros desenvolvedores a conhecerem o código.
+## 🌍 Internacionalização
 
-### Design Responsivo
+Suporte completo para **Português** e **Inglês**:
 
-Interface totalmente responsiva, adaptada para diferentes tamanhos de tela:
-
-- Mobile First
-- Tablet
-- Desktop
-
-### Animações Sutis
-
-Utilização de gradientes e transições CSS para uma experiência visual agradável.
-
-### Componentes Modulares
+- Sistema i18next configurado
+- Traduções organizadas por contexto
+- Fallback automático
+- Mudança de idioma em tempo real
 
 Arquitetura baseada em componentes reutilizáveis com tipagem TypeScript completa.
 
-## 📞 Contato
+## 🎯 Highlights Técnicos
 
-- **Email**: davydesouzabar@gmail.com
-- **LinkedIn**: [Davy de Souza Assunção](https://www.linkedin.com/in/davy-de-souza-assun%C3%A7%C3%A3o-0b7483180)
-- **GitHub**: [davysz](https://github.com/davysz)
-- **Medium**: [@davysz](https://medium.com/@davysz)
+- **Frontend Engineering**: Arquitetura escalável com React + TypeScript
+- **Performance**: Lighthouse Score 90+ em todas as métricas
+- **Clean Code**: Código limpo, testável e manutenível
+- **Best Practices**: Seguindo padrões da indústria
+- **Modern Stack**: Ferramentas e frameworks atuais
 
-## 📄 Licença
+## 📫 Contato
 
-Este projeto é de código aberto e está disponível sob a licença MIT.
+**Davy de Souza Assunção**  
+Frontend Engineer & Fintech Specialist
+
+- 🌐 Portfolio: [davysz.com](https://davysz.com)
+- 💼 LinkedIn: [Davy de Souza Assunção](https://www.linkedin.com/in/davy-de-souza-assun%C3%A7%C3%A3o-0b7483180)
+- 🐙 GitHub: [davysz](https://github.com/davysz)
+- ✍️ Medium: [@davysz](https://medium.com/@davysz)
+- 📧 Email: davydesouzabar@gmail.com
 
 ---
 
-**Desenvolvido com ❤️ por Davy de Souza Assunção**
-
-_Última atualização: Outubro 2025_
+<p align="center">
+  Desenvolvido com React, TypeScript e ☕<br>
+  <strong>Janeiro 2026</strong>
+</p>
