@@ -1,4 +1,4 @@
-import { ProjectCardProps } from "./types";
+import type { ProjectCardProps } from "./types";
 import { Text } from "../text";
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({

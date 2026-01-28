@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { LinkProps } from "./types";
+import type { LinkProps } from "./types";
 
 export const Link: React.FC<LinkProps> = ({
   variant = "primary",

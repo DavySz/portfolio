@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { useLocales } from "../../hooks/useLocales/use-locales";
-import { ToggleProps } from "./types";
+import type { ToggleProps } from "./types";
 
 export const Toggle: React.FC<ToggleProps> = ({ className }) => {
   const { language, toggleLanguage } = useLocales();

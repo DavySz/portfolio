@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ServiceCardsProps } from "./types";
+import type { ServiceCardsProps } from "./types";
 
 export const ServiceCards: React.FC<ServiceCardsProps> = ({ data }) => {
   return (

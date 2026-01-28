@@ -1,6 +1,6 @@
 import { FaGithubAlt, FaInstagram, FaLinkedin, FaMedium } from "react-icons/fa";
 import { CONTACTS } from "../../../shared/constants";
-import { TFunction } from "i18next";
+import type { TFunction } from "i18next";
 
 export const getLinks = (t: TFunction<"home", undefined>) => [
   { label: t("footer.links.home"), href: "/" },

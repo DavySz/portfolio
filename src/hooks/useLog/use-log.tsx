@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { LogMessage, UseLogOptions } from "./use-log.types";
+import type { LogMessage, UseLogOptions } from "./use-log.types";
 
 export const useLog = (
   messages: LogMessage | LogMessage[],

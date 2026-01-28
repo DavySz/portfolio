@@ -1,44 +1,119 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#7947DF" />
 
-    <!-- Preconnect for better performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- SEO Meta Tags -->
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+    <meta
+      name="theme-color"
+      content="#7947DF"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#7947DF"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta name="author" content="Davy de Souza Assuncao" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Performance Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="dns-prefetch" href="https://davysz.com" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
 
-    <!-- Fonts -->
+    <!-- Fonts with display=swap for better performance -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <!-- Favicon and PWA -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/images/favicon-16x16.png"
+    />
     <link rel="manifest" href="/manifest.json" />
+    <meta name="msapplication-TileColor" content="#7947DF" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://davysz.com" />
 
-    <!-- Default title (will be updated by useSEO hook) -->
-    <title>Davy de Souza Assunção | Full Stack Developer</title>
-
-    <!-- Base meta tags (will be enhanced by useSEO hook) -->
+    <!-- Default Title and Meta (will be updated by useSEO hook) -->
+    <title>
+      Davy de Souza Assunção | Frontend Engineer & Fintech Specialist
+    </title>
     <meta
       name="description"
-      content="Desenvolvedor Full Stack especializado em React, React Native, TypeScript e Node.js. Transformo ideias em soluções digitais inovadoras."
+      content="Frontend Engineer especializado em Fintech. Construo interfaces financeiras de alta performance com React, TypeScript e Next.js. Experiência real na Fretepago."
     />
     <meta
       name="keywords"
-      content="davy de souza assuncao, davysz, full stack developer, react, react native, typescript, nodejs"
+      content="frontend engineer, fintech developer, react specialist, typescript expert, nextjs, fretepago, davy souza, davy assunção"
     />
-    <meta name="author" content="Davy de Souza Assuncao" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://davysz.com/" />
+    <meta
+      property="og:title"
+      content="Davy de Souza Assunção | Frontend Engineer & Fintech Specialist"
+    />
+    <meta
+      property="og:description"
+      content="Frontend Engineer especializado em Fintech. Construo interfaces financeiras que pessoas confiam."
+    />
+    <meta property="og:image" content="https://davysz.com/images/user.jpeg" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta
+      property="og:site_name"
+      content="Davy de Souza Assunção - Frontend Engineer"
+    />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://davysz.com/" />
+    <meta
+      name="twitter:title"
+      content="Davy de Souza Assunção | Frontend Engineer & Fintech Specialist"
+    />
+    <meta
+      name="twitter:description"
+      content="Frontend Engineer especializado em Fintech. Construo interfaces financeiras que pessoas confiam."
+    />
+    <meta name="twitter:image" content="https://davysz.com/images/user.jpeg" />
   </head>
   <body>
+    <noscript>
+      <div style="text-align: center; padding: 2rem">
+        <h1>JavaScript Necessário</h1>
+        <p>
+          Este site requer JavaScript para funcionar corretamente. Por favor,
+          habilite o JavaScript no seu navegador.
+        </p>
+      </div>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

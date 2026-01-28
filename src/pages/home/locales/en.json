@@ -1,44 +1,44 @@
 {
   "hero": {
-    "me": "I am Davy de Souza Assunção",
-    "role": "Full Stack Software Developer",
-    "description": "I love technology, coffee, and using my knowledge to solve problems and transform lives.",
+    "me": "Davy de Souza Assunção",
+    "role": "Frontend Engineer & Fintech Specialist",
+    "description": "Part of the team that brought Fretepago fintech to market. I transform financial complexity into intuitive interfaces that people trust.",
     "download": "Download CV"
   },
   "self": {
-    "title": "About Myself",
-    "description": "With extensive experience and expertise in various software development technologies, I have collaborated with a range of clients to create efficient and innovative digital solutions. I invite you to explore this portfolio and discover how I can help turn your ideas into reality through high-quality code.",
+    "title": "Who I am",
+    "description": "I'm a Frontend Engineer specialized in Fintech, with real-world experience building financial products at Fretepago. I master the modern frontend ecosystem and have expertise in creating interfaces that handle critical transactions, sensitive data, and high performance. If you're looking for someone who combines clean code, robust design systems, and deep understanding of financial flows, let's connect.",
     "download": "Download CV"
   },
   "services": {
-    "title": "My Quality Services",
-    "description": "I turn your ideas and thus your wishes into a unique project that inspires you and your customers.",
+    "title": "My Expertise",
+    "description": "Specialized in modern frontend with focus on high-criticality financial applications.",
     "items": {
       "mobile": {
-        "title": "Mobile Development",
-        "description": "Build robust mobile applications that connect millions, delivering scalable and high-performance solutions."
+        "title": "Mobile-First Development",
+        "description": "Responsive and performant apps with React Native. Experience creating mobile interfaces that handle financial transactions and offline sync."
       },
       "web": {
-        "title": "Web Development",
-        "description": "Create secure, scalable web solutions that enhance user experiences and empower global connections."
+        "title": "Frontend Engineering",
+        "description": "React, TypeScript, and Next.js to build scalable SPAs and SSR apps. Design Systems, micro-frontends, and modern architectures that support growth."
       },
       "design": {
-        "title": "UI/UX Design",
-        "description": "Design intuitive, responsive interfaces that drive seamless interactions and prioritize user satisfaction."
+        "title": "UI/UX Implementation",
+        "description": "Transform designs into pixel-perfect code. Expertise in accessibility, performance, and seamless experiences that convert users into customers."
       },
       "backend": {
-        "title": "Backend Development",
-        "description": "Develop reliable backend systems that support billions of interactions with security and scalability."
+        "title": "Backend Integration",
+        "description": "Node.js and TypeScript for BFFs and RESTful APIs. Experience integrating frontends with complex financial systems and third-party services."
       }
     }
   },
   "skills": {
-    "title": "My Skills",
-    "description": "I transform your vision into a distinctive experience that captivates both you and your audience."
+    "title": "Stack & Tools",
+    "description": "Technologies I master to build world-class frontend products, focused on performance, scalability, and developer experience."
   },
   "projects": {
-    "title": "Selected Projects",
-    "description": "I turn your idea, and thus your dream, into a unique project that inspires you and your client.",
+    "title": "Case Studies",
+    "description": "Personal projects where I explore new technologies, architectural patterns, and best practices from the frontend ecosystem.",
     "items": {
       "quezzy": {
         "title": "Quezzy - Gamified app making learning interactive and engaging."
@@ -55,8 +55,8 @@
     }
   },
   "articles": {
-    "title": "Medium Articles",
-    "description": "I turn your idea, and thus your dream, into a unique project that inspires you and your client.",
+    "title": "Articles & Insights",
+    "description": "Sharing insights about frontend, architecture, and the reality of software development beyond the code.",
     "items": {
       "bff": {
         "title": "BFF – Why Should the Frontend Lead This Revolution?"
@@ -73,8 +73,8 @@
     }
   },
   "footer": {
-    "description": "Welcome to my personal portfolio! I'm a software developer passionate about delivering creative and innovative solutions across various domains of development. Explore my projects to see how I bring ideas to life through code.",
-    "copyright": "© All Right Reserved",
+    "description": "Frontend Engineer specialized in Fintech. Currently building the future of payments at Fretepago. Open to challenging opportunities and conversations about technology, frontend architecture, and financial innovation.",
+    "copyright": "© Built with React, TypeScript and ☕",
     "links": {
       "home": "HOME",
       "about": "ABOUT ME",

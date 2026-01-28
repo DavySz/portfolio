@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { CONTACTS } from "../../shared/constants";
-import { StructuredDataProps } from "./types";
+import type { StructuredDataProps } from "./types";
 
 export const StructuredData: React.FC<StructuredDataProps> = ({
   locale = "pt-BR",

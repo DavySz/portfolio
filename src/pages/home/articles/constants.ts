@@ -1,9 +1,9 @@
-import { ProjectCardProps } from "../../../components/project-card/types";
+import type { ProjectCardProps } from "../../../components/project-card/types";
 import BFFThumb from "../../../assets/bff-thumb.svg";
 import ENEMThumb from "../../../assets/enem-thumb.png";
 import TestingThumb from "../../../assets/testing-thumb.png";
 import MicroThumb from "../../../assets/micro-thumb.png";
-import { TFunction } from "i18next";
+import type { TFunction } from "i18next";
 
 export const getArticles = (
   t: TFunction<"home", undefined>

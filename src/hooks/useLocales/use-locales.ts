@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import i18n from "../../i18n";
-import { Language } from "./use-locales.types";
+import type { Language } from "./use-locales.types";
 
 export const useLocales = () => {
   const [language, setLanguage] = useState<Language>(i18n.language as Language);

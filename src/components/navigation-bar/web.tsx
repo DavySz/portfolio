@@ -13,14 +13,20 @@ export const WebNavigationBar: React.FC = () => {
   };
 
   return (
-    <div className="flex gap-8 w-full items-center xl:justify-end lg:justify-center py-8 mb-8 md:px-[24px] mb:px-[100px] xl:px-[100px]">
+    <nav
+      className="flex gap-8 w-full items-center xl:justify-end lg:justify-center py-8 mb-8 md:px-[24px] mb:px-[100px] xl:px-[100px]"
+      role="navigation"
+      aria-label="Navegação principal"
+    >
       {getLinks(t).map((link, index) => (
         <Link href={link.href} key={index}>
           {link.label}
         </Link>
       ))}
       <Toggle />
-      <Button onClick={openLinkedin}>{t("navigation-bar.hire-me")}</Button>
-    </div>
+      <Button onClick={openLinkedin} aria-label="Contratar no LinkedIn">
+        {t("navigation-bar.hire-me")}
+      </Button>
+    </nav>
   );
 };

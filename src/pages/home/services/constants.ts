@@ -1,5 +1,5 @@
-import { TFunction } from "i18next";
-import { ServiceTableProps } from "../../../components/service-table/types";
+import type { TFunction } from "i18next";
+import type { ServiceTableProps } from "../../../components/service-table/types";
 
 export const getServices = (
   t: TFunction<"home", undefined>

@@ -4,7 +4,7 @@ import { Button } from "../button";
 import { Toggle } from "../toogle";
 import { getLinks } from "./constants";
 import { FiMenu } from "react-icons/fi";
-import { IconType } from "react-icons";
+import type { IconType } from "react-icons";
 import { AiOutlineClose } from "react-icons/ai";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";

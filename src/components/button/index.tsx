@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useState } from "react";
-import { ButtonProps, ButtonVariant } from "./types";
+import type { ButtonProps, ButtonVariant } from "./types";
 import { Loading } from "../loading";
 
 export const Button: React.FC<ButtonProps> = ({

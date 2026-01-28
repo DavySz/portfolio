@@ -1,44 +1,44 @@
 {
   "hero": {
     "me": "Davy de Souza Assunção",
-    "role": "Desenvolvedor Full Stack",
-    "description": "Amo tecnologia, café e usar meu conhecimento para resolver problemas e transformar vidas.",
-    "download": "Baixar CV"
+    "role": "Frontend Engineer & Fintech Specialist",
+    "description": "Faço parte do time que trouxe a fintech Fretepago para o mercado. Transformo complexidade financeira em interfaces intuitivas que as pessoas confiam.",
+    "download": "Download CV"
   },
   "self": {
-    "title": "Sobre Mim",
-    "description": "Com ampla experiência e expertise em diversas tecnologias de desenvolvimento de software, colaborei com diversos clientes para criar soluções digitais eficientes e inovadoras. Convido você a explorar este portfólio e descobrir como posso ajudar a transformar suas ideias em realidade através de código de alta qualidade.",
-    "download": "Baixar CV"
+    "title": "Quem sou eu",
+    "description": "Sou Frontend Engineer especializado em Fintech, com experiência real construindo produtos financeiros na Fretepago. Domino o ecossistema frontend moderno e tenho expertise em criar interfaces que lidam com transações críticas, dados sensíveis e alta performance. Se você busca alguém que une código limpo, design systems robustos e compreensão profunda de fluxos financeiros, vamos conversar.",
+    "download": "Download CV"
   },
   "services": {
-    "title": "Meus Serviços de Qualidade",
-    "description": "Transformo suas ideias e desejos em um projeto único que inspira você e seus clientes.",
+    "title": "Minha Expertise",
+    "description": "Especializado em frontend moderno com foco em aplicações financeiras de alta criticidade.",
     "items": {
       "mobile": {
-        "title": "Desenvolvimento Mobile",
-        "description": "Crio aplicativos móveis robustos que conectam milhões de pessoas, entregando soluções escaláveis e de alta performance."
+        "title": "Mobile-First Development",
+        "description": "Apps responsivos e performáticos com React Native. Experiência em criar interfaces mobile que lidam com transações financeiras e sincronização offline."
       },
       "web": {
-        "title": "Desenvolvimento Web",
-        "description": "Desenvolvo soluções web seguras e escaláveis que aprimoram a experiência do usuário e fortalecem conexões globais."
+        "title": "Frontend Engineering",
+        "description": "React, TypeScript e Next.js para criar SPAs e SSR apps escaláveis. Design Systems, micro-frontends e arquiteturas modernas que suportam crescimento."
       },
       "design": {
-        "title": "Design UI/UX",
-        "description": "Projete interfaces intuitivas e responsivas que promovem interações fluidas e priorizam a satisfação do usuário."
+        "title": "UI/UX Implementation",
+        "description": "Transformo designs em código pixel-perfect. Expertise em acessibilidade, performance e experiências fluidas que convertem usuários em clientes."
       },
       "backend": {
-        "title": "Desenvolvimento Backend",
-        "description": "Desenvolvo sistemas backend confiáveis que suportam bilhões de interações com segurança e escalabilidade."
+        "title": "Backend Integration",
+        "description": "Node.js e TypeScript para BFFs e APIs RESTful. Experiência em integrar frontends com sistemas financeiros complexos e third-party services."
       }
     }
   },
   "skills": {
-    "title": "Minhas Habilidades",
-    "description": "Transformo sua visão em uma experiência distinta que cativa você e seu público."
+    "title": "Stack & Ferramentas",
+    "description": "Tecnologias que domino para criar produtos frontend de classe mundial, com foco em performance, escalabilidade e developer experience."
   },
   "projects": {
-    "title": "Projetos Selecionados",
-    "description": "Transformo sua ideia, e assim seu sonho, em um projeto único que inspira você e seu cliente.",
+    "title": "Cases de Estudo",
+    "description": "Projetos pessoais onde exploro novas tecnologias, padrões arquiteturais e best practices do ecossistema frontend.",
     "items": {
       "quezzy": {
         "title": "Quezzy - App gamificado tornando o aprendizado interativo e envolvente."
@@ -55,8 +55,8 @@
     }
   },
   "articles": {
-    "title": "Artigos no Medium",
-    "description": "Transformo sua ideia, e assim seu sonho, em um projeto único que inspira você e seu cliente.",
+    "title": "Artigos & Reflexões",
+    "description": "Compartilho insights sobre frontend, arquitetura e a realidade do desenvolvimento de software além do código.",
     "items": {
       "bff": {
         "title": "BFF – Por que o Frontend deveria liderar essa revolução?"
@@ -73,8 +73,8 @@
     }
   },
   "footer": {
-    "description": "Bem-vindo ao meu portfólio pessoal! Sou um desenvolvedor de software apaixonado por entregar soluções criativas e inovadoras em diversos domínios de desenvolvimento. Explore meus projetos para ver como transformo ideias em realidade através do código.",
-    "copyright": "© Todos os direitos reservados",
+    "description": "Frontend Engineer especializado em Fintech. Atualmente construindo o futuro dos pagamentos na Fretepago. Aberto para oportunidades desafiadoras e conversas sobre tecnologia, arquitetura frontend e inovação financeira.",
+    "copyright": "© Desenvolvido com React, TypeScript e ☕",
     "links": {
       "home": "INÍCIO",
       "about": "SOBRE MIM",

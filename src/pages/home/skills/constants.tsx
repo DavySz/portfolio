@@ -1,5 +1,5 @@
 import { FaReact } from "react-icons/fa";
-import { SkillCardProps } from "../../../components/skill-card/types";
+import type { SkillCardProps } from "../../../components/skill-card/types";
 import { IoLogoJavascript } from "react-icons/io5";
 import { FaFigma } from "react-icons/fa";
 import { FaNodeJs } from "react-icons/fa";

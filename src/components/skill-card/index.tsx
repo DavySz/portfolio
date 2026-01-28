@@ -1,4 +1,4 @@
-import { SkillCardProps } from "./types";
+import type { SkillCardProps } from "./types";
 
 export const SkillCard: React.FC<SkillCardProps> = ({ data, onClick }) => {
   return (

@@ -1,6 +1,6 @@
 import { GoArrowUpRight, GoArrowDownRight } from "react-icons/go";
 import clsx from "clsx";
-import { ServiceTableProps } from "./types";
+import type { ServiceTableProps } from "./types";
 
 export const ServiceTable: React.FC<ServiceTableProps> = ({ data }) => {
   const getIcon = (isHighlighted: boolean) => {
