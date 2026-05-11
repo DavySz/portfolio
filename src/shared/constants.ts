@@ -11,7 +11,6 @@ export const CONTACTS = {
 export const EN_CV_PATH = "/pdfs/davy-de-souza-assuncao-curriculum-en.pdf";
 export const PT_CV_PATH = "/pdfs/davy-de-souza-assuncao-curriculum-pt.pdf";
 
-export const INIT_WORK_DATE = "2022-02-01";
 
 export const WELCOME_LOG_MESSAGE = `%c� Hey, dev curioso(a)!
     

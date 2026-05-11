@@ -10,9 +10,3 @@ export interface OptimizedImageProps {
   objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
   loading?: "lazy" | "eager";
 }
-
-export interface ImageFormat {
-  webp?: string;
-  avif?: string;
-  original: string;
-}

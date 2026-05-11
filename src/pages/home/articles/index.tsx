@@ -1,8 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
+import { FaMedium } from "react-icons/fa";
 import { ProjectCard } from "../../../components/project-card";
 import { ProjectCardSkeleton } from "../../../components/project-card-skeleton";
 import { Text } from "../../../components/text";
+import { Button } from "../../../components/button";
+import { CONTACTS } from "../../../shared/constants";
 import { getArticles } from "./constants";
 
 export const Articles: React.FC = () => {
@@ -69,6 +72,18 @@ export const Articles: React.FC = () => {
               </div>
             ))}
       </div>
+
+      {!isLoading && (
+        <div className="mt-12 animate-fade-in-up">
+          <Button
+            variant="secondary"
+            icon={FaMedium}
+            onClick={() => window.open(CONTACTS.MEDIUM, "_blank")}
+          >
+            {t("articles.seeMore")}
+          </Button>
+        </div>
+      )}
     </section>
   );
 };

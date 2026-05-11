@@ -30,15 +30,3 @@ export const registerServiceWorker = async (): Promise<void> => {
     }
   }
 };
-
-export const unregisterServiceWorker = async (): Promise<void> => {
-  if ('serviceWorker' in navigator) {
-    try {
-      const registration = await navigator.serviceWorker.ready;
-      await registration.unregister();
-      console.log('Service Worker unregistered');
-    } catch (error) {
-      console.error('Service Worker unregistration failed:', error);
-    }
-  }
-};

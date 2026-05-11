@@ -57,6 +57,7 @@
   "articles": {
     "title": "Artigos & Reflexões",
     "description": "Compartilho insights sobre frontend, arquitetura e a realidade do desenvolvimento de software além do código.",
+    "seeMore": "Ver todos os artigos",
     "items": {
       "bff": {
         "title": "BFF – Por que o Frontend deveria liderar essa revolução?"
