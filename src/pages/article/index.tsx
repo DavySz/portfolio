@@ -8,6 +8,7 @@ import { Loading } from "../../components/loading";
 import { useSEO } from "../../hooks";
 import type { Language } from "../../i18n";
 import { articleHref } from "../../hooks/useHashRoute/use-hash-route";
+import { formatCatalogDate } from "../../shared/date";
 import { ArticleToc } from "../../components/article-toc";
 import { ReadingProgress } from "../../components/reading-progress";
 import {
@@ -181,11 +182,11 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
     );
   }
 
-  const published = new Intl.DateTimeFormat(i18n.language, {
+  const published = formatCatalogDate(meta.date, i18n.language, {
     day: "2-digit",
     month: "long",
     year: "numeric",
-  }).format(new Date(meta.date));
+  });
 
   return (
     <div className="mx-auto w-full max-w-7xl px-6 py-12 md:py-16">

@@ -1,6 +1,7 @@
 import { FaMedium } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { articleHref } from "../../hooks/useHashRoute/use-hash-route";
+import { formatCatalogDate } from "../../shared/date";
 import { Text } from "../text";
 import { ResponsiveImage } from "../responsive-image";
 import type { ArticleCardProps } from "./types";
@@ -23,10 +24,10 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
   /* Mês e ano bastam numa listagem: o dia exato só importa dentro do artigo,
      onde a data completa já aparece. O `dateTime` leva o ISO, então quem lê a
      marcação recebe a data precisa de qualquer forma. */
-  const published = new Intl.DateTimeFormat(i18n.language, {
+  const published = formatCatalogDate(article.date, i18n.language, {
     month: "short",
     year: "numeric",
-  }).format(new Date(article.date));
+  });
 
   return (
     <div
