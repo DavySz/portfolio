@@ -41,7 +41,7 @@ export const Articles: React.FC = () => {
 
       <ul className="grid w-full max-w-7xl grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {ARTICLES.map((article) => (
-          <li key={article.slug} className="h-full">
+          <li key={article.slug} className="h-full" data-physics>
             <ArticleCard article={article} labels={labels} />
           </li>
         ))}

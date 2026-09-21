@@ -56,7 +56,7 @@ const restoreScroll = (lock: ScrollLock): void => {
   document.body.style.touchAction = lock.bodyTouchAction;
 };
 
-export const startGravity = async (): Promise<GravityWorld> => {
+export const startGravity = async (): Promise<GravityWorld | null> => {
   await RAPIER.init();
 
   const width = window.innerWidth;
@@ -76,6 +76,11 @@ export const startGravity = async (): Promise<GravityWorld> => {
       rect.left < width
     );
   });
+
+  // Sem nada marcado na tela não há o que derrubar. Antes disto o modo
+  // "ligava" mesmo assim: travava o scroll e mostrava o botão de sair, com a
+  // página intacta — parecia quebrado, e era.
+  if (candidates.length === 0) return null;
 
   const world = new RAPIER.World({ x: 0, y: GRAVITY });
 

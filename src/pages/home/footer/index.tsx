@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="py-16 md:py-24 px-6 xl:px-[100px] flex flex-col justify-center bg-secondary-900">
       <div className="flex flex-col md:flex-row justify-between pb-16 gap-6 md:gap-0">
-        <div className="max-w-[500px]">
+        <div className="max-w-[500px]" data-physics>
           <Text
             as="p"
             variant="bodyText"
@@ -30,7 +30,7 @@ export const Footer: React.FC = () => {
             {t("footer.description")}
           </Text>
         </div>
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6" data-physics>
           <div className="flex gap-5 items-center">
             <MdOutlineMailOutline size={20} color="#ffff" />
             <Text
@@ -68,7 +68,7 @@ export const Footer: React.FC = () => {
       </div>
       <div className="w-full h-[0.5px] bg-white mb-12" />
       <div className="flex items-center justify-between flex-wrap gap-8">
-        <div className="flex gap-8 flex-wrap">
+        <div className="flex gap-8 flex-wrap" data-physics>
           {getLinks(t).map((link, index) => (
             <Link href={link.href} key={index} variant="secondary">
               {link.label}

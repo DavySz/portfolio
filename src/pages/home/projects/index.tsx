@@ -37,6 +37,7 @@ export const Projects: React.FC = () => {
             style={{
               animationDelay: `${index * 0.1}s`,
             }}
+            data-physics
           >
             <ProjectCard {...project} />
           </div>

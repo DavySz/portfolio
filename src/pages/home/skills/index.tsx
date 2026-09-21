@@ -37,6 +37,7 @@ export const Skills: React.FC = () => {
             style={{
               animationDelay: `${index * 0.05}s`,
             }}
+            data-physics
           >
             <SkillCard data={skill} />
           </div>
