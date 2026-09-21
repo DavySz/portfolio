@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { CONTACTS } from "../../shared/constants";
 import type { StructuredDataProps } from "./types";
+import { SITE_ORIGIN } from "../../shared/site";
 
 export const StructuredData: React.FC<StructuredDataProps> = ({
   locale = "pt-BR",
@@ -14,7 +15,7 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
     const personSchema = {
       "@context": "https://schema.org",
       "@type": "Person",
-      "@id": "https://davysz.com/#person",
+      "@id": `${SITE_ORIGIN}/#person`,
       name: "Davy de Souza Assunção",
       givenName: "Davy",
       familyName: "de Souza Assunção",
@@ -23,10 +24,10 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
         locale === "pt-BR"
           ? "Desenvolvedor Full Stack especializado em React, React Native, TypeScript e Node.js"
           : "Full Stack Developer specializing in React, React Native, TypeScript and Node.js",
-      url: "https://davysz.com",
+      url: SITE_ORIGIN,
       image: {
         "@type": "ImageObject",
-        url: "https://davysz.com/images/user.jpeg",
+        url: `${SITE_ORIGIN}/images/user.jpeg`,
         width: 400,
         height: 400,
       },
@@ -93,7 +94,7 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
     const websiteSchema = {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "@id": "https://davysz.com/#website",
+      "@id": `${SITE_ORIGIN}/#website`,
       name:
         locale === "pt-BR"
           ? "Davy de Souza Assunção - Portfolio"
@@ -102,24 +103,24 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
         locale === "pt-BR"
           ? "Portfolio pessoal de Davy de Souza Assunção, desenvolvedor Full Stack especializado em React, React Native, TypeScript e Node.js"
           : "Personal portfolio of Davy de Souza Assunção, Full Stack developer specializing in React, React Native, TypeScript and Node.js",
-      url: "https://davysz.com",
+      url: SITE_ORIGIN,
       author: {
         "@type": "Person",
-        "@id": "https://davysz.com/#person",
+        "@id": `${SITE_ORIGIN}/#person`,
       },
       publisher: {
         "@type": "Person",
-        "@id": "https://davysz.com/#person",
+        "@id": `${SITE_ORIGIN}/#person`,
       },
       inLanguage: locale === "pt-BR" ? "pt-BR" : "en-US",
       copyrightYear: new Date().getFullYear(),
       copyrightHolder: {
         "@type": "Person",
-        "@id": "https://davysz.com/#person",
+        "@id": `${SITE_ORIGIN}/#person`,
       },
       potentialAction: {
         "@type": "SearchAction",
-        target: "https://davysz.com/?q={search_term_string}",
+        target: `${SITE_ORIGIN}/?q={search_term_string}`,
         "query-input": "required name=search_term_string",
       },
     };
@@ -127,7 +128,7 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
     const professionalServiceSchema = {
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
-      "@id": "https://davysz.com/#service",
+      "@id": `${SITE_ORIGIN}/#service`,
       name:
         locale === "pt-BR"
           ? "Serviços de Desenvolvimento de Software"
@@ -138,7 +139,7 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
           : "Web and mobile application development, frontend and backend",
       provider: {
         "@type": "Person",
-        "@id": "https://davysz.com/#person",
+        "@id": `${SITE_ORIGIN}/#person`,
       },
       areaServed: {
         "@type": "Country",
@@ -200,7 +201,7 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
           "@type": "ListItem",
           position: 1,
           name: locale === "pt-BR" ? "Início" : "Home",
-          item: "https://davysz.com",
+          item: SITE_ORIGIN,
         },
       ],
     };

@@ -7,7 +7,9 @@ import { Button } from "../../components/button";
 import { Loading } from "../../components/loading";
 import { useSEO } from "../../hooks";
 import type { Language } from "../../i18n";
-import { articleHref, goToSection } from "../../hooks/useHashRoute/use-hash-route";
+import { articleHref, goToSection } from "../../hooks/useRoute/use-route";
+import { ArticleLink } from "../../components/article-link";
+import { absoluteUrl, articleUrl } from "../../shared/site";
 import { useReducedMotion } from "../../hooks/useReducedMotion/use-reduced-motion";
 import { formatCatalogDate } from "../../shared/date";
 import { ArticleToc } from "../../components/article-toc";
@@ -20,7 +22,6 @@ import {
 import type { ArticleContent } from "../../content/articles";
 import type { ArticlePageProps } from "./types";
 
-const SITE = "https://davysz.com";
 const AUTHOR = "Davy de Souza Assunção";
 
 export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
@@ -129,25 +130,6 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
   }, [content, t]);
 
   /**
-   * Reescreve as âncoras dos títulos para a rota do artigo.
-   *
-   * O plugin gera `href="#<id>"`, que é o certo para um markdown solto — mas
-   * neste site um hash sem o prefixo da rota derruba o artigo e monta a home.
-   * A correção fica aqui para o gerador de conteúdo não precisar saber de
-   * roteamento.
-   */
-  useEffect(() => {
-    if (!content) return;
-
-    for (const anchor of document.querySelectorAll<HTMLAnchorElement>(
-      ".article-anchor"
-    )) {
-      const id = anchor.getAttribute("href")?.replace(/^#/, "");
-      if (id) anchor.setAttribute("href", articleHref(slug, id));
-    }
-  }, [content, slug]);
-
-  /**
    * SEO do artigo. Sem isto, todo link compartilhado mostrava o título e a
    * imagem da home — oito artigos com o mesmo cartão.
    */
@@ -159,10 +141,15 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
               title: `${text.title} | ${AUTHOR}`,
               description: text.excerpt,
               keywords: text.tag,
-              // og:image precisa de URL, não do par src/half
-              image: meta.thumb?.src ?? "/images/user.jpeg",
-              url: `${SITE}/#/artigos/${meta.slug}`,
-              canonicalUrl: meta.mediumUrl ?? `${SITE}/#/artigos/${meta.slug}`,
+              /* og:image precisa de URL ABSOLUTA: o `src` do thumb é um
+                 caminho de raiz (`/assets/...`) e scraper de rede social
+                 descarta caminho relativo. */
+              image: absoluteUrl(meta.thumb?.src ?? "/images/user.jpeg"),
+              url: articleUrl(meta.slug),
+              /* A16: o canonical é sempre o próprio site. Antes apontava
+                 para o Medium nos quatro publicados lá, o que mandava o
+                 buscador indexar a plataforma e ignorar esta página. */
+              canonicalUrl: articleUrl(meta.slug),
               type: "article",
             }
           : {},
@@ -289,7 +276,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
         className="mt-16 grid gap-4 border-t border-gray-200 pt-8 sm:grid-cols-2"
       >
         {previous ? (
-          <a
+          <ArticleLink
             href={articleHref(previous.slug)}
             className="group rounded-xl border border-gray-200 p-4 transition-colors duration-300 hover:border-primary-300 hover:bg-primary-50
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
@@ -300,13 +287,13 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
             <span className="mt-1 block font-poppins text-body-md font-semibold text-gray-900 group-hover:text-primary-700">
               {previous[language].title}
             </span>
-          </a>
+          </ArticleLink>
         ) : (
           <span />
         )}
 
         {next && (
-          <a
+          <ArticleLink
             href={articleHref(next.slug)}
             className="group rounded-xl border border-gray-200 p-4 text-right transition-colors duration-300 hover:border-primary-300 hover:bg-primary-50
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
@@ -317,7 +304,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
             <span className="mt-1 block font-poppins text-body-md font-semibold text-gray-900 group-hover:text-primary-700">
               {next[language].title}
             </span>
-          </a>
+          </ArticleLink>
         )}
       </nav>
         </article>
@@ -325,7 +312,6 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
         {content && (
           <aside className="hidden xl:block">
             <ArticleToc
-              slug={slug}
               headings={content.headings}
               label={t("article.toc")}
             />

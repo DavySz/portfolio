@@ -1,21 +1,21 @@
 import clsx from "clsx";
 import { useActiveSection } from "../../hooks/useActiveSection/use-active-section";
 import { useMemo } from "react";
-import { articleHref } from "../../hooks/useHashRoute/use-hash-route";
 import type { ArticleTocProps } from "./types";
 
 /**
  * Sumário do artigo, fixo na lateral a partir de `xl`.
  *
+ * As âncoras voltaram a ser `#<id>` puro: com a rota num caminho de verdade,
+ * o fragmento é de novo só o pedaço da página. Enquanto a rota vivia no hash,
+ * um `#<id>` derrubava o artigo e montava a home, e por isso o link precisava
+ * carregar a rota inteira junto.
+ *
  * Abaixo disso ele some: numa coluna estreita, um sumário empurraria o texto
  * para baixo da dobra em troca de pouco. Os títulos continuam alcançáveis
  * pelas âncoras do próprio texto.
  */
-export const ArticleToc: React.FC<ArticleTocProps> = ({
-  slug,
-  headings,
-  label,
-}) => {
+export const ArticleToc: React.FC<ArticleTocProps> = ({ headings, label }) => {
   const ids = useMemo(() => headings.map((heading) => heading.id), [headings]);
   const active = useActiveSection(ids);
 
@@ -33,7 +33,7 @@ export const ArticleToc: React.FC<ArticleTocProps> = ({
         {headings.map((heading) => (
           <li key={heading.id}>
             <a
-              href={articleHref(slug, heading.id)}
+              href={`#${heading.id}`}
               aria-current={heading.id === active ? "true" : undefined}
               className={clsx(
                 "-ml-px block border-l-2 py-1 font-poppins text-body-sm transition-colors duration-200",

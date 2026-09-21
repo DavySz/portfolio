@@ -9,7 +9,7 @@
     <atom:link href="https://davysz.com/rss.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mais código do que dá para revisar</title>
-      <link>https://davysz.com/#/artigos/mais-codigo-do-que-revisar</link>
+      <link>https://davysz.com/artigos/mais-codigo-do-que-revisar</link>
       <guid isPermaLink="false">https://davysz.com/artigos/mais-codigo-do-que-revisar</guid>
       <description>Quando planejar, implementar e documentar deixam de ser o gargalo, a revisão vira o funil.</description>
       <pubDate>Mon, 21 Sep 2026 12:00:00 GMT</pubDate>
@@ -17,7 +17,7 @@
     </item>
     <item>
       <title>O básico que separa quem usa IA de quem é usado por ela</title>
-      <link>https://davysz.com/#/artigos/o-basico-de-ia</link>
+      <link>https://davysz.com/artigos/o-basico-de-ia</link>
       <guid isPermaLink="false">https://davysz.com/artigos/o-basico-de-ia</guid>
       <description>Como os mesmos princípios que parecem chatos no começo decidem quem tira proveito da IA.</description>
       <pubDate>Tue, 02 Jun 2026 12:00:00 GMT</pubDate>
@@ -25,7 +25,7 @@
     </item>
     <item>
       <title>Frontend como plataforma</title>
-      <link>https://davysz.com/#/artigos/frontend-como-plataforma</link>
+      <link>https://davysz.com/artigos/frontend-como-plataforma</link>
       <guid isPermaLink="false">https://davysz.com/artigos/frontend-como-plataforma</guid>
       <description>Você não está mais só construindo telas: seu time virou provedor interno.</description>
       <pubDate>Sat, 28 Mar 2026 12:00:00 GMT</pubDate>
@@ -33,7 +33,7 @@
     </item>
     <item>
       <title>Observabilidade no Frontend</title>
-      <link>https://davysz.com/#/artigos/observabilidade-no-frontend</link>
+      <link>https://davysz.com/artigos/observabilidade-no-frontend</link>
       <guid isPermaLink="false">https://davysz.com/artigos/observabilidade-no-frontend</guid>
       <description>Como parar de descobrir bugs pelo Twitter e enxergar o que acontece em produção.</description>
       <pubDate>Sun, 11 Jan 2026 12:00:00 GMT</pubDate>
@@ -41,7 +41,7 @@
     </item>
     <item>
       <title>Micro Frontends</title>
-      <link>https://davysz.com/#/artigos/micro-frontends</link>
+      <link>https://davysz.com/artigos/micro-frontends</link>
       <guid isPermaLink="false">https://davysz.com/artigos/micro-frontends</guid>
       <description>Como transformar seu frontend gigante em partes que times independentes conseguem evoluir.</description>
       <pubDate>Fri, 02 Jan 2026 12:00:00 GMT</pubDate>
@@ -49,7 +49,7 @@
     </item>
     <item>
       <title>BFF: por que o Frontend deveria liderar essa revolução</title>
-      <link>https://davysz.com/#/artigos/bff-frontend-revolucao</link>
+      <link>https://davysz.com/artigos/bff-frontend-revolucao</link>
       <guid isPermaLink="false">https://davysz.com/artigos/bff-frontend-revolucao</guid>
       <description>Como Backend for Frontend pode transformar a forma que desenvolvemos aplicações modernas.</description>
       <pubDate>Sun, 14 Dec 2025 12:00:00 GMT</pubDate>
@@ -57,7 +57,7 @@
     </item>
     <item>
       <title>Testes unitários no Frontend</title>
-      <link>https://davysz.com/#/artigos/testes-unitarios-no-frontend</link>
+      <link>https://davysz.com/artigos/testes-unitarios-no-frontend</link>
       <guid isPermaLink="false">https://davysz.com/artigos/testes-unitarios-no-frontend</guid>
       <description>Como abandonar a ilusão de cobertura e testar o que realmente importa.</description>
       <pubDate>Sun, 14 Dec 2025 12:00:00 GMT</pubDate>
@@ -65,7 +65,7 @@
     </item>
     <item>
       <title>O efeito ENEM no código</title>
-      <link>https://davysz.com/#/artigos/efeito-enem-no-codigo</link>
+      <link>https://davysz.com/artigos/efeito-enem-no-codigo</link>
       <guid isPermaLink="false">https://davysz.com/artigos/efeito-enem-no-codigo</guid>
       <description>Como o vício em estudar para passar criou uma geração de devs inseguros.</description>
       <pubDate>Sun, 14 Dec 2025 12:00:00 GMT</pubDate>

@@ -5,6 +5,15 @@
  * enquanto todo o resto do site usa `davysz.com` sem www, e estava com
  * `lastmod` de 2024. Nenhum dos oito artigos aparecia.
  *
+ * Depois disso ele passou a listar os oito — mas como `#/artigos/<slug>`, e o
+ * fragmento não faz parte da identidade de uma URL: os nove endereços
+ * colapsavam em um. Agora são caminhos de verdade.
+ *
+ * O `<guid>` do RSS já era a forma com caminho, e continua igual de
+ * propósito: é por ele que o leitor decide o que é item novo. Mudar só o
+ * `<link>` evita que os oito artigos reapareçam como se tivessem sido
+ * publicados de novo.
+ *
  * O RSS não existia. Um blog técnico sem feed perde o leitor recorrente, que é
  * justamente quem volta.
  *
@@ -20,7 +29,12 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const CATALOG = resolve(ROOT, "src/content/articles/index.ts");
 const PUBLIC = resolve(ROOT, "public");
 
-/** Sem www, para bater com o canonical do index.html e do StructuredData. */
+/*
+ * Espelha `SITE_ORIGIN` de `src/shared/site.ts`. Este script roda em Node puro
+ * no `prebuild`, antes de qualquer transpilação, então não dá para importar o
+ * módulo TypeScript — a duplicação é deliberada e as duas linhas devem mudar
+ * juntas.
+ */
 const SITE = "https://davysz.com";
 const AUTHOR = "Davy de Souza Assunção";
 const TITLE = `${AUTHOR} — Artigos`;
@@ -80,8 +94,7 @@ const newest = articles
 const urls = [
   { loc: `${SITE}/`, lastmod: newest, priority: "1.0" },
   ...articles.map((article) => ({
-    // rota por hash: é o que o site usa hoje, por não ter rewrite garantido
-    loc: `${SITE}/#/artigos/${article.slug}`,
+    loc: `${SITE}/artigos/${article.slug}`,
     lastmod: article.date,
     priority: "0.8",
   })),
@@ -116,7 +129,7 @@ ${articles
     (article) =>
       `    <item>\n` +
       `      <title>${escapeXml(article.title)}</title>\n` +
-      `      <link>${SITE}/#/artigos/${article.slug}</link>\n` +
+      `      <link>${SITE}/artigos/${article.slug}</link>\n` +
       `      <guid isPermaLink="false">${SITE}/artigos/${article.slug}</guid>\n` +
       `      <description>${escapeXml(article.excerpt)}</description>\n` +
       `      <pubDate>${new Date(`${article.date}T12:00:00Z`).toUTCString()}</pubDate>\n` +

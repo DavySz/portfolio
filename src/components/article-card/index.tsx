@@ -1,6 +1,7 @@
 import { FaMedium } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
-import { articleHref } from "../../hooks/useHashRoute/use-hash-route";
+import { articleHref } from "../../hooks/useRoute/use-route";
+import { ArticleLink } from "../article-link";
 import { formatCatalogDate } from "../../shared/date";
 import { Text } from "../text";
 import { ResponsiveImage } from "../responsive-image";
@@ -76,13 +77,13 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           className="text-heading-md transition-colors duration-300 group-hover:text-primary-700"
         >
           {/* O link cobre o card inteiro, mas o nome acessível é só o título */}
-          <a
+          <ArticleLink
             href={articleHref(article.slug)}
             className="after:absolute after:inset-0 after:content-['']
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
           >
             {text.title}
-          </a>
+          </ArticleLink>
         </Text>
 
         <Text

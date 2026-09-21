@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
+import { SITE_ORIGIN, absoluteUrl } from "../../shared/site";
 import type { MetaTag, SEOProps } from "./use-seo.types";
 
 /**
@@ -17,13 +18,13 @@ const defaultSEO: Required<SEOProps> = {
   title: "Davy de Souza Assunção",
   description: "",
   keywords: "",
-  image: "/images/user.jpeg",
-  url: "https://davysz.com",
+  image: `${SITE_ORIGIN}/images/user.jpeg`,
+  url: absoluteUrl("/"),
   type: "website",
   locale: "en_US",
   siteName: "Davy de Souza Assunção",
   author: "Davy de Souza Assunção",
-  canonicalUrl: "https://davysz.com",
+  canonicalUrl: absoluteUrl("/"),
 };
 
 export const useSEO = (props: SEOProps = {}) => {
@@ -58,6 +59,9 @@ export const useSEO = (props: SEOProps = {}) => {
         },
         { property: "og:site_name", content: seo.siteName },
         { name: "twitter:card", content: "summary_large_image" },
+        // I11: acompanhava só o index.html, fixo na home. Com rota de hash
+        // isso não mudava nada, porque toda URL era a home; agora muda.
+        { name: "twitter:url", content: seo.url },
         { name: "twitter:title", content: seo.title },
         { name: "twitter:description", content: seo.description },
         { name: "twitter:image", content: seo.image },
