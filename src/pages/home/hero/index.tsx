@@ -8,6 +8,16 @@ import { useExperienceSection } from "../../../hooks/useExperienceSection/use-ex
 import UserPhoto from "../../../assets/user.png";
 import { useTranslation } from "react-i18next";
 
+/**
+ * O React 18 não reconhece a prop camelCase `fetchPriority` — só a 19 passa a
+ * reconhecer. Os tipos do @types/react 18 já a declaram, então o typecheck
+ * aprova e o aviso aparece só em runtime.
+ *
+ * Em minúsculas o React repassa o atributo direto para o DOM, que é o que o
+ * navegador lê. Via spread porque o nome minúsculo não está nos tipos de <img>.
+ */
+const LCP_PRIORITY = { fetchpriority: "high" } as const;
+
 export const Hero: React.FC = () => {
   const { t, i18n } = useTranslation("home");
   const sectionRef = useExperienceSection("hero");
@@ -95,7 +105,7 @@ export const Hero: React.FC = () => {
         data-physics
       >
         {/* Elemento LCP da página. width/height reservam a caixa antes de a
-            imagem chegar (evita CLS) e fetchPriority tira ela da fila atrás
+            imagem chegar (evita CLS) e a prioridade tira ela da fila atrás
             dos outros recursos. O peso do arquivo continua sendo o gargalo —
             ver "Próximos passos" no REPORT. */}
         <img
@@ -103,8 +113,8 @@ export const Hero: React.FC = () => {
           alt="Davy de Souza Assunção - Full Stack Developer"
           width={1024}
           height={1024}
-          fetchPriority="high"
           decoding="async"
+          {...LCP_PRIORITY}
           className="h-full w-full animate-float object-cover"
         />
       </div>
