@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CONTACTS } from "../../shared/constants";
 import { Button } from "../button";
 import { Toggle } from "../toggle";
@@ -19,6 +19,42 @@ const MENU_ID = "mobile-menu";
  */
 const inertWhenClosed = (closed: boolean) =>
   (closed ? { inert: "" } : {}) as Record<string, string>;
+
+interface ScrollLock {
+  htmlOverflow: string;
+  bodyOverflow: string;
+  bodyTouchAction: string;
+}
+
+/**
+ * Trava o scroll guardando o que estava lá antes, como em
+ * `src/physics/gravity-world.ts`.
+ *
+ * A versão anterior aplicava `position: fixed` no body sem salvar o `scrollY`.
+ * Isso tira o body do fluxo e o reposiciona na origem: abrir o menu no meio da
+ * página jogava tudo para o topo, e fechar não devolvia a posição. `overflow`
+ * mais `touch-action` seguram o scroll — inclusive o de toque no iOS, que
+ * ignora `overflow: hidden` sozinho — sem mexer no fluxo, então não há posição
+ * a restaurar.
+ */
+const lockScroll = (): ScrollLock => {
+  const lock: ScrollLock = {
+    htmlOverflow: document.documentElement.style.overflow,
+    bodyOverflow: document.body.style.overflow,
+    bodyTouchAction: document.body.style.touchAction,
+  };
+  document.documentElement.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
+  document.body.style.touchAction = "none";
+  return lock;
+};
+
+/** Devolve os valores anteriores, em vez de chutar `auto`. */
+const restoreScroll = (lock: ScrollLock): void => {
+  document.documentElement.style.overflow = lock.htmlOverflow;
+  document.body.style.overflow = lock.bodyOverflow;
+  document.body.style.touchAction = lock.bodyTouchAction;
+};
 
 export const MobileNavigationBar: React.FC = () => {
   const { t } = useTranslation("component");
@@ -52,37 +88,13 @@ export const MobileNavigationBar: React.FC = () => {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isVisible]);
 
-  const disableScrollY = useCallback((): void => {
-    if (isVisible) {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
-      document.body.style.height = "100%";
-      document.body.style.touchAction = "none";
-    } else {
-      document.documentElement.style.overflow = "auto";
-      document.body.style.overflow = "auto";
-      document.body.style.position = "static";
-      document.body.style.width = "auto";
-      document.body.style.height = "auto";
-      document.body.style.touchAction = "auto";
-    }
-  }, [isVisible]);
-
-  const enableScrollY = () => {
-    document.documentElement.style.overflow = "auto";
-    document.body.style.overflow = "auto";
-    document.body.style.position = "static";
-    document.body.style.width = "auto";
-    document.body.style.height = "auto";
-    document.body.style.touchAction = "auto";
-  };
-
+  // Trava só enquanto o menu está aberto. Antes isto rodava na montagem
+  // mesmo com o menu fechado, escrevendo estilo inline no body sem motivo.
   useEffect(() => {
-    disableScrollY();
-    return enableScrollY;
-  }, [disableScrollY]);
+    if (!isVisible) return;
+    const lock = lockScroll();
+    return () => restoreScroll(lock);
+  }, [isVisible]);
 
   return (
     <>
