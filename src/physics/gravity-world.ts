@@ -1,8 +1,14 @@
 import RAPIER from "@dimforge/rapier2d-compat";
 
 /**
- * Núcleo do easter egg: dá física de corpo rígido aos elementos marcados com
- * `data-physics` que estiverem na viewport no momento da ativação.
+ * Núcleo do easter egg: dá física de corpo rígido a **tudo que está na tela**
+ * no momento da ativação.
+ *
+ * Os blocos são descobertos percorrendo o DOM em vez de marcados à mão: desce
+ * enquanto o elemento for alto demais para ser um bloco e para no primeiro que
+ * cabe. Isso encontra sozinho o título, o parágrafo, cada card — e continua
+ * funcionando quando a página ganhar seção nova, sem ninguém lembrar de marcar.
+ * `data-no-physics` exclui o que não deve cair.
  *
  * Este arquivo é o único que importa o Rapier, e só é carregado por `import()`
  * na ativação — quem nunca liga o modo não baixa nada disso.
@@ -17,6 +23,13 @@ const GRAVITY = 9.81;
 /** Velocidade mínima do gesto, em px/s, para valer como arremesso. */
 const THROW_EPSILON = 40;
 const RESTORE_MS = 450;
+
+/** Teto de corpos, para uma página gigante não virar uma simulação enorme. */
+const MAX_BODIES = 140;
+/** Acima desta fração da altura da tela, o elemento é contêiner, não bloco. */
+const BLOCK_MAX_HEIGHT = 0.5;
+/** Abaixo disto não vale a pena: espaçadores, divisores, ícones soltos. */
+const MIN_SIZE = 24;
 
 interface Item {
   element: HTMLElement;
@@ -50,6 +63,48 @@ const lockScroll = (): ScrollLock => {
   return lock;
 };
 
+/**
+ * Acha os blocos visíveis da página.
+ *
+ * Desce a árvore enquanto o elemento for alto demais para ser um bloco e para
+ * no primeiro que cabe — assim uma <section> vira seus títulos, parágrafos e
+ * cards, e não um retângulo gigante só. Quem é pego não é visitado por dentro,
+ * então nenhum corpo fica dentro de outro (transforms se multiplicariam).
+ */
+const collectBlocks = (width: number, height: number): HTMLElement[] => {
+  const blocks: HTMLElement[] = [];
+  const maxHeight = height * BLOCK_MAX_HEIGHT;
+
+  const visit = (element: Element): void => {
+    if (blocks.length >= MAX_BODIES) return;
+    if (!(element instanceof HTMLElement)) return;
+    if (element.hasAttribute("data-no-physics")) return;
+
+    const style = window.getComputedStyle(element);
+    if (style.display === "none" || style.visibility === "hidden") return;
+    // fixos são a moldura da experiência (canvas, botão de sair): não caem
+    if (style.position === "fixed") return;
+
+    const rect = element.getBoundingClientRect();
+    const onScreen =
+      rect.bottom > 0 &&
+      rect.top < height &&
+      rect.right > 0 &&
+      rect.left < width;
+    if (!onScreen) return;
+
+    if (rect.height <= maxHeight && rect.width >= MIN_SIZE && rect.height >= MIN_SIZE) {
+      blocks.push(element);
+      return;
+    }
+
+    for (const child of element.children) visit(child);
+  };
+
+  visit(document.body);
+  return blocks;
+};
+
 const restoreScroll = (lock: ScrollLock): void => {
   document.documentElement.style.overflow = lock.htmlOverflow;
   document.body.style.overflow = lock.bodyOverflow;
@@ -62,20 +117,7 @@ export const startGravity = async (): Promise<GravityWorld | null> => {
   const width = window.innerWidth;
   const height = window.innerHeight;
 
-  // Só o que está na tela agora: o resto da página fica intacto.
-  const candidates = [
-    ...document.querySelectorAll<HTMLElement>("[data-physics]"),
-  ].filter((element) => {
-    const rect = element.getBoundingClientRect();
-    return (
-      rect.width > 0 &&
-      rect.height > 0 &&
-      rect.bottom > 0 &&
-      rect.top < height &&
-      rect.right > 0 &&
-      rect.left < width
-    );
-  });
+  const candidates = collectBlocks(width, height);
 
   // Sem nada marcado na tela não há o que derrubar. Antes disto o modo
   // "ligava" mesmo assim: travava o scroll e mostrava o botão de sair, com a
@@ -123,7 +165,11 @@ export const startGravity = async (): Promise<GravityWorld | null> => {
     );
 
     element.style.willChange = "transform";
-    // o elemento vira alvo de arrasto, não de seleção/scroll
+    // O bloco vira objeto, não interface: sem isto dava para clicar num link
+    // do rodapé e navegar com a página toda caída. O arrasto não depende
+    // disso — ele é resolvido por hit-test na window, não por evento no nó.
+    element.style.pointerEvents = "none";
+    element.style.userSelect = "none";
     element.style.touchAction = "none";
 
     return {
@@ -269,6 +315,8 @@ export const startGravity = async (): Promise<GravityWorld | null> => {
       item.element.style.removeProperty("transform");
       item.element.style.removeProperty("will-change");
       item.element.style.removeProperty("touch-action");
+      item.element.style.removeProperty("pointer-events");
+      item.element.style.removeProperty("user-select");
       if (item.element.getAttribute("style") === "") {
         item.element.removeAttribute("style");
       }

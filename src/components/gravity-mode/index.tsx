@@ -68,6 +68,7 @@ export const GravityMode: React.FC = () => {
     <button
       type="button"
       onClick={() => setGravityActive(false)}
+      data-no-physics
       className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-3xl bg-gradient-to-r from-primary-500 to-primary-900
                  px-8 py-3 font-poppins font-semibold text-white shadow-primary
                  transition-transform duration-300 hover:scale-105 active:scale-95

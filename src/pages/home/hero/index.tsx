@@ -41,6 +41,7 @@ export const Hero: React.FC = () => {
           experience assumir. O canvas em si é global (ExperienceRoot). */}
       <div
         className="absolute inset-0 -z-10 overflow-hidden experience-fallback experience-fallback-hero"
+        data-no-physics
         aria-hidden="true"
       />
       <div className="flex flex-col items-center xl:items-start animate-fade-in-left">
@@ -54,7 +55,7 @@ export const Hero: React.FC = () => {
           {t("hero.me")}
         </Text>
 
-        <div className="xl:w-[610px] mb-9" data-physics>
+        <div className="xl:w-[610px] mb-9">
           <Text
             as="h1"
             variant="heroTitle"
@@ -66,7 +67,7 @@ export const Hero: React.FC = () => {
           </Text>
         </div>
 
-        <div className="xl:w-[518px] mb-10" data-physics>
+        <div className="xl:w-[518px] mb-10">
           <Text
             as="p"
             variant="heroSubtitle"
@@ -80,7 +81,6 @@ export const Hero: React.FC = () => {
 
         <div
           className="flex flex-col items-center gap-4 xl:flex-row xl:gap-7 animate-fade-in-up"
-          data-physics
         >
           <Button
             icon={MdOutlineFileDownload}
@@ -104,7 +104,6 @@ export const Hero: React.FC = () => {
       </div>
       <div
         className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden animate-fade-in-right"
-        data-physics
       >
         {/* Elemento LCP da página. width/height reservam a caixa antes de a
             imagem chegar (evita CLS) e a prioridade tira ela da fila atrás

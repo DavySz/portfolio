@@ -20,6 +20,7 @@ export const Services: React.FC = () => {
           apaga quando o experience assume. */}
       <div
         className="absolute inset-0 -z-10 bg-secondary-50 experience-fallback"
+        data-no-physics
         aria-hidden="true"
       />
       <Text

@@ -39,6 +39,7 @@ export const ReadingProgress: React.FC = () => {
   return (
     <div
       aria-hidden="true"
+      data-no-physics
       className="fixed inset-x-0 top-0 z-50 h-0.5 bg-transparent"
     >
       <div
