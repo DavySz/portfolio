@@ -200,6 +200,18 @@ export const startGravity = async (): Promise<GravityWorld | null> => {
     };
   });
 
+  /**
+   * `pointer-events` é herdado: um elemento `data-no-physics` dentro de um
+   * bloco que caiu herda o `none` do pai e para de responder, mesmo sendo
+   * `fixed`. Era o que deixava o botão de sair sem clique — e sem saída.
+   */
+  const interactive = [
+    ...document.querySelectorAll<HTMLElement>("[data-no-physics]"),
+  ];
+  for (const element of interactive) {
+    element.style.pointerEvents = "auto";
+  }
+
   const scrollLock = lockScroll();
 
   // ------------------------------------------------------------- arrastar
