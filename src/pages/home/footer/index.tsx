@@ -5,6 +5,7 @@ import { Link } from "../../../components/link";
 import { Text } from "../../../components/text";
 import { CONTACTS } from "../../../shared/constants";
 import { Button } from "../../../components/button";
+import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import { useGravityMode } from "../../../hooks/useGravityMode/use-gravity-mode";
 
@@ -85,9 +86,17 @@ export const Footer: React.FC = () => {
               /* O rótulo e o aria-pressed mudam com o estado: um botão que
                  diz sempre "desligar" mente para quem já desligou. */
               aria-pressed={gravity.active}
-              className="font-poppins text-base font-normal text-[#5F5F5F] underline decoration-dotted underline-offset-4
-                         transition-colors duration-300 hover:text-primary-300
-                         focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2 focus:ring-offset-secondary-900"
+              /* Não cai junto com a página: é o caminho de volta. Com o modo
+                 ativo ele flutua, porque o rodapé fica fora de alcance — o
+                 scroll está travado e os blocos não recebem clique. */
+              data-no-physics
+              className={clsx(
+                "font-poppins transition-all duration-300",
+                "focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2",
+                gravity.active
+                  ? "fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-3xl bg-gradient-to-r from-primary-500 to-primary-900 px-8 py-3 text-base font-semibold text-white shadow-primary hover:scale-105 focus:ring-offset-transparent"
+                  : "text-base font-normal text-[#5F5F5F] underline decoration-dotted underline-offset-4 hover:text-primary-300 focus:ring-offset-secondary-900"
+              )}
             >
               {tc(gravity.active ? "gravity.disable" : "gravity.enable")}
             </button>

@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
 import {
   isGravityAvailable,
   listenForKonami,
@@ -9,13 +8,13 @@ import { useGravityMode } from "../../hooks/useGravityMode/use-gravity-mode";
 import type { GravityWorld } from "../../physics/gravity-world";
 
 /**
- * Orquestra o easter egg: escuta o Konami, carrega a física só na ativação e
- * oferece a saída por Esc ou pelo botão flutuante.
+ * Orquestra o easter egg: escuta o Konami e carrega a física só na ativação.
  *
- * Fica no PageTemplate e não renderiza nada enquanto o modo está desligado.
+ * Não desenha nada. O controle de ligar e desligar é um só, o link do rodapé,
+ * que não cai junto e flutua enquanto o modo está ativo — ter um segundo botão
+ * "arrumar a página" com outro texto dizia duas coisas para a mesma ação.
  */
 export const GravityMode: React.FC = () => {
-  const { t } = useTranslation("component");
   const { active } = useGravityMode();
   const worldRef = useRef<GravityWorld | null>(null);
   const restoreFocusRef = useRef<HTMLElement | null>(null);
@@ -62,19 +61,5 @@ export const GravityMode: React.FC = () => {
     };
   }, [active]);
 
-  if (!active) return null;
-
-  return (
-    <button
-      type="button"
-      onClick={() => setGravityActive(false)}
-      data-no-physics
-      className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-3xl bg-gradient-to-r from-primary-500 to-primary-900
-                 px-8 py-3 font-poppins font-semibold text-white shadow-primary
-                 transition-transform duration-300 hover:scale-105 active:scale-95
-                 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2"
-    >
-      {t("gravity.restore")}
-    </button>
-  );
+  return null;
 };

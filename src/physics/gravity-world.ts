@@ -22,6 +22,15 @@ const SCALE = 60;
 const GRAVITY = 9.81;
 /** Velocidade mínima do gesto, em px/s, para valer como arremesso. */
 const THROW_EPSILON = 40;
+
+/**
+ * Empurrãozinho inicial. Sem isto os blocos só escorregam para baixo e
+ * empilham alinhados — parece uma barra descendo, não a página desabando.
+ * Um giro e um desvio lateral pequenos, diferentes por bloco, fazem eles
+ * tombarem uns sobre os outros.
+ */
+const SPIN = 2.6; // rad/s
+const NUDGE = 90; // px/s
 const RESTORE_MS = 450;
 
 /** Teto de corpos, para uma página gigante não virar uma simulação enorme. */
@@ -147,19 +156,28 @@ export const startGravity = async (): Promise<GravityWorld | null> => {
     const originX = rect.left + rect.width / 2;
     const originY = rect.top + rect.height / 2;
 
+    // determinístico por posição: o mesmo bloco tomba igual toda vez, mas
+    // blocos diferentes tombam diferente
+    const seed = Math.sin(originX * 12.9898 + originY * 78.233) * 43758.5453;
+    const random = seed - Math.floor(seed);
+
     const body = world.createRigidBody(
       RAPIER.RigidBodyDesc.dynamic()
         .setTranslation(originX / SCALE, originY / SCALE)
-        .setLinearDamping(0.2)
-        .setAngularDamping(0.4)
+        .setLinvel(((random - 0.5) * NUDGE) / SCALE, 0)
+        .setAngvel((random - 0.5) * SPIN)
+        .setLinearDamping(0.05)
+        .setAngularDamping(0.15)
     );
     world.createCollider(
       RAPIER.ColliderDesc.cuboid(
         rect.width / 2 / SCALE,
         rect.height / 2 / SCALE
       )
-        .setRestitution(0.3)
-        .setFriction(0.9)
+        // pouco quique e bastante atrito: a página desaba e assenta, em vez
+        // de ficar pulando como bola
+        .setRestitution(0.12)
+        .setFriction(0.85)
         .setDensity(1),
       body
     );
