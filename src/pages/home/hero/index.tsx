@@ -5,7 +5,7 @@ import { EN_CV_PATH, PT_CV_PATH } from "../../../shared/constants";
 import { Button } from "../../../components/button";
 import { Text } from "../../../components/text";
 import { useExperienceSection } from "../../../hooks/useExperienceSection/use-experience-section";
-import UserPhoto from "../../../assets/user.png";
+import UserPhoto from "../../../assets/user.webp";
 import { useTranslation } from "react-i18next";
 
 /**
@@ -113,8 +113,8 @@ export const Hero: React.FC = () => {
         <img
           src={UserPhoto}
           alt="Davy de Souza Assunção - Full Stack Developer"
-          width={1024}
-          height={1024}
+          width={1000}
+          height={1000}
           decoding="async"
           {...LCP_PRIORITY}
           className="h-full w-full animate-float object-cover"

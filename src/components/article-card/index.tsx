@@ -27,6 +27,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           alt=""
           aria-hidden="true"
           loading="lazy"
+          decoding="async"
           className="h-[180px] w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
         />
       ) : (

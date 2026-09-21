@@ -1,5 +1,5 @@
 import { MdOutlineFileDownload } from "react-icons/md";
-import SelfTemp from "../../../assets/portfolio.png";
+import SelfTemp from "../../../assets/portfolio.webp";
 import { usePDF } from "../../../hooks/usePdf/use-pdf";
 import { PT_CV_PATH, EN_CV_PATH } from "../../../shared/constants";
 import { useTranslation } from "react-i18next";
@@ -22,7 +22,12 @@ export const Self: React.FC = () => {
       <div className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden">
         <img
           src={SelfTemp}
-          alt="Davy de Souza Assunção - Portfolio workspace"
+          alt=""
+          aria-hidden="true"
+          width={1000}
+          height={582}
+          loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover"
         />
       </div>

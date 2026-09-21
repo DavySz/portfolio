@@ -12,6 +12,7 @@
     "assets:decoders": "node scripts/assets/copy-decoders.js",
     "assets:test-cube": "node scripts/assets/make-test-cube.js",
     "assets:optimize": "node scripts/assets/optimize.js",
+    "images:optimize": "node scripts/images/optimize.js",
     "postinstall": "node scripts/assets/copy-decoders.js"
   },
   "dependencies": {
@@ -43,6 +44,7 @@
     "marked": "^18.0.13",
     "postcss": "^8.4.47",
     "rollup-plugin-visualizer": "^6.0.5",
+    "sharp": "^0.35.4",
     "tailwindcss": "^3.4.13",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",

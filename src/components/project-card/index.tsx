@@ -28,6 +28,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           aria-hidden="true"
           className="h-[200px] md:h-[389px] w-full rounded-t-[20px] transition-transform duration-300 ease-out group-hover:scale-105 object-cover"
           loading="lazy"
+          decoding="async"
         />
 
         <div

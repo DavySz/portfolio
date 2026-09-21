@@ -34,3 +34,5 @@ public/models/_test-cube.glb
 
 # Cache incremental do tsc: derivado, e sujava o diff a cada build
 *.tsbuildinfo
+
+# Originais das imagens: entrada do yarn images:optimize, não vão para o bundle

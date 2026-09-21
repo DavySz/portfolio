@@ -1,8 +1,8 @@
 import type { ProjectCardProps } from "../../../components/project-card/types";
-import PlanningThumb from "../../../assets/planning-poker-thumb.svg";
-import GoFinancesThumb from "../../../assets/go-finances-thumb.svg";
-import QuezzyThumb from "../../../assets/quezzy-thumb.svg";
-import RentxThumb from "../../../assets/rentx-thumb.svg";
+import PlanningThumb from "../../../assets/planning-poker-thumb.webp";
+import GoFinancesThumb from "../../../assets/go-finances-thumb.webp";
+import QuezzyThumb from "../../../assets/quezzy-thumb.webp";
+import RentxThumb from "../../../assets/rentx-thumb.webp";
 import type { TFunction } from "i18next";
 
 export const getProjects = (

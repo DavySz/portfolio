@@ -1,7 +1,7 @@
 import BFFThumb from "../../assets/bff-thumb.svg";
-import ENEMThumb from "../../assets/enem-thumb.png";
-import TestingThumb from "../../assets/testing-thumb.png";
-import MicroThumb from "../../assets/micro-thumb.png";
+import ENEMThumb from "../../assets/enem-thumb.webp";
+import TestingThumb from "../../assets/testing-thumb.webp";
+import MicroThumb from "../../assets/micro-thumb.webp";
 
 /**
  * Catálogo dos artigos.
