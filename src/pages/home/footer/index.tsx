@@ -101,13 +101,15 @@ export const Footer: React.FC = () => {
                 "focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2",
                 gravity.active
                   ? "fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-3xl bg-gradient-to-r from-primary-500 to-primary-900 px-8 py-3 text-base font-semibold text-white shadow-primary hover:scale-105 focus:ring-offset-transparent"
-                  : "text-base font-normal text-[#5F5F5F] underline decoration-dotted underline-offset-4 hover:text-primary-300 focus:ring-offset-secondary-900"
+                  : "text-base font-normal text-gray-400 underline decoration-dotted underline-offset-4 hover:text-primary-300 focus:ring-offset-secondary-900"
               )}
             >
               {tc(gravity.active ? "gravity.disable" : "gravity.enable")}
             </button>
           )}
-          <span className="text-base font-normal font-poppins text-[#5F5F5F]">
+          {/* gray-400 sobre secondary-900 = 6,24:1. O #5F5F5F que estava aqui
+              dava 2,48:1, quase metade do mínimo AA de 4,5:1. */}
+          <span className="text-base font-normal font-poppins text-gray-400">
             {t("footer.copyright")}
           </span>
         </div>
