@@ -54,7 +54,7 @@ Três coisas aqui são genuinamente boas, e eu defenderia cada uma:
 
 **O plano existe antes do código, e é revisável.** Discutir arquitetura em cima de um documento de duas páginas custa minutos. Discutir a mesma coisa em cima de 118 arquivos custa uma sprint. Antecipar a discussão é o ganho mais óbvio e o mais subestimado.
 
-**Os padrões entram sozinhos.** Antes, "aplicar os padrões de engenharia" dependia de alguém lembrar. Agora eles entram no plano automaticamente conforme o tipo de repositório — API, camada de agregação, web, mobile. Isso é a ideia de [padrões com dentes](#/artigos/frontend-como-plataforma) funcionando na prática: a regra não depende de disciplina individual, ela está embutida no caminho.
+**Os padrões entram sozinhos.** Antes, "aplicar os padrões de engenharia" dependia de alguém lembrar. Agora eles entram no plano automaticamente conforme o tipo de repositório — API, camada de agregação, web, mobile. Isso é a ideia de [padrões com dentes](/artigos/frontend-como-plataforma) funcionando na prática: a regra não depende de disciplina individual, ela está embutida no caminho.
 
 **A documentação é derivada da realidade, não da intenção.** Esse é o detalhe mais inteligente do processo inteiro. A descrição do comportamento entregue vem do diff depois do merge — então correção feita em QA, ajuste de última hora, coisa que ninguém planejou, tudo isso é absorvido. Documentação que descreve o que você *queria* ter feito é drift esperando para acontecer. Documentação derivada do que você *fez* nasce honesta.
 
@@ -135,7 +135,7 @@ E repare no que se perdeu no primeiro. Não foi contexto — o agente tinha o de
 
 Hoje essa decisão é tomada por inferência, sozinha, no meio de um MR de 118 arquivos que ninguém vai ler inteiro.
 
-Eu já escrevi sobre o dia em que descobrimos [seis implementações diferentes de validação de CPF](#/artigos/frontend-como-plataforma) espalhadas pelos micro frontends. Aquilo levou anos para acontecer. A versão visual disso — seis amarelos, quatro sombras, três raios de borda para a mesma coisa — agora leva semanas. Um improviso por MR, entrando rápido demais para alguém notar.
+Eu já escrevi sobre o dia em que descobrimos [seis implementações diferentes de validação de CPF](/artigos/frontend-como-plataforma) espalhadas pelos micro frontends. Aquilo levou anos para acontecer. A versão visual disso — seis amarelos, quatro sombras, três raios de borda para a mesma coisa — agora leva semanas. Um improviso por MR, entrando rápido demais para alguém notar.
 
 **Design system maduro não é só o que ele oferece. É também conseguir dizer "não tenho isso" em voz alta.**
 
@@ -237,7 +237,7 @@ Uma expressão regular com um detalhe errado truncava a descrição de cada regr
 
 Não deu erro. Não deixou teste vermelho. Não teve sintoma. Só produzia verificação pior — e todo o histórico de decisões acumulado nesse período foi medido contra um catálogo degradado.
 
-Se isso te soa familiar, é porque é exatamente a mesma forma de [94% de cobertura e 0% de confiança](#/artigos/testes-unitarios-no-frontend). O sistema verde que não estava protegendo nada. **Quem verifica também precisa ser verificado.**
+Se isso te soa familiar, é porque é exatamente a mesma forma de [94% de cobertura e 0% de confiança](/artigos/testes-unitarios-no-frontend). O sistema verde que não estava protegendo nada. **Quem verifica também precisa ser verificado.**
 
 ### 2. Rótulo errado é pior que erro
 
@@ -269,7 +269,7 @@ Aconteceu três vezes, e ganhou nome próprio no time.
 
 A pior: o dublê de uma conexão de eventos entregava mensagem nomeada num canal que a implementação real nunca usa para isso. O teste passava, limpo. **E a tela real travava para sempre num estado de carregamento.**
 
-É a continuação direta do que eu já tinha escrito sobre [testar o que importa](#/artigos/testes-unitarios-no-frontend), com um agravante novo: quando o volume de código sobe, o teste deixa de ser só rede de segurança e passa a ser **a principal evidência de que aquilo funciona** — porque ninguém mais vai ler o código. Um dublê mentiroso, nesse cenário, não atrasa o time. Ele engana o time.
+É a continuação direta do que eu já tinha escrito sobre [testar o que importa](/artigos/testes-unitarios-no-frontend), com um agravante novo: quando o volume de código sobe, o teste deixa de ser só rede de segurança e passa a ser **a principal evidência de que aquilo funciona** — porque ninguém mais vai ler o código. Um dublê mentiroso, nesse cenário, não atrasa o time. Ele engana o time.
 
 ### E uma que não é técnica
 
@@ -341,7 +341,7 @@ Quando o requisito estava mal resolvido, o dev travava e perguntava. Quando o de
 
 A máquina removeu a fricção sem substituir o mecanismo. Hoje a ambiguidade não trava mais nada. Ela vira cento e dezoito arquivos.
 
-Assim como no [efeito ENEM no código](#/artigos/efeito-enem-no-codigo), onde o hábito era entregar o mínimo para passar de fase sem entender o porquê, e assim como eu já escrevi sobre [os fundamentos na era da IA](#/artigos/o-basico-de-ia) — onde a fricção que sumiu era justamente onde o aprendizado acontecia — aqui o padrão se repete numa escala nova: **a fricção que sumiu era onde as decisões eram tomadas.**
+Assim como no [efeito ENEM no código](/artigos/efeito-enem-no-codigo), onde o hábito era entregar o mínimo para passar de fase sem entender o porquê, e assim como eu já escrevi sobre [os fundamentos na era da IA](/artigos/o-basico-de-ia) — onde a fricção que sumiu era justamente onde o aprendizado acontecia — aqui o padrão se repete numa escala nova: **a fricção que sumiu era onde as decisões eram tomadas.**
 
 A saída não é reintroduzir lentidão de propósito. É reconstruir o sensor em outro lugar: transformar o padrão escrito em padrão verificado, obrigar o sistema a declarar o que não sabe, e reservar o julgamento humano para o que só humano decide.
 

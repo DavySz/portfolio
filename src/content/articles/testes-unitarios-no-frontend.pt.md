@@ -18,7 +18,7 @@ Esse é o maior problema dos testes no frontend moderno: não é que as pessoas 
 
 Antes de falar sobre Jest, React Testing Library ou coverage thresholds, precisamos entender por que tantos times escrevem testes inúteis.
 
-A resposta está na mesma raiz do [efeito ENEM no código](#/artigos/efeito-enem-no-codigo): fazer o mínimo para passar.
+A resposta está na mesma raiz do [efeito ENEM no código](/artigos/efeito-enem-no-codigo): fazer o mínimo para passar.
 
 ### A métrica virou o objetivo
 
@@ -1006,7 +1006,7 @@ A indústria de software criou uma obsessão doentia por cobertura de código. T
 
 **O problema não é testar. O problema é testar sem pensar.**
 
-Assim como no [efeito ENEM no código](#/artigos/efeito-enem-no-codigo), onde aprendemos a passar de fase sem entender, muitos devs aprenderam a escrever testes que passam no CI sem proteger o código.
+Assim como no [efeito ENEM no código](/artigos/efeito-enem-no-codigo), onde aprendemos a passar de fase sem entender, muitos devs aprenderam a escrever testes que passam no CI sem proteger o código.
 
 A verdadeira habilidade não está em fazer testes passarem — está em fazer testes que significam algo.
 

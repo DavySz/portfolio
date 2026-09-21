@@ -18,7 +18,7 @@ It is like locking every window in the house and leaving the front door wide ope
 
 Before we talk about Jest, React Testing Library or coverage thresholds, we need to understand why so many teams write useless tests.
 
-The answer shares a root with [the exam effect in code](#/artigos/efeito-enem-no-codigo): do the minimum required to pass.
+The answer shares a root with [the exam effect in code](/artigos/efeito-enem-no-codigo): do the minimum required to pass.
 
 ### The metric became the goal
 
@@ -1000,7 +1000,7 @@ The software industry built an unhealthy obsession with code coverage. Teams cel
 
 **The problem is not testing. The problem is testing without thinking.**
 
-Just like in [the exam effect in code](#/artigos/efeito-enem-no-codigo), where we learned to clear the level without understanding it, many developers learned to write tests that pass CI without protecting anything.
+Just like in [the exam effect in code](/artigos/efeito-enem-no-codigo), where we learned to clear the level without understanding it, many developers learned to write tests that pass CI without protecting anything.
 
 The real skill is not making tests pass — it is making tests that mean something.
 
