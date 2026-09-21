@@ -11,14 +11,10 @@ export const useLocales = () => {
     return () => i18n.off("languageChanged", handleLanguageChanged);
   }, []);
 
-  const setApplicationLanguage = useCallback((lng: Language) => {
-    i18n.changeLanguage(lng);
-  }, []);
-
   const toggleLanguage = useCallback(() => {
     const newLang: Language = language === "en" ? "pt" : "en";
     i18n.changeLanguage(newLang);
   }, [language]);
 
-  return { language, setApplicationLanguage, toggleLanguage };
+  return { language, toggleLanguage };
 };

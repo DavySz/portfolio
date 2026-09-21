@@ -5,7 +5,6 @@ interface SkeletonLoaderProps {
   variant?: "text" | "circular" | "rectangular";
   width?: string | number;
   height?: string | number;
-  lines?: number;
 }
 
 export const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
@@ -13,7 +12,6 @@ export const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
   variant = "rectangular",
   width,
   height,
-  lines = 1,
 }) => {
   const getVariantClasses = () => {
     switch (variant) {
@@ -35,26 +33,6 @@ export const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
       styles.height = typeof height === "number" ? `${height}px` : height;
     return styles;
   };
-
-  if (variant === "text" && lines > 1) {
-    return (
-      <div className={clsx("space-y-2", className)}>
-        {Array.from({ length: lines }).map((_, index) => (
-          <div
-            key={index}
-            className={clsx("animate-shimmer", getVariantClasses(), {
-              "w-full": index < lines - 1,
-              "w-3/4": index === lines - 1,
-            })}
-            style={{
-              ...getSize(),
-              animationDelay: `${index * 0.1}s`,
-            }}
-          />
-        ))}
-      </div>
-    );
-  }
 
   return (
     <div

@@ -4,12 +4,11 @@ import type { LinkProps } from "./types";
 export const Link: React.FC<LinkProps> = ({
   variant = "primary",
   children,
-  onClick,
   href,
 }) => {
   return (
     <div className="group relative">
-      <a href={href} onClick={onClick}>
+      <a href={href}>
         <p
           className={clsx(
             "font-poppins font-normal text-base lg:text-xl transition-all duration-300 ease-out",

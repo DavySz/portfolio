@@ -54,7 +54,7 @@ export const Toggle: React.FC<ToggleProps> = ({ className }) => {
           <span
             className={clsx(
               "text-xs transition-transform duration-300 ease-out",
-              "group-hover:scale-110 group-active:animate-bounce-gentle"
+              "group-hover:scale-110"
             )}
           >
             {language === "en" ? "🇺🇸" : "🇧🇷"}

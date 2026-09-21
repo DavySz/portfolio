@@ -30,7 +30,6 @@ export const Text: React.FC<TextProps> = ({
   className,
   children,
   maxWidth,
-  ...props
 }) => {
   const getColorClasses = () => {
     switch (color) {
@@ -79,7 +78,7 @@ export const Text: React.FC<TextProps> = ({
   const style = maxWidth ? { maxWidth } : undefined;
 
   return (
-    <Component className={classes} style={style} {...props}>
+    <Component className={classes} style={style}>
       {children}
     </Component>
   );
