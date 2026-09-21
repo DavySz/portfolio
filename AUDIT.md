@@ -1,9 +1,12 @@
 # Auditoria de UI/UX e Acessibilidade — davysz.com
 
 > Auditoria estática, feita sobre o código em `724a75a` (branch `chore/experience-audit`).
-> **Etapas 1 a 4 implementadas** em `b0e0742..e2cf44b` — os itens concluídos
-> estão marcados com ✅ e o hash na tabela. A16 está suspenso por A29; as
-> etapas 4 e 5 seguem pendentes.
+> **Etapas 1 a 5 implementadas** em `b0e0742..c1fe06e`. 26 dos 29 achados
+> estão fechados, com ✅ e hash na tabela.
+>
+> Em aberto: **A16** (suspenso, depende de A29), **A29** (investigado, não
+> implementado) e **A19** (fechado sem alteração — nunca foi confirmado no
+> navegador).
 
 ## Premissas usadas
 
@@ -68,16 +71,16 @@ página para o topo e fechar não devolve a posição.
 | A16 | Artigos | SEO | `canonical` aponta para o Medium nos 4 publicados lá — **suspenso: depende de A29**, porque com rota de hash o canonical do próprio site equivale à home | Médio | P | `pages/article/index.tsx` |  |
 | ✅ A17 | Artigos (home) | UX | O card não mostra data nem tempo de leitura, embora os dois existam no dado | Médio | P | `components/article-card/index.tsx` | `1e326d4` |
 | ✅ A18 | Hero | UX / Conversão | Nenhum CTA de contato no hero; o único CTA de conversão está na nav e leva para fora do site | Médio | M | `pages/home/hero/index.tsx` | `9f0c3d2` |
-| A19 | Hero | Responsivo | `w-screen` dentro de um pai com `px-6` e sem `overflow-x` global → provável rolagem horizontal de 48px no mobile — **aguardando confirmação no navegador** | Médio | P | `pages/home/hero/index.tsx` |  |
+| ⏸️ A19 | Hero | Responsivo | `w-screen` dentro de um pai com `px-6` e sem `overflow-x` global → provável rolagem horizontal de 48px no mobile — **fechado sem alteração: nunca confirmado no navegador** | Médio | P | `pages/home/hero/index.tsx` | — |
 | ✅ A20 | Nav | UX / i18n | Bandeira 🇺🇸/🇧🇷 como única pista visível do seletor de idioma; alvo de 56×28px | Médio | P | `components/toggle/index.tsx` | `e2cf44b` |
-| A21 | Artigos | A11y (motion) | `scrollIntoView({behavior:"smooth"})` — a opção JS vence o `scroll-behavior:auto` do `prefers-reduced-motion` | Baixo | P | `pages/article/index.tsx` |  |
-| A22 | Artigos | Copy | Botão "Back"/"Voltar" não volta no histórico: vai para a home | Baixo | P | `pages/article/index.tsx` |  |
+| ✅ A21 | Artigos | A11y (motion) | `scrollIntoView({behavior:"smooth"})` — a opção JS vence o `scroll-behavior:auto` do `prefers-reduced-motion` | Baixo | P | `pages/article/index.tsx` | `61ac312` |
+| ✅ A22 | Artigos | Copy | Botão "Back"/"Voltar" não volta no histórico: vai para a home | Baixo | P | `pages/article/index.tsx` | `61ac312` |
 | ✅ A23 | Artigos (home) | UI | Sem thumb, a tag aparece duas vezes empilhada (capa + linha de tag) | Baixo | P | `components/article-card/index.tsx` | `1e326d4` |
-| A24 | Projetos / Stack | Bug | `animate-fade-in-up` no card **e** no wrapper — animação dobrada | Baixo | P | `project-card/`, `skill-card/`, `projects/`, `skills/` |  |
-| A25 | Global | Consistência | `Button` usa `focus:`; `Link` e os cards usam `focus-visible:` — o anel aparece no clique de mouse | Baixo | P | `components/button/index.tsx` |  |
-| A26 | Console | Bug | `WELCOME_LOG_MESSAGE` começa com `U+FFFD` (bytes `EF BF BD`) e é só em português | Baixo | P | `src/shared/constants.ts` |  |
-| A27 | Global | Limpeza | Chaves `articles.items.*` mortas nos dois locales; `relative` duplicado; `mr-7` solto | Baixo | P | vários |  |
-| A28 | `<head>` | Performance | Google Fonts como `<link rel=stylesheet>` de terceiro, bloqueando render | Médio | M | `index.html` |  |
+| ✅ A24 | Projetos / Stack | Bug | `animate-fade-in-up` no card **e** no wrapper — animação dobrada | Baixo | P | `project-card/`, `skill-card/`, `projects/`, `skills/` | `614d18a` |
+| ✅ A25 | Global | Consistência | `Button` usa `focus:`; `Link` e os cards usam `focus-visible:` — o anel aparece no clique de mouse | Baixo | P | `components/button/index.tsx` | `614d18a` |
+| ✅ A26 | Console | Bug | `WELCOME_LOG_MESSAGE` começa com `U+FFFD` (bytes `EF BF BD`) e é só em português | Baixo | P | `src/shared/constants.ts` | `c1fe06e` |
+| ✅ A27 | Global | Limpeza | Chaves `articles.items.*` mortas nos dois locales; `relative` duplicado; `mr-7` solto | Baixo | P | vários | `c1fe06e` |
+| ✅ A28 | `<head>` | Performance | Google Fonts como `<link rel=stylesheet>` de terceiro, bloqueando render | Médio | M | `index.html` | `15ff06d` |
 | A29 | Global | SEO / Arquitetura | Rota por hash faz os 8 artigos serem a mesma URL que a home para o buscador; o sitemap declara 9 `<loc>` que colapsam em 1 | Alto | G | `useHashRoute/`, `scripts/content/build-feeds.js`, `vite.config.ts` |  |
 
 ---
@@ -557,12 +560,12 @@ para medir antes e depois com o build que já existe.
 14. **A17 + A23** — data no card; tag sem repetição
 15. **A18** — reavaliar o CTA depois que A01 estiver de pé
 
-**Etapa 4 — confirmar na tela primeiro** — A20 ✅; A19 aguardando confirmação
+**Etapa 4 — confirmar na tela primeiro** — A20 ✅; A19 fechado sem alteração
 
 16. **A19** — rolagem horizontal do hero **[VISUAL]**
 17. **A20** — `EN | PT` no lugar da bandeira
 
-**Etapa 5 — acabamento**
+**Etapa 5 — acabamento** — ✅ concluída
 
 18. **A28** — self-hospedar Poppins (medir antes/depois)
 19. **A21, A22, A24, A25, A26, A27**
@@ -758,7 +761,7 @@ diagonal para fora é a convenção de "link externo" — é o mesmo ícone que 
 Sobrou, então, uma pista de destino num item que não leva a lugar nenhum. Não
 mexi porque A07 falava de cursor e hover, e trocar ícone é decisão visual sua.
 
-### I05 — `key={index}` nos links do rodapé
+### I05 — `key={index}` nos links do rodapé · ✅ `c1fe06e`
 
 `pages/home/footer/index.tsx` usa `key={index}` ao mapear `getLinks(t)`,
 enquanto `navigation-bar/mobile.tsx` usa `key={link.href}` na mesma lista. Sem
@@ -776,7 +779,7 @@ Se quiser os dois, o caminho é manter o rótulo curto como nome do destino em
 nav e rodapé e devolver um subtítulo com voz logo abaixo do `h2`, em vez de
 carregar a voz no próprio nome da seção.
 
-### I07 — `a11y.hireOnLinkedIn` ficou órfã
+### I07 — `a11y.hireOnLinkedIn` ficou órfã · ✅ `c1fe06e`
 
 A08 trocou o `aria-label` do "Vamos conversar" por texto `sr-only`, e a chave
 `a11y.hireOnLinkedIn` deixou de ter consumidor nos dois locales. Encaixa em
@@ -837,7 +840,7 @@ O `useSEO` atualiza `og:url` por página, mas `twitter:url` ficou só no
 com rota de hash todas as URLs são a home (A29) — passa a importar quando A29
 for resolvido.
 
-### I12 — `theme-color` duplicado sem motivo
+### I12 — `theme-color` duplicado sem motivo · ✅ `c1fe06e`
 
 O `index.html` declara `theme-color` duas vezes, uma para
 `prefers-color-scheme: light` e outra para `dark`, **com o mesmo `#7947DF`**.
@@ -853,8 +856,10 @@ duplicada que sobrou depois de A15, e é inofensiva.
 | Etapa 3 | **Não** adicionar "Contact"/"Contato" à nav nem ao rodapé | O CTA já leva a `#contact`; um link a mais seriam dois destinos iguais na mesma nav, e a estimativa é que a nav desktop já passe de 1024px hoje |
 | Etapa 3 | **I06 adiado** — sem subtítulos abaixo dos `h2` | Fica registrado para depois; as seções seguem com o rótulo puro definido em A10 |
 | Etapa 3 | **A16 suspenso** até A29 | Com rota de hash, canonical para o próprio site equivale a canonical para a home |
+| Etapa 5 | **A19 fechado sem alteração** | O achado foi levantado três vezes e a confirmação no navegador nunca chegou. A causa continua provada no código; o efeito, não. Reabrir é barato: basta rodar o script do achado a 375px |
+| Etapa 5 | **vitest adotado** (`^2`, não `^5`) | A linha 5 exige Vite 6 (`vite/module-runner`) e o projeto está no Vite 5.4. A entrada em `resolutions` mantém uma instância só de Vite, senão `vitest/config` e os plugins apontam para tipos diferentes |
 
-### I13 — O projeto não tem runner de testes
+### I13 — O projeto não tem runner de testes · ✅ `4a7b43f`
 
 Não há `vitest`, `jest`, `playwright`, `puppeteer` nem `cypress` — nem em
 `devDependencies`, nem em `node_modules/.bin`, nem script de teste no
@@ -872,8 +877,3 @@ achado. Se for adiante, `vitest` é o de menor atrito aqui: usa a config do
 Vite que já existe, e `src/shared/date.ts` e `src/experience/quality.ts` são os
 dois melhores primeiros alvos.
 
-### I14 — `a11y.hireOnLinkedIn` continua órfã
-
-Registrada em I07 e ainda presente nos dois locales. A20 removeu
-`a11y.switchLanguage` porque o par de botões a substituiu diretamente, mas
-`hireOnLinkedIn` ficou — some junto com A27, que junta as chaves mortas.
