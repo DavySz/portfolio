@@ -4,7 +4,7 @@ import { getLinks, SOCIALS } from "./constants";
 import { Link } from "../../../components/link";
 import { Text } from "../../../components/text";
 import { CONTACTS } from "../../../shared/constants";
-import { Button } from "../../../components/button";
+import { ExternalLink } from "../../../components/external-link";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import { useGravityMode } from "../../../hooks/useGravityMode/use-gravity-mode";
@@ -13,10 +13,6 @@ export const Footer: React.FC = () => {
   const { t } = useTranslation("home");
   const { t: tc } = useTranslation("component");
   const gravity = useGravityMode();
-
-  const openLink = (link: string): void => {
-    window.open(link, "_blank");
-  };
 
   return (
     <footer className="py-16 md:py-24 px-6 xl:px-[100px] flex flex-col justify-center bg-secondary-900">
@@ -62,11 +58,11 @@ export const Footer: React.FC = () => {
           </a>
           <div className="flex gap-5 items-center">
             {SOCIALS.map((social) => (
-              <Button
-                onClick={() => openLink(social.href)}
+              <ExternalLink
+                href={social.href}
                 variant="tertiary"
                 icon={social.icon}
-                aria-label={tc("a11y.openProfile", { network: social.name })}
+                label={tc("a11y.openProfile", { network: social.name })}
                 key={social.name}
               />
             ))}

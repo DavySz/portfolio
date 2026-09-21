@@ -1,7 +1,15 @@
 import clsx from "clsx";
 import { useState } from "react";
-import type { ButtonProps, ButtonVariant } from "./types";
+import type { ButtonProps } from "./types";
 import { Loading } from "../loading";
+import {
+  BASE_CLASSES,
+  LABEL_CLASSES,
+  iconColor,
+  labelClasses,
+  shapeClasses,
+  surfaceClasses,
+} from "./styles";
 
 export const Button: React.FC<ButtonProps> = ({
   variant = "primary",
@@ -14,50 +22,6 @@ export const Button: React.FC<ButtonProps> = ({
   ...rest
 }) => {
   const [isPressed, setIsPressed] = useState(false);
-  const getButtonVariant = (): string => {
-    if (disabled) return "bg-gray-400";
-
-    const variants: Record<ButtonVariant, string> = {
-      primary:
-        "bg-gradient-to-r from-primary-500 to-primary-900 hover:from-primary-400 hover:to-primary-800 shadow-primary hover:shadow-primary-hover",
-      secondary:
-        "bg-transparent border border-primary-500 hover:bg-primary-500/10 hover:border-primary-400 hover:shadow-primary",
-      tertiary: "bg-transparent hover:bg-white/5",
-      // Superfície escura (fundo do experience): borda primary-200 = 4.60:1
-      // sobre o ponto mais claro do shader, acima dos 3:1 exigidos para UI.
-      onDark:
-        "bg-transparent border border-primary-200 hover:bg-white/10 hover:border-white hover:shadow-primary",
-    };
-
-    return variants[variant];
-  };
-
-  const getTextVariant = (): string => {
-    if (disabled) return "text-white";
-
-    const variants: Record<ButtonVariant, string> = {
-      primary: "text-white",
-      tertiary: "text-white hover:text-primary-300",
-      secondary: "text-primary-700 hover:text-primary-600",
-      // primary-100 = 5.79:1 sobre o ponto mais claro do shader (AA).
-      onDark: "text-primary-100 hover:text-white",
-    };
-
-    return variants[variant];
-  };
-
-  const getButtonShape = (): string => {
-    if (!children && !(variant === "tertiary")) return "p-4 rounded-full";
-    if (variant === "tertiary") return "";
-    return "py-2 px-8";
-  };
-
-  const getIconColor = (): string => {
-    if (variant === "tertiary") return "#FFFFFF";
-    if (variant === "onDark") return "#E9E3FF"; // primary-100
-    return "#7041CF";
-  };
-
   const handleMouseDown = () => {
     setIsPressed(true);
   };
@@ -77,12 +41,11 @@ export const Button: React.FC<ButtonProps> = ({
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseLeave}
       className={clsx(
-        "flex gap-2 rounded-3xl items-center justify-center relative overflow-hidden group",
-        "transition-all duration-300 ease-out",
-        "transform hover:scale-105 active:scale-95",
-        "focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 focus:ring-offset-transparent",
-        getButtonVariant(),
-        getButtonShape(),
+        BASE_CLASSES,
+        /* Ternário, não soma: o gradiente é background-image e pintaria por
+           cima do bg-gray-400 do estado desabilitado. */
+        disabled ? "bg-gray-400" : surfaceClasses(variant),
+        shapeClasses(variant, Boolean(children)),
         {
           "w-full": full,
           "cursor-not-allowed opacity-60": disabled,
@@ -109,8 +72,8 @@ export const Button: React.FC<ButtonProps> = ({
       {children && !isLoading && (
         <p
           className={clsx(
-            "font-poppins font-semibold xl:text-xl text-base transition-colors duration-300",
-            getTextVariant()
+            LABEL_CLASSES,
+            disabled ? "text-white" : labelClasses(variant)
           )}
         >
           {children}
@@ -118,7 +81,7 @@ export const Button: React.FC<ButtonProps> = ({
       )}
       {Icon && !isLoading && (
         <span className="transition-transform duration-300 hover:rotate-12">
-          <Icon size={24} color={getIconColor()} />
+          <Icon size={24} color={iconColor(variant)} />
         </span>
       )}
       {isLoading && (

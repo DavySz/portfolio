@@ -36,6 +36,7 @@
     "menuTitle": "Menu",
     "hireOnLinkedIn": "Get in touch on LinkedIn",
     "switchLanguage": "Switch language to {{language}}",
-    "openProfile": "Open {{network}} profile"
+    "openProfile": "Open {{network}} profile",
+    "opensInNewTab": "opens in new tab"
   }
 }

@@ -36,6 +36,7 @@
     "menuTitle": "Menu",
     "hireOnLinkedIn": "Falar comigo no LinkedIn",
     "switchLanguage": "Mudar idioma para {{language}}",
-    "openProfile": "Abrir perfil no {{network}}"
+    "openProfile": "Abrir perfil no {{network}}",
+    "opensInNewTab": "abre em nova aba"
   }
 }

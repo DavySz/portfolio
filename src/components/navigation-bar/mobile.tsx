@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CONTACTS } from "../../shared/constants";
 import { Button } from "../button";
+import { ExternalLink } from "../external-link";
 import { Toggle } from "../toggle";
 import { getLinks, SECTION_IDS } from "./constants";
 import { FiMenu } from "react-icons/fi";
@@ -80,10 +81,6 @@ export const MobileNavigationBar: React.FC = () => {
 
   const toggleOptions = (): void => {
     setIsVisible((prev) => !prev);
-  };
-
-  const openLinkedin = () => {
-    window.open(CONTACTS.LINKEDIN, "_blank");
   };
 
   const getIcon = (): IconType => {
@@ -266,15 +263,9 @@ export const MobileNavigationBar: React.FC = () => {
 
           {/* Footer Action */}
           <div className="p-6 border-t border-gray-100 bg-gray-50">
-            <Button
-              onClick={() => {
-                openLinkedin();
-                toggleOptions();
-              }}
-              full
-            >
+            <ExternalLink href={CONTACTS.LINKEDIN} full>
               {t("navigation-bar.hire-me")}
-            </Button>
+            </ExternalLink>
           </div>
         </div>
       </div>

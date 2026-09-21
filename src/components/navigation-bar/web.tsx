@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { CONTACTS } from "../../shared/constants";
-import { Button } from "../button";
+import { ExternalLink } from "../external-link";
 import { Link } from "../link";
 import { Toggle } from "../toggle";
 import { getLinks, SECTION_IDS } from "./constants";
@@ -9,10 +9,6 @@ import { useActiveSection } from "../../hooks/useActiveSection/use-active-sectio
 export const WebNavigationBar: React.FC = () => {
   const { t } = useTranslation("component");
   const active = useActiveSection(SECTION_IDS);
-
-  const openLinkedin = (): void => {
-    window.open(CONTACTS.LINKEDIN, "_blank");
-  };
 
   return (
     <nav
@@ -31,9 +27,9 @@ export const WebNavigationBar: React.FC = () => {
         </Link>
       ))}
       <Toggle />
-      <Button onClick={openLinkedin} aria-label={t("a11y.hireOnLinkedIn")}>
+      <ExternalLink href={CONTACTS.LINKEDIN}>
         {t("navigation-bar.hire-me")}
-      </Button>
+      </ExternalLink>
     </nav>
   );
 };

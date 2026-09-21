@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { FaMedium } from "react-icons/fa";
 import { ArticleCard } from "../../../components/article-card";
 import { Text } from "../../../components/text";
-import { Button } from "../../../components/button";
+import { ExternalLink } from "../../../components/external-link";
 import { CONTACTS } from "../../../shared/constants";
 import { ARTICLES } from "../../../content/articles";
 
@@ -53,13 +53,13 @@ export const Articles: React.FC = () => {
       </ul>
 
       <div className="mt-12">
-        <Button
+        <ExternalLink
+          href={CONTACTS.MEDIUM}
           variant="secondary"
           icon={FaMedium}
-          onClick={() => window.open(CONTACTS.MEDIUM, "_blank")}
         >
           {t("articles.seeMore")}
-        </Button>
+        </ExternalLink>
       </div>
     </section>
   );

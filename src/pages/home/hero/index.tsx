@@ -3,6 +3,7 @@ import { SOCIALS } from "./constants";
 import { usePDF } from "../../../hooks/usePdf/use-pdf";
 import { EN_CV_PATH, PT_CV_PATH } from "../../../shared/constants";
 import { Button } from "../../../components/button";
+import { ExternalLink } from "../../../components/external-link";
 import { Text } from "../../../components/text";
 import { useExperienceSection } from "../../../hooks/useExperienceSection/use-experience-section";
 import UserPhoto from "../../../assets/user.webp";
@@ -16,10 +17,6 @@ export const Hero: React.FC = () => {
   const { t: tc } = useTranslation("component");
   const sectionRef = useExperienceSection("hero");
   const { download } = usePDF();
-
-  const openLink = (href: string): void => {
-    window.open(href, "_blank");
-  };
 
   const handleDownLoadCV = (): void => {
     download(i18n.language === "pt" ? PT_CV_PATH : EN_CV_PATH);
@@ -84,11 +81,11 @@ export const Hero: React.FC = () => {
           </Button>
           <div className="flex gap-4 xl:gap-5 items-center">
             {SOCIALS.map((social) => (
-              <Button
-                onClick={() => openLink(social.href)}
+              <ExternalLink
+                href={social.href}
                 variant="onDark"
                 icon={social.icon}
-                aria-label={tc("a11y.openProfile", { network: social.name })}
+                label={tc("a11y.openProfile", { network: social.name })}
                 key={social.name}
               />
             ))}
