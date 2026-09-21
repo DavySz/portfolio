@@ -1,28 +1,7 @@
 import React from "react";
 import clsx from "clsx";
-import {
-  typographyClasses,
-  type TypographyClass,
-} from "../../shared/typography-tokens";
-
-interface TextProps {
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div";
-  variant?: TypographyClass;
-  color?:
-    | "primary"
-    | "secondary"
-    | "muted"
-    | "subtle"
-    | "accent"
-    | "accentLight"
-    | "gradient"
-    | "gradientLight"
-    | "white";
-  align?: "left" | "center" | "right" | "justify";
-  className?: string;
-  children: React.ReactNode;
-  maxWidth?: string;
-}
+import { typographyClasses } from "../../shared/typography-tokens";
+import type { TextProps } from "./types";
 
 export const Text: React.FC<TextProps> = ({
   as: Component = "p",
@@ -31,7 +10,6 @@ export const Text: React.FC<TextProps> = ({
   align = "left",
   className,
   children,
-  maxWidth,
 }) => {
   const getColorClasses = () => {
     switch (color) {
@@ -83,10 +61,8 @@ export const Text: React.FC<TextProps> = ({
     className
   );
 
-  const style = maxWidth ? { maxWidth } : undefined;
-
   return (
-    <Component className={classes} style={style}>
+    <Component className={classes}>
       {children}
     </Component>
   );

@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { CONTACTS } from "../../shared/constants";
 import { Button } from "../button";
 import { Link } from "../link";
-import { Toggle } from "../toogle";
+import { Toggle } from "../toggle";
 import { getLinks, SECTION_IDS } from "./constants";
 import { useActiveSection } from "../../hooks/useActiveSection/use-active-section";
 

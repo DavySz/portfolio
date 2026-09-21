@@ -1,6 +1,6 @@
 // Service Worker for Portfolio PWA
-const CACHE_NAME = 'portfolio-v1';
-const STATIC_CACHE = 'static-v1';
+const CACHE_NAME = 'portfolio-v2';
+const STATIC_CACHE = 'static-v2';
 
 // Assets to cache on install
 const STATIC_ASSETS = [
@@ -42,6 +42,24 @@ self.addEventListener('fetch', (event) => {
   // Skip chrome extension requests
   if (event.request.url.startsWith('chrome-extension://')) return;
 
+  // Navegação é network-first: com cache-first, um deploy novo continuava
+  // servindo o index.html velho, que aponta para chunks com hash que não
+  // existem mais — tela branca até um hard refresh.
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(STATIC_CACHE).then((cache) => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((cached) => cached || caches.match('/index.html')))
+    );
+    return;
+  }
+
+  // Assets têm hash no nome: o conteúdo nunca muda para a mesma URL,
+  // então cache-first é seguro e é o que deixa a visita seguinte instantânea.
   event.respondWith(
     caches.match(event.request)
       .then((cachedResponse) => {

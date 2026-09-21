@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { CONTACTS } from "../../shared/constants";
 import { Button } from "../button";
-import { Toggle } from "../toogle";
+import { Toggle } from "../toggle";
 import { getLinks } from "./constants";
 import { FiMenu } from "react-icons/fi";
 import type { IconType } from "react-icons";

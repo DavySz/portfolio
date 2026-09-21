@@ -6,8 +6,6 @@ export const registerServiceWorker = async (): Promise<void> => {
         scope: '/',
       });
 
-      console.log('Service Worker registered successfully:', registration);
-
       // Check for updates periodically
       setInterval(() => {
         registration.update();
@@ -19,8 +17,8 @@ export const registerServiceWorker = async (): Promise<void> => {
         if (newWorker) {
           newWorker.addEventListener('statechange', () => {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // New service worker available, notify user
-              console.log('New content available, please refresh.');
+              // Há versão nova esperando. O fetch de navegação é network-first,
+              // então o próximo carregamento já pega o HTML atualizado.
             }
           });
         }

@@ -39,6 +39,11 @@ export default {
         "body-sm": ["0.875rem", { lineHeight: "1.6", letterSpacing: "0" }],
         "body-xs": ["0.75rem", { lineHeight: "1.5", letterSpacing: "0" }],
       },
+      maxWidth: {
+        /* Largura da descrição centralizada das seções. Estava repetida como
+           style inline em quatro lugares. */
+        section: "764px",
+      },
       letterSpacing: {
         tighter: "-0.02em",
         tight: "-0.01em",

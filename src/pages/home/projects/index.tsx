@@ -24,8 +24,7 @@ export const Projects: React.FC = () => {
         variant="sectionDescription"
         color="secondary"
         align="center"
-        className="text-body-md lg:text-body-xl mb-16 leading-relaxed"
-        maxWidth="764px"
+        className="text-body-md lg:text-body-xl mb-16 leading-relaxed max-w-section"
       >
         {t("projects.description")}
       </Text>
