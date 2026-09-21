@@ -42,8 +42,8 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 17 | **Medir fps por tier e o tempo de CPU do `update` no Performance** (task 05) | Davy | Aceite da task 05. |
 | 18 | Conferir que a cena fica igual em WebGPU e em WebGL2 (`forceWebGL: true`) | Davy | Aceite da task 05. |
 | 19 | **Task 06: aceitar SVG ou criar uma seção nova de observabilidade** | Davy | Bloqueia a task 06. |
-| 20 | Site abre em inglês (`lng: "en"` no i18n) mas o CLAUDE.md pede pt-BR | Davy | Fora da série Experience; confirmar se é intencional. |
-| 21 | Hero e Self citam o empregador pelo nome, o que o CLAUDE.md proíbe | Davy | Conteúdo pré-existente; não alterei. |
+| 20 | ~~Site abre em inglês vs CLAUDE.md pedindo pt-BR~~ — Davy confirmou: **inglês é intencional**. CLAUDE.md corrigido. | — | Resolvido. |
+| 21 | ~~Hero e Self citam o empregador~~ — Davy autorizou citar o **nome** da empresa. CLAUDE.md corrigido; dados/endpoints/métricas seguem proibidos. | — | Resolvido. |
 
 ## Números de referência
 
@@ -134,3 +134,4 @@ através de `self`, `skills`, `projects` e `articles`. Decidir o que fazer com
 | 2026-09-21 | Escolha delegada a mim pelo Davy: seção `services`, narrativa A, fundo claro preservado. Task 05 executada em `feat/experience-transactions-scene`. |
 | 2026-09-21 | Davy reportou que a cena da 05 ficou ruim. Causa medida: 103% de cobertura — as partículas saturavam na própria cor. Tamanho passou a sair de conta de cobertura (`b875f49`). |
 | 2026-09-21 | Task 06 parada no checkpoint, com recomendação de fazer em SVG/DOM em vez de WebGL. |
+| 2026-09-21 | Davy decidiu: pode citar o nome da empresa, e o site abre em inglês mesmo. CLAUDE.md atualizado nas duas regras. |

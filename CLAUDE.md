@@ -24,7 +24,7 @@ Se algum passo não puder ser executado no ambiente, dizer isso explicitamente n
 - Seguir o padrão dos arquivos vizinhos (nomes, exports, estrutura de pastas) em vez de introduzir um novo. Se o padrão existente parecer ruim, apontar no resumo, não mudar por conta própria.
 - Estilo com Tailwind. CSS próprio só quando o Tailwind não resolve bem (keyframes complexos, estilos de canvas), e com justificativa.
 - Cor da marca: `#7947DF`. Usar o token do tema do Tailwind se existir; se não existir, propor a criação em vez de espalhar o hex.
-- Todo texto visível do site em português (pt-BR).
+- O site é bilíngue via i18next (`en` e `pt`) e **abre em inglês**. Todo texto visível entra pelos dois locales (`src/pages/home/locales/`, `src/components/locales/`); nunca hardcodar string visível no componente.
 - Acessibilidade é requisito, não extra: contraste WCAG AA, foco visível, navegação completa por teclado, `prefers-reduced-motion` respeitado em toda animação.
 - Performance: nada pode atrasar o primeiro conteúdo. Dependência pesada entra por `import()` dinâmico, nunca no bundle inicial. Ao adicionar dependência, reportar o impacto no bundle.
 
@@ -34,7 +34,7 @@ Se algum passo não puder ser executado no ambiente, dizer isso explicitamente n
 - Uma branch por task, com o nome definido na spec.
 - **Nunca commitar.** Ao terminar: resumo do que mudou, o que ficou pendente de checagem manual e uma sugestão de mensagem em Conventional Commits.
 - Dúvida de produto, conteúdo ou visual que a spec não resolve vira pergunta, não suposição.
-- Nunca incluir dados, nomes de sistemas, endpoints, métricas ou prints de empregadores (Fretebras incluída), nem como exemplo. Dado de demonstração é sempre inventado e genérico.
+- Citar o **nome** do empregador é permitido. Continua proibido: dados, endpoints, métricas, nomes de sistemas internos e prints de sistemas de empregadores, nem como exemplo. Dado de demonstração é sempre inventado e genérico.
 
 ## Experience (camada 3D/WebGL)
 
