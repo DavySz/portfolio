@@ -45,6 +45,10 @@ export class HeroBackground implements Feature {
   constructor() {
     const material = new THREE.MeshBasicNodeMaterial();
     material.colorNode = this.buildColorNode();
+    // O fundo é a camada mais atrás do canvas. Sem isso o quad ocuparia o
+    // depth buffer e esconderia as features renderizadas depois dele.
+    material.depthWrite = false;
+    material.depthTest = false;
 
     this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
     this.mesh.frustumCulled = false;

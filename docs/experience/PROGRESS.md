@@ -10,7 +10,7 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 00 | Discovery e baseline de performance | só leitura | não | **concluída** | — (sem branch, por spec) | `BASELINE.md` criado e commitado direto no master. Bundle medido; **Lighthouse pendente de execução manual** (pendência 1). 15 ajustes levantados para as próximas tasks. |
 | 01 | Núcleo do Experience + fundo em shader no hero | feature | não | **aguardando revisão** | `feat/experience-core` | three@0.186 em chunk dinâmico (**240.672 B gzip**). JS inicial +601 B (+0,78%). **Hero virou escuro** e as cores do texto mudaram para passar AA — precisa de aval visual. |
 | 02 | Pipeline de assets 3D (glTF + Draco + KTX2) | infra | não | **aguardando revisão** | `feat/experience-assets` (ramificada de `feat/experience-core`, **não** do master) | Pipeline 4 passos + loaders + página de debug + `ASSETS.md`. Cubo de teste: 3,1 kB → 2,4 kB (−22,7%). **`ktx` não instalado → saída em WebP.** Bundle inalterado. |
-| 03 | Objeto-assinatura no hero | feature | **sim, antes de codar** | **aguardando decisão** | — (não criada, por spec) | 3 conceitos propostos: **A** gyroid, **B** células/shell, **C** giroscópio. Aguardando a escolha do Davy antes de qualquer código. |
+| 03 | Objeto-assinatura no hero | feature | **sim, antes de codar** | **aguardando revisão** | `feat/experience-signature-object` (de `feat/experience-assets`) | Conceito **C — Alinhamento (giroscópio)**, escolha delegada a mim. 7.760 tris `high` / 3.092 `low` (39,8%). JS inicial **−6 B**. **Posicionamento precisa de aval visual.** |
 | 04 | Canvas global + cenas por seção | refactor | não | pendente | — | Ponto de montagem provável: `PageTemplate`. |
 | 05 | Cena de domínio: fluxo de transações | feature | **sim, antes de codar** | pendente | — | Checkpoint de seção e narrativa. |
 | 06 | Cena de domínio: waterfall de traces | feature | **sim, antes de codar** | pendente | — | Checkpoint de seção e narrativa. |
@@ -33,6 +33,9 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 8 | **Os `.blend` ficam versionados (Git LFS) ou fora do repo?** (pergunta da task 02) | Davy | Não bloqueia; documentar no `ASSETS.md`. |
 | 9 | Instalar o binário `ktx` (KTX-Software) e rodar `yarn assets:optimize` de novo | Davy | Sem ele as texturas saem em WebP em vez de KTX2 (perde economia de VRAM). Instruções no `ASSETS.md`. |
 | 10 | Abrir `/debug-assets.html` no Chrome e no Firefox para confirmar Draco + textura decodificando | Davy | Aceite da task 02. |
+| 11 | **Aval visual do posicionamento do objeto-assinatura** (halo em volta da foto, só em ≥1280px) | Davy | Aceite da task 03. Estimei sem browser. |
+| 12 | Conferir `renderer.info` antes/depois de desmontar (vazamento de geometria) | Davy | Aceite da task 03. |
+| 13 | Tailwind emite utilitários fantasma a partir de palavras no `src/**/*.ts` (ex.: `.ring` veio de `RingConfig`) | — | Candidata à task 08: hoje custa 14 B, mas cresce junto com `src/experience/`. |
 
 ## Números de referência
 
@@ -49,6 +52,13 @@ Depois da task 01 (branch `feat/experience-core`, ainda não mergeada):
 - **Total inicial:** 83.669 B gzip (+875 B, +1,06%)
 - **Chunk `Experience` (dinâmico, fora do caminho inicial):** 240.672 B gzip / 885.117 B raw
 
+Depois da task 03 (branch `feat/experience-signature-object`):
+
+- **JS inicial:** 77.723 B gzip (−6 B vs task 01; +595 B / +0,77% vs baseline)
+- **CSS inicial:** 5.954 B gzip (+14 B vs task 01 — utilitário fantasma `.ring`)
+- **Chunk `Experience` (dinâmico):** 242.738 B gzip / 891.096 B raw (+2.066 B vs task 01)
+- **Triângulos:** 7.760 `high` · 3.092 `low` (39,8% — spec exige ≤50%)
+
 ## Histórico
 
 | Data | Evento |
@@ -60,3 +70,4 @@ Depois da task 01 (branch `feat/experience-core`, ainda não mergeada):
 | 2026-09-20 | Task 02 executada na branch `feat/experience-assets`, ramificada de `feat/experience-core` porque a 01 ainda não está no master. Pipeline glTF, loaders, cubo de teste, página de debug e `ASSETS.md`. |
 | 2026-09-20 | Task 02 commitada em `feat/experience-assets` (`5721848`), sem push. |
 | 2026-09-20 | Task 03 parada no checkpoint de conceito, conforme a spec. 3 conceitos propostos; nenhuma branch ou arquivo criado. |
+| 2026-09-21 | Escolha do conceito delegada a mim pelo Davy: **C — Alinhamento (giroscópio)**. Task 03 executada em `feat/experience-signature-object`. |

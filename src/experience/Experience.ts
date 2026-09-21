@@ -2,6 +2,7 @@ import * as THREE from "three/webgpu";
 import type { Quality } from "./quality";
 import type { Feature, FrameContext } from "./types";
 import { HeroBackground } from "./features/HeroBackground";
+import { SignatureObject } from "./features/SignatureObject";
 
 /**
  * Núcleo imperativo: um renderer, um loop, N features.
@@ -60,7 +61,10 @@ export class Experience {
     // tick, e sem isso o frame inicial sairia no tamanho padrão do canvas.
     this.syncSize(container.clientWidth, container.clientHeight);
 
+    // ordem = ordem de composição: o fundo não escreve depth, então o
+    // objeto renderiza por cima dele no mesmo canvas e no mesmo loop.
     this.add(new HeroBackground());
+    this.add(new SignatureObject(ctx.quality));
 
     this.observeSize();
     this.observeVisibility();
