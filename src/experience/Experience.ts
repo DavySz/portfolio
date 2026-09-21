@@ -107,6 +107,7 @@ export class Experience {
     this.add(new LayeredStack(ctx.quality));
 
     this.observeReducedMotion();
+    this.observeTheme();
     this.observeViewport();
     this.observeLayout();
     this.observeSectionRegistry();
@@ -312,6 +313,35 @@ export class Experience {
         this.renderFrame(0);
       })
     );
+  }
+
+  /**
+   * Acompanha a troca de tema da página.
+   *
+   * O tema vive como classe no `<html>`, carimbada pelo script anti-flash e
+   * mantida pelo React. Um `MutationObserver` no atributo `class` é o caminho
+   * que não exige o experience conhecer o React nem o contrário.
+   */
+  private observeTheme() {
+    const read = (): "light" | "dark" =>
+      document.documentElement.classList.contains("dark") ? "dark" : "light";
+
+    let current = read();
+    for (const feature of this.features) feature.setTheme?.(current);
+
+    const observer = new MutationObserver(() => {
+      const next = read();
+      if (next === current) return;
+      current = next;
+      for (const feature of this.features) feature.setTheme?.(next);
+      this.renderFrame(0);
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    this.cleanups.push(() => observer.disconnect());
   }
 
   private observeViewport() {

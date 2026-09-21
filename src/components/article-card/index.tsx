@@ -32,7 +32,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
 
   return (
     <div
-      className="group relative flex h-full flex-col overflow-hidden rounded-[20px] bg-surface-raised shadow-lg
+      className="group relative flex h-full flex-col overflow-hidden rounded-[20px] bg-surface-raised shadow-lg dark:shadow-none dark:border dark:border-line
                  transition-all duration-300 ease-out
                  hover:-translate-y-2 hover:shadow-xl hover:shadow-primary-500/10"
     >

@@ -140,8 +140,15 @@
 
   body {
     /* O fundo e a cor base da página seguem o tema. Antes o branco vinha do
-       padrão do navegador, e no escuro sobraria branco atrás de tudo. */
+       padrão do navegador, e no escuro sobraria branco atrás de tudo.
+
+       A transição suaviza a troca de tema. Não precisa de guarda própria: o
+       bloco de `prefers-reduced-motion` abaixo zera `transition-duration` de
+       tudo, inclusive daqui. */
     @apply bg-page text-ink;
+    transition:
+      background-color 300ms ease,
+      color 300ms ease;
     font-family: "Poppins", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

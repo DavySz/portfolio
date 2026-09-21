@@ -26,4 +26,11 @@ export interface Feature {
   resize(ctx: FrameContext): void;
   update(ctx: FrameContext, delta: number): void;
   dispose(): void;
+  /**
+   * Opcional: só as features cujo material depende do tema da página
+   * implementam. O canvas é decoração (`aria-hidden`), então o que está em
+   * jogo aqui não é contraste de texto — é o objeto continuar se lendo como
+   * objeto sobre o fundo novo.
+   */
+  setTheme?(theme: "light" | "dark"): void;
 }

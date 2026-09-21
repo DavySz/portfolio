@@ -27,8 +27,16 @@ export const Text: React.FC<TextProps> = ({
       // o ponto mais claro do shader (#653bbe): primary-200 = 4.60:1 (AA).
       case "accentLight":
         return "text-primary-200";
+      /* Q1 do DARK-MODE.md: no escuro a ponta `primary-900` do gradiente fica
+         a 1,34:1 do fundo — ilegível. Não é um valor que um token resolva: é
+         um PAR de cores, então o componente troca de variante. No escuro usa o
+         mesmo tratamento que o hero já usava sobre superfície escura. */
       case "gradient":
-        return "bg-gradient-to-tr from-primary-500 to-primary-900 bg-clip-text text-transparent";
+        return clsx(
+          "bg-clip-text text-transparent",
+          "bg-gradient-to-tr from-primary-500 to-primary-900",
+          "dark:from-white dark:to-primary-200"
+        );
       case "gradientLight":
         return "bg-gradient-to-tr from-white to-primary-200 bg-clip-text text-transparent";
       case "white":

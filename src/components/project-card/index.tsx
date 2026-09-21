@@ -10,7 +10,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 }) => {
   return (
     <div
-      className="group relative flex flex-col w-full h-full min-h-[400px] md:min-h-[500px] rounded-[20px] shadow-lg bg-surface-raised
+      className="group relative flex flex-col w-full h-full min-h-[400px] md:min-h-[500px] rounded-[20px] shadow-lg dark:shadow-none dark:border dark:border-line bg-surface-raised
                  transition-all duration-300 ease-out
                  hover:shadow-xl hover:shadow-primary-500/10 hover:-translate-y-2
                  transform active:scale-95

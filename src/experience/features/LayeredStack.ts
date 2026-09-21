@@ -41,6 +41,14 @@ const SHADOW = 0x2a1454;
 const BODY = 0x6b3acc;
 const SHEEN = 0xd4c7ff;
 
+/**
+ * No tema escuro a sombra do objeto encosta no fundo da página: primary-900
+ * fica a 1,23:1 de `--page`, e o volume perde o contorno. primary-800 sobe
+ * para 1,84:1 e mantém a faixa de valor em 0,571, contra os 0,604 do claro —
+ * que é o que faz a cena parecer material e não papel.
+ */
+const SHADOW_DARK = 0x4a2496;
+
 const CAMERA_FOV = 32;
 const CAMERA_DISTANCE = 7;
 
@@ -103,6 +111,7 @@ export class LayeredStack implements Feature {
   private readonly geometries: THREE.BufferGeometry[] = [];
   private readonly material: THREE.MeshBasicNodeMaterial;
   private readonly uSpread = uniform(0);
+  private readonly uShadow = uniform(color(SHADOW));
 
   private readonly animate: boolean;
   private elapsed = 0;
@@ -146,6 +155,8 @@ export class LayeredStack implements Feature {
   private buildColorNode() {
     const { uSpread } = this;
 
+    const { uShadow } = this;
+
     return Fn(() => {
       const normal = normalize(normalView);
       const view = positionViewDirection;
@@ -156,11 +167,7 @@ export class LayeredStack implements Feature {
 
       // Difusa com faixa larga: da sombra quase primary-900 até o corpo.
       const lambert = dot(normal, light).mul(0.5).add(0.5);
-      const base = mix(
-        color(SHADOW),
-        color(BODY),
-        smoothstep(0.1, 0.92, lambert)
-      );
+      const base = mix(uShadow, color(BODY), smoothstep(0.1, 0.92, lambert));
 
       // Especular Blinn-Phong: é o ponto de brilho que denuncia superfície
       // dura. Sem ele qualquer sólido parece papel fosco.
@@ -175,6 +182,12 @@ export class LayeredStack implements Feature {
 
       return vec4(base.add(color(SHEEN).mul(glow)), 1);
     })();
+  }
+
+  setTheme(theme: "light" | "dark") {
+    this.uShadow.value = new THREE.Color(
+      theme === "dark" ? SHADOW_DARK : SHADOW
+    );
   }
 
   resize({ width, height }: FrameContext) {

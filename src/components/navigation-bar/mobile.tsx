@@ -205,7 +205,7 @@ export const MobileNavigationBar: React.FC = () => {
         {...inertWhenClosed(!isVisible)}
         className={clsx(
           "fixed top-0 right-0 h-full w-80 max-w-[90vw] z-50",
-          "bg-surface-raised shadow-2xl shadow-black/20",
+          "bg-surface-raised shadow-2xl shadow-black/20 dark:shadow-none dark:border-l dark:border-line",
           "transform transition-all duration-300 ease-out",
           {
             "translate-x-0": isVisible,
