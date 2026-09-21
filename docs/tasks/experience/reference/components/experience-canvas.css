@@ -1,0 +1,12 @@
+/* O container já nasce com um gradiente parecido com o shader:
+   é o que aparece antes do fade-in e em quem cai no tier 'off'. */
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 70% 30%, #7947df55 0%, transparent 55%),
+    radial-gradient(90% 80% at 20% 80%, #2a176099 0%, transparent 60%),
+    #0e0a1a;
+}
