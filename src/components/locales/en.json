@@ -1,11 +1,44 @@
 {
   "navigation-bar": {
     "home": "Home",
-    "about": "About",
+    "about": "About me",
     "services": "Expertise",
     "skills": "Stack",
-    "projects": "Projects",
+    "projects": "Case studies",
     "articles": "Articles",
     "hire-me": "Let's talk"
+  },
+  "gravity": {
+    "enable": "Turn off gravity",
+    "disable": "Turn gravity back on"
+  },
+  "article": {
+    "read": "Read here",
+    "onMedium": "Medium",
+    "readOnMedium": "Also on Medium",
+    "readingTime": "{{minutes}} min read",
+    "notFound": "Article not found",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyFailed": "Could not copy",
+    "toc": "On this page",
+    "previous": "Previous",
+    "next": "Next",
+    "allArticles": "All articles",
+    "onlyInPortuguese": "This article has not been translated yet — the text below is in Portuguese."
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content",
+    "mainNavigation": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuTitle": "Menu",
+    "openProfile": "Open {{network}} profile",
+    "opensInNewTab": "opens in new tab",
+    "language": "Language",
+    "theme": "Theme",
+    "themeSystem": "Follow the system",
+    "themeLight": "Light",
+    "themeDark": "Dark"
   }
 }

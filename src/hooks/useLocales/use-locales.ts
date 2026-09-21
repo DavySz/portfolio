@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import i18n from "../../i18n";
+import i18n, { changeLanguage } from "../../i18n";
 import type { Language } from "./use-locales.types";
 
 export const useLocales = () => {
@@ -11,10 +11,13 @@ export const useLocales = () => {
     return () => i18n.off("languageChanged", handleLanguageChanged);
   }, []);
 
-  const toggleLanguage = useCallback(() => {
-    const newLang: Language = language === "en" ? "pt" : "en";
-    i18n.changeLanguage(newLang);
-  }, [language]);
+  /* Escolher explicitamente, não alternar: o seletor virou dois botões, e
+     cada um sabe qual idioma representa. */
+  const selectLanguage = useCallback((next: Language) => {
+    // changeLanguage carrega o idioma antes de trocar: sem isso a tela
+    // apareceria com as chaves cruas até o arquivo chegar.
+    void changeLanguage(next);
+  }, []);
 
-  return { language, toggleLanguage };
+  return { language, selectLanguage };
 };

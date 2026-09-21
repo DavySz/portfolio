@@ -4,18 +4,18 @@ import { getLinks, SOCIALS } from "./constants";
 import { Link } from "../../../components/link";
 import { Text } from "../../../components/text";
 import { CONTACTS } from "../../../shared/constants";
-import { Button } from "../../../components/button";
+import { ExternalLink } from "../../../components/external-link";
+import clsx from "clsx";
 import { useTranslation } from "react-i18next";
+import { useGravityMode } from "../../../hooks/useGravityMode/use-gravity-mode";
 
 export const Footer: React.FC = () => {
   const { t } = useTranslation("home");
-
-  const openLink = (link: string): void => {
-    window.open(link, "_blank");
-  };
+  const { t: tc } = useTranslation("component");
+  const gravity = useGravityMode();
 
   return (
-    <footer className="py-16 md:py-24 px-6 xl:px-[100px] flex flex-col justify-center bg-secondary-900">
+    <footer className="py-16 md:py-24 px-6 xl:px-[100px] flex flex-col justify-center bg-footer">
       <div className="flex flex-col md:flex-row justify-between pb-16 gap-6 md:gap-0">
         <div className="max-w-[500px]">
           <Text
@@ -28,52 +28,87 @@ export const Footer: React.FC = () => {
           </Text>
         </div>
         <div className="flex flex-col gap-6">
+          {/* Contato é o objetivo da página: precisa ser acionável, não um
+              texto para selecionar e copiar. A linha inteira é o link, para o
+              alvo de toque não ser só a altura da fonte. */}
+          <a
+            href={`mailto:${CONTACTS.GMAIL}`}
+            className="flex gap-5 items-center rounded-sm text-white transition-colors duration-300
+                       hover:text-primary-300
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-footer"
+          >
+            <MdOutlineMailOutline
+              size={20}
+              color="currentColor"
+              aria-hidden="true"
+            />
+            <span className="font-poppins text-body-md">{CONTACTS.GMAIL}</span>
+          </a>
+          <a
+            href={`tel:${CONTACTS.PHONE}`}
+            className="flex gap-5 items-center rounded-sm text-white transition-colors duration-300
+                       hover:text-primary-300
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-footer"
+          >
+            <LuPhone size={20} color="currentColor" aria-hidden="true" />
+            {/* O `tel:` leva o E.164; quem lê e quem ouve recebe o formatado. */}
+            <span className="font-poppins text-body-md">
+              {CONTACTS.PHONE_DISPLAY}
+            </span>
+          </a>
           <div className="flex gap-5 items-center">
-            <MdOutlineMailOutline size={20} color="#ffff" />
-            <Text
-              as="span"
-              variant="bodyText"
-              color="white"
-              className="text-body-md"
-            >
-              {CONTACTS.GMAIL}
-            </Text>
-          </div>
-          <div className="flex gap-5 items-center">
-            <LuPhone size={20} color="#ffff" />
-            <Text
-              as="span"
-              variant="bodyText"
-              color="white"
-              className="text-body-md"
-            >
-              {CONTACTS.PHONE}
-            </Text>
-          </div>
-          <div className="flex gap-5 items-center">
-            {SOCIALS.map((social, index) => (
-              <Button
-                onClick={() => openLink(social.href)}
+            {SOCIALS.map((social) => (
+              <ExternalLink
+                href={social.href}
                 variant="tertiary"
                 icon={social.icon}
-                key={index}
+                label={tc("a11y.openProfile", { network: social.name })}
+                key={social.name}
               />
             ))}
           </div>
         </div>
       </div>
-      <div className="w-full h-[0.5px] bg-white mb-12" />
+      <div className="w-full h-[0.5px] bg-surface-raised mb-12" />
       <div className="flex items-center justify-between flex-wrap gap-8">
         <div className="flex gap-8 flex-wrap">
-          {getLinks(t).map((link, index) => (
-            <Link href={link.href} key={index} variant="secondary">
+          {getLinks(t).map((link) => (
+            <Link href={link.href} key={link.href} variant="secondary">
               {link.label}
             </Link>
           ))}
         </div>
-        <span className="text-base font-normal font-poppins text-[#5F5F5F]">
-          {t("footer.copyright")}
-        </span>
+        <div className="flex items-center gap-6">
+          {/* Discreto, não escondido: é um botão de verdade, alcançável por
+              teclado e anunciado por leitor de tela. Some com reduced motion. */}
+          {gravity.available && (
+            <button
+              type="button"
+              onClick={gravity.toggle}
+              /* O rótulo e o aria-pressed mudam com o estado: um botão que
+                 diz sempre "desligar" mente para quem já desligou. */
+              aria-pressed={gravity.active}
+              /* Não cai junto com a página: é o caminho de volta. Com o modo
+                 ativo ele flutua, porque o rodapé fica fora de alcance — o
+                 scroll está travado e os blocos não recebem clique. */
+              data-no-physics
+              className={clsx(
+                "font-poppins transition-all duration-300",
+                "focus:outline-none focus:ring-2 focus:ring-focus focus:ring-offset-2",
+                gravity.active
+                  ? "fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-3xl bg-gradient-to-r from-primary-500 to-primary-900 px-8 py-3 text-base font-semibold text-white shadow-primary hover:scale-105 focus:ring-offset-transparent"
+                  : "text-base font-normal text-footer-muted underline decoration-dotted underline-offset-4 hover:text-primary-300 focus:ring-offset-footer"
+              )}
+            >
+              {tc(gravity.active ? "gravity.disable" : "gravity.enable")}
+            </button>
+          )}
+          {/* gray-400 sobre secondary-900 = 6,24:1. O #5F5F5F que estava aqui
+              dava 2,48:1, quase metade do mínimo AA de 4,5:1. */}
+          <span className="text-base font-normal font-poppins text-footer-muted">
+            {t("footer.copyright")}
+          </span>
+        </div>
       </div>
     </footer>
   );

@@ -1,19 +1,29 @@
 import { useTranslation } from "react-i18next";
-import { ServiceCards } from "../../../components/service-cards";
-import { ServiceTable } from "../../../components/service-table";
+import { useExperienceSection } from "../../../hooks/useExperienceSection/use-experience-section";
+import { ServiceList } from "../../../components/service-list";
 import { Text } from "../../../components/text";
 import { getServices } from "./constants";
 
 export const Services: React.FC = () => {
   const { t } = useTranslation("home");
+  const sectionRef = useExperienceSection("services");
 
   return (
     <section
+      ref={sectionRef}
       id="services"
-      className="flex flex-col items-center justify-center bg-secondary-50 py-16 md:py-24 px-6 xl:px-[100px]"
+      className="relative isolate flex flex-col items-center justify-center py-16 md:py-24 px-6 xl:px-[100px]"
     >
+      {/* O fundo sai do CSS e passa a ser pintado pelo canvas, na mesma cor.
+          Este elemento é o fallback: mantém a seção idêntica sem WebGL e se
+          apaga quando o experience assume. */}
+      <div
+        className="absolute inset-0 -z-10 bg-surface experience-fallback"
+        data-no-physics
+        aria-hidden="true"
+      />
       <Text
-        as="h1"
+        as="h2"
         variant="sectionTitle"
         color="gradient"
         align="center"
@@ -26,17 +36,11 @@ export const Services: React.FC = () => {
         variant="sectionDescription"
         color="secondary"
         align="center"
-        className="text-body-md lg:text-body-xl mb-16 leading-relaxed"
-        maxWidth="764px"
+        className="text-body-md lg:text-body-xl mb-16 leading-relaxed max-w-section"
       >
         {t("services.description")}
       </Text>
-      <div className="hidden md:flex">
-        <ServiceTable data={getServices(t)} />
-      </div>
-      <div className="md:hidden">
-        <ServiceCards data={getServices(t)} />
-      </div>
+      <ServiceList data={getServices(t)} />
     </section>
   );
 };

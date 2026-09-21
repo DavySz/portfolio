@@ -1,19 +1,21 @@
 import type { SkillCardProps } from "./types";
 
-export const SkillCard: React.FC<SkillCardProps> = ({ data, onClick }) => {
+export const SkillCard: React.FC<SkillCardProps> = ({ data }) => {
   return (
-    <div
-      className="group cursor-pointer flex flex-col items-center justify-center transition-all duration-300 ease-out
-                 hover:scale-105 animate-fade-in-up"
-      onClick={onClick}
-      style={{
-        animationDelay: `${Math.random() * 0.5}s`,
-      }}
+    /* Link de verdade em vez de div com onClick: alcançável por teclado,
+       anunciado como link e com "abrir em nova aba" funcionando. */
+    <a
+      href={data.link}
+      target="_blank"
+      rel="noreferrer noopener"
+      className="group flex flex-col items-center justify-center transition-all duration-300 ease-out
+                 hover:scale-105
+                 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:rounded-[30px]"
     >
       <div
-        className="bg-secondary-50 rounded-[30px] h-[150px] w-[150px] flex flex-col items-center justify-center mb-5 
+        className="bg-surface rounded-[30px] h-[150px] w-[150px] flex flex-col items-center justify-center mb-5 
                       transition-all duration-300 ease-out
-                      group-hover:bg-secondary-900 group-hover:-translate-y-3 group-hover:shadow-xl group-hover:shadow-primary-500/20
+                      group-hover:bg-footer group-hover:-translate-y-3 group-hover:shadow-xl group-hover:shadow-primary-500/20
                       group-hover:animate-pulse-soft transform group-active:scale-95
                       relative overflow-hidden"
       >
@@ -29,10 +31,10 @@ export const SkillCard: React.FC<SkillCardProps> = ({ data, onClick }) => {
       </div>
       <p
         className="font-poppins font-normal text-primary-500 text-xl transition-all duration-300 ease-out
-                    group-hover:text-primary-600 group-hover:font-semibold"
+                    group-hover:text-accent group-hover:font-semibold"
       >
         {data.title}
       </p>
-    </div>
+    </a>
   );
 };

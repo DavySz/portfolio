@@ -1,5 +1,14 @@
 import type { TFunction } from "i18next";
 
+/** Seções observadas pelo scroll-spy, na ordem do documento. */
+export const SECTION_IDS = [
+  "self",
+  "services",
+  "skills",
+  "projects",
+  "articles",
+];
+
 export const getLinks = (t: TFunction<"component", undefined>) => [
   {
     href: "/",

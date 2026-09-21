@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Debug — pipeline de assets 3D</title>
+    <style>
+      body {
+        font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+        max-width: 60rem;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        background: #0e0a1a;
+        color: #f3f0ff;
+        line-height: 1.6;
+      }
+      h1 {
+        font-size: 1.25rem;
+        color: #b197e8;
+      }
+      p {
+        margin: 0.25rem 0;
+      }
+      [data-status="ok"]::before {
+        content: "✔ ";
+        color: #10b981;
+      }
+      [data-status="fail"]::before {
+        content: "✖ ";
+        color: #ef4444;
+      }
+      small {
+        color: #9573d7;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Debug — pipeline de assets 3D</h1>
+    <p>
+      <small>
+        Página só de desenvolvimento; não entra no build de produção. Rode
+        <code>yarn assets:test-cube &amp;&amp; yarn assets:optimize</code> antes.
+      </small>
+    </p>
+    <div id="output"></div>
+    <script type="module" src="/src/debug/assets-debug.ts"></script>
+  </body>
+</html>

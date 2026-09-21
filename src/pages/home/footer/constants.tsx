@@ -14,18 +14,22 @@ export const getLinks = (t: TFunction<"home", undefined>) => [
 export const SOCIALS = [
   {
     icon: FaGithubAlt,
+    name: "GitHub",
     href: CONTACTS.GITHUB,
   },
   {
     icon: FaMedium,
+    name: "Medium",
     href: CONTACTS.MEDIUM,
   },
   {
     icon: FaLinkedin,
+    name: "LinkedIn",
     href: CONTACTS.LINKEDIN,
   },
   {
     icon: FaInstagram,
+    name: "Instagram",
     href: CONTACTS.INSTAGRAM,
   },
 ];

@@ -21,9 +21,11 @@ export type ProjectCategory =
   | "Article"
   | "Other";
 
+import type { ImageSource } from "../responsive-image/types";
+
 export interface ProjectCardProps {
   category: ProjectCategory;
-  thumb: string;
+  thumb: ImageSource;
   title: string;
   link: string;
 }

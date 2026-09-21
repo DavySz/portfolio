@@ -6,12 +6,12 @@
     "download": "Download CV"
   },
   "self": {
-    "title": "Who I am",
+    "title": "About me",
     "description": "I'm a Frontend Engineer specialized in Fintech, with real-world experience building financial products at Fretepago. I master the modern frontend ecosystem and have expertise in creating interfaces that handle critical transactions, sensitive data, and high performance. If you're looking for someone who combines clean code, robust design systems, and deep understanding of financial flows, let's connect.",
     "download": "Download CV"
   },
   "services": {
-    "title": "My Expertise",
+    "title": "Expertise",
     "description": "Specialized in modern frontend with focus on high-criticality financial applications.",
     "items": {
       "mobile": {
@@ -33,11 +33,11 @@
     }
   },
   "skills": {
-    "title": "Stack & Tools",
+    "title": "Stack",
     "description": "Technologies I master to build world-class frontend products, focused on performance, scalability, and developer experience."
   },
   "projects": {
-    "title": "Case Studies",
+    "title": "Case studies",
     "description": "Personal projects where I explore new technologies, architectural patterns, and best practices from the frontend ecosystem.",
     "items": {
       "quezzy": {
@@ -55,34 +55,32 @@
     }
   },
   "articles": {
-    "title": "Articles & Insights",
+    "title": "Articles",
     "description": "Sharing insights about frontend, architecture, and the reality of software development beyond the code.",
-    "seeMore": "See all articles",
-    "items": {
-      "bff": {
-        "title": "BFF – Why Should the Frontend Lead This Revolution?"
-      },
-      "enem": {
-        "title": "The ENEM Effect in Code: How Studying Just to 'Pass' Created a Generation of Insecure Devs"
-      },
-      "testing": {
-        "title": "Unit Testing in Frontend: The Art of Testing What Matters"
-      },
-      "micro": {
-        "title": "Micro Frontends: Divide and Conquer"
-      }
-    }
+    "seeMore": "See all articles"
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Three ways to reach me. Email and phone stay right here; LinkedIn opens in a new tab.",
+    "copy": "Copy",
+    "copied": "Email address copied",
+    "failed": "Could not copy — use the link instead"
   },
   "footer": {
     "description": "Frontend Engineer specialized in Fintech. Currently building the future of payments at Fretepago. Open to challenging opportunities and conversations about technology, frontend architecture, and financial innovation.",
     "copyright": "© Built with React, TypeScript and ☕",
     "links": {
-      "home": "HOME",
-      "about": "ABOUT ME",
-      "services": "SERVICES",
-      "skills": "SKILLS",
-      "projects": "PROJECTS",
-      "articles": "ARTICLES"
+      "home": "Home",
+      "about": "About me",
+      "services": "Expertise",
+      "skills": "Stack",
+      "projects": "Case studies",
+      "articles": "Articles"
     }
+  },
+  "seo": {
+    "title": "Davy de Souza Assunção | Frontend Engineer & Fintech Specialist",
+    "description": "Frontend Engineer specialized in Fintech. I build high-performance financial interfaces with React, TypeScript and Next.js.",
+    "keywords": "frontend engineer, fintech developer, react specialist, typescript expert, nextjs, frontend architecture, design systems, mobile-first, financial applications, davy souza, davy assuncao"
   }
 }

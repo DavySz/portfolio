@@ -1,3 +1,119 @@
+/*
+ * Poppins self-hospedada.
+ *
+ * Antes vinha por `<link rel="stylesheet">` para fonts.googleapis.com: um CSS
+ * de terceiro no caminho crítico, que só depois disparava o download dos
+ * `.woff2` em fonts.gstatic.com. Eram dois handshakes antes de qualquer texto
+ * aparecer — caro num Android de entrada em 4G, que é o aparelho de
+ * referência do projeto.
+ *
+ * Só o subset `latin` (U+0000-00FF e afins). Verificado que nenhuma letra do
+ * site ou dos artigos cai fora dele: os acentos do português vivem todos no
+ * Latin-1 Supplement. Sem `unicode-range` de propósito — não há outro subset
+ * para escolher, e o que a fonte não cobrir cai no fallback por caractere,
+ * como já caía.
+ */
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/poppins-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/poppins-400-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/poppins-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/poppins-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/poppins-700.woff2") format("woff2");
+}
+
+/*
+ * Tokens semânticos de cor.
+ *
+ * Os componentes deixam de nomear a cor ("roxo 600") e passam a nomear o
+ * papel ("acento"): a mesma classe funciona nos dois temas, e trocar de tema
+ * é trocar o valor da variável, não varrer 45 usos de classe.
+ *
+ * A paleta escura não foi inventada. O site já tinha um vocabulário escuro em
+ * três lugares — o fundo do hero, os blocos de código dos artigos e o rodapé.
+ * `--surface`, `--surface-raised` e `--line` são exatamente as cores que o
+ * bloco de código já usava; `--page` é o fundo do hero. Daí o escuro ser roxo
+ * e não cinza, e ser reconhecidamente deste site.
+ *
+ * Canais RGB separados por espaço, e não hex, para o Tailwind conseguir
+ * aplicar opacidade por cima (`bg-surface/80`).
+ *
+ * `color-scheme` é o que faz barra de rolagem, `<select>` e o foco nativo
+ * seguirem o tema. Sem ele a scrollbar fica branca no escuro.
+ */
+:root {
+  color-scheme: light;
+
+  --page: 255 255 255;
+  --surface: 246 243 252;
+  --surface-raised: 255 255 255;
+  --line: 229 231 235;
+
+  --ink: 17 24 39;
+  --ink-secondary: 55 65 81;
+  --ink-muted: 75 85 99;
+
+  --accent: 107 58 204;
+  --accent-strong: 90 45 184;
+  --focus: 121 71 223;
+
+  /* O rodapé é a âncora escura no claro e a superfície mais clara no escuro:
+     a cor não muda, o papel sim. */
+  --footer: 42 20 84;
+  --footer-muted: 156 163 175;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --page: 14 10 26;
+  --surface: 21 16 43;
+  --surface-raised: 29 22 64;
+  --line: 44 33 80;
+
+  --ink: 233 227 255;
+  --ink-secondary: 212 199 255;
+  --ink-muted: 177 151 232;
+
+  --accent: 177 151 232;
+  --accent-strong: 212 199 255;
+  --focus: 177 151 232;
+
+  --footer: 42 20 84;
+  --footer-muted: 177 151 232;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,7 +130,25 @@
     scroll-behavior: smooth;
   }
 
+  /* O header é sticky: sem isto, pular para uma âncora deixa o título da
+     seção escondido atrás dele. */
+  section[id],
+  [id="main-content"],
+  .article-heading {
+    scroll-margin-top: 6rem;
+  }
+
   body {
+    /* O fundo e a cor base da página seguem o tema. Antes o branco vinha do
+       padrão do navegador, e no escuro sobraria branco atrás de tudo.
+
+       A transição suaviza a troca de tema. Não precisa de guarda própria: o
+       bloco de `prefers-reduced-motion` abaixo zera `transition-duration` de
+       tudo, inclusive daqui. */
+    @apply bg-page text-ink;
+    transition:
+      background-color 300ms ease,
+      color 300ms ease;
     font-family: "Poppins", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -59,12 +193,6 @@
     white-space: normal;
   }
 
-  /* Table cells */
-  td,
-  th {
-    @apply px-[50px] py-[40px];
-  }
-
   /* Performance-optimized animations */
   .animate-float {
     animation: float 6s ease-in-out infinite;
@@ -95,12 +223,240 @@
     animation: gradient 4s ease infinite;
   }
 
-  .animate-shimmer {
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
+  /* Marcador do fallback: qualquer seção com cena declara este elemento com
+     a sua cor de fundo. Ele é o que aparece no tier "off", sem WebGPU/WebGL2
+     e até o experience assumir — e precisa se apagar quando ele assume,
+     porque o canvas é global e fica ATRÁS das seções. O canvas já está
+     pintado quando o fade começa, então não há branco vazando no meio. */
+  .experience-fallback {
+    transition: opacity 900ms ease;
+  }
+
+  [data-experience="live"] .experience-fallback {
+    opacity: 0;
+  }
+
+  /* Gradiente do hero. CSS próprio (e não Tailwind) porque são três camadas
+     de radial-gradient com stops próprios: como valor arbitrário do Tailwind
+     viraria uma string ilegível. As cores espelham DEEP/MID/BRAND de
+     src/experience/features/HeroBackground.ts. */
+  .experience-fallback-hero {
+    background:
+      radial-gradient(120% 90% at 70% 30%, #7947df55 0%, transparent 55%),
+      radial-gradient(90% 80% at 20% 80%, #2a176099 0%, transparent 60%),
+      #0e0a1a;
   }
 }
+
+/* Transição entre a home e o artigo.
+   View Transitions é progressivo: onde não existe, a troca só acontece seca,
+   sem nada quebrar. O bloco de prefers-reduced-motion abaixo desliga a
+   animação — uma página inteira cruzando a tela é exatamente o movimento que
+   a preferência pede para evitar. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: view-fade-out 180ms ease both;
+  }
+
+  ::view-transition-new(root) {
+    animation: view-fade-in 260ms ease both;
+  }
+}
+
+@keyframes view-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes view-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Artigos — FORA de @layer de propósito.
+   O Tailwind poda o que está dentro de @layer e não encontra no `content`.
+   Estas classes vivem no HTML gerado do markdown em tempo de build, e os
+   `hljs-*` são emitidos pelo highlight.js: nenhum dos dois existe em arquivo
+   que o Tailwind varra, então dentro de um @layer eles seriam apagados.
+   --------------------------------------------------------------------------- */
+
+/* Conteúdo dos artigos.
+   CSS próprio (e não Tailwind) porque o HTML vem do markdown convertido no
+   build: não há onde pendurar classe elemento a elemento. É exatamente o
+   caso em que o CLAUDE.md abre exceção. Tudo fica escopado em
+   `.article-content` para não vazar para o resto do site. */
+.article-content {
+  @apply font-poppins text-body-md leading-relaxed text-ink-secondary;
+}
+
+.article-content > * + * {
+  @apply mt-5;
+}
+
+/* Âncora copiável ao lado do título, como em docs técnicas. Só aparece no
+   hover ou no foco, para não poluir a leitura — mas existe no DOM e é
+   alcançável por teclado. */
+.article-heading {
+  @apply relative;
+}
+
+.article-anchor {
+  @apply ml-2 align-middle text-primary-400 no-underline opacity-0 transition-opacity duration-200;
+  @apply focus:outline-none focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-primary-500;
+}
+
+.article-heading:hover .article-anchor,
+.article-anchor:focus-visible {
+  @apply opacity-100;
+}
+
+.article-content h2 {
+  @apply mt-12 text-heading-xl font-bold leading-snug text-ink md:text-display-sm;
+}
+
+.article-content h3 {
+  @apply mt-9 text-heading-lg font-semibold leading-snug text-ink;
+}
+
+.article-content h4 {
+  @apply mt-7 text-heading-md font-semibold text-ink;
+}
+
+.article-content strong {
+  @apply font-semibold text-ink;
+}
+
+.article-content a {
+  @apply text-primary-600 underline underline-offset-4 transition-colors duration-300 hover:text-accent-strong;
+}
+
+.article-content ul {
+  @apply list-disc space-y-2 pl-6;
+}
+
+.article-content ol {
+  @apply list-decimal space-y-2 pl-6;
+}
+
+.article-content blockquote {
+  @apply border-l-4 border-accent bg-accent/10 py-3 pl-5 pr-4 italic text-ink-secondary;
+}
+
+.article-content hr {
+  @apply my-10 border-line;
+}
+
+/* Código inline (fora de <pre>) */
+.article-content :not(pre) > code {
+  @apply rounded bg-surface px-1.5 py-0.5 text-body-sm text-accent-strong;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+/* Bloco de código: barra com a linguagem + área rolável.
+   `figure`/`figcaption` porque o bloco é uma peça com legenda, não um <pre> solto. */
+.article-code {
+  @apply my-6 overflow-hidden rounded-xl border border-[#2c2150] bg-[#15102b];
+}
+
+.article-code-bar {
+  @apply flex items-center justify-between gap-4 border-b border-[#2c2150] bg-[#1d1640] px-4 py-2;
+}
+
+.article-code-lang {
+  @apply font-poppins text-body-xs font-semibold uppercase tracking-wider text-[#b8a6f0];
+}
+
+.article-code-copy {
+  @apply rounded-md px-2 py-1 font-poppins text-body-xs font-medium text-[#b8a6f0];
+  @apply transition-colors duration-200 hover:bg-white/10 hover:text-white;
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-300;
+}
+
+.article-code-pre {
+  /* rolagem horizontal fica DENTRO do bloco: a página nunca rola de lado */
+  @apply overflow-x-auto p-4 text-body-sm leading-[1.7] md:p-5;
+}
+
+.article-code-pre code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  @apply text-[#e9e3ff];
+  /* tabulação de 8 é larga demais para o espaço de um artigo */
+  tab-size: 2;
+}
+
+/* barra de rolagem discreta, no tom do bloco */
+.article-code-pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+.article-code-pre::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-white/20;
+}
+
+.article-code-pre::-webkit-scrollbar-thumb:hover {
+  @apply bg-white/30;
+}
+
+/* Tema do highlight.js na paleta da marca. Classes, não estilo inline:
+   o tema pesa uma vez no CSS em vez de repetir em cada token do HTML. */
+.hljs-comment,
+.hljs-quote {
+  @apply italic text-[#9a8fc4];
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-type {
+  @apply text-[#c4a7ff];
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition {
+  @apply text-[#9ae6c4];
+}
+
+.hljs-number,
+.hljs-symbol {
+  @apply text-[#ffc98b];
+}
+
+.hljs-title,
+.hljs-title.function_,
+.hljs-section {
+  @apply text-[#8fd3ff];
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-variable,
+.hljs-property {
+  @apply text-[#ffb4d1];
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  @apply text-[#ffe08a];
+}
+
+.hljs-deletion {
+  @apply text-[#ff9b9b];
+}
+
+.hljs-emphasis {
+  @apply italic;
+}
+
+.hljs-strong {
+  @apply font-semibold;
+}
+
 
 /* Keyframes */
 @keyframes float {
@@ -167,14 +523,5 @@
   }
   100% {
     background-position: 0% 50%;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
   }
 }

@@ -1,11 +1,44 @@
 {
   "navigation-bar": {
     "home": "Início",
-    "about": "Sobre",
+    "about": "Sobre mim",
     "services": "Expertise",
     "skills": "Stack",
-    "projects": "Projetos",
+    "projects": "Cases de estudo",
     "articles": "Artigos",
     "hire-me": "Vamos conversar"
+  },
+  "gravity": {
+    "enable": "Desligar a gravidade",
+    "disable": "Ligar a gravidade de volta"
+  },
+  "article": {
+    "read": "Ler aqui",
+    "onMedium": "Medium",
+    "readOnMedium": "Também no Medium",
+    "readingTime": "{{minutes}} min de leitura",
+    "notFound": "Artigo não encontrado",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "copyFailed": "Não deu para copiar",
+    "toc": "Nesta página",
+    "previous": "Anterior",
+    "next": "Próximo",
+    "allArticles": "Todos os artigos",
+    "onlyInPortuguese": "Este artigo ainda não foi traduzido — o texto abaixo está em português."
+  },
+  "a11y": {
+    "skipToContent": "Pular para o conteúdo principal",
+    "mainNavigation": "Navegação principal",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "menuTitle": "Menu",
+    "openProfile": "Abrir perfil no {{network}}",
+    "opensInNewTab": "abre em nova aba",
+    "language": "Idioma",
+    "theme": "Tema",
+    "themeSystem": "Seguir o sistema",
+    "themeLight": "Claro",
+    "themeDark": "Escuro"
   }
 }

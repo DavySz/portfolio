@@ -1,11 +1,15 @@
-import { defineConfig } from "vite";
+// `vitest/config` reexporta o defineConfig do Vite já com o bloco `test`
+// tipado; o do "vite" puro não conhece esse campo.
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import { visualizer } from "rollup-plugin-visualizer";
+import { markdownArticles } from "./plugins/markdown";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    markdownArticles(),
     visualizer({
       filename: "dist/bundle-analysis.html",
       open: false,
@@ -13,6 +17,12 @@ export default defineConfig({
       brotliSize: true,
     }),
   ],
+  /* Vitest reaproveita esta config inteira — plugins, alias e tudo. Só o
+     bloco `test` é dele. */
+  test: {
+    environment: "node",
+    include: ["src/**/*.test.ts", "scripts/**/*.test.ts"],
+  },
   resolve: {
     alias: {
       "@": "/src",

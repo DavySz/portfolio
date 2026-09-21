@@ -147,6 +147,15 @@ Gzip real de cada arquivo (`gzip -9`), não a estimativa do log do Vite.
 |---|---:|---:|
 | `assets/index.D8Tifvub.css` | 29.875 B | **5.666 B** |
 
+> ### ⚠️ Estes números ficaram obsoletos
+>
+> Medidos em 2026-09-21 no commit `9ffa418`, **antes** da otimização de
+> imagens. A página tinha 8.634 kB de imagem; hoje tem 449 kB. Qualquer
+> Lighthouse rodado agora não é comparável com a seção 7.3 deste arquivo.
+>
+> Estado atual: JS inicial 79627 B, CSS 7524 B, imagens 459 kB.
+> O histórico completo está em `REPORT.md` e `AUDIT.md`.
+
 > ### 🎯 Orçamento herdado pelas próximas tasks
 > **JS inicial: 77.128 B gzip (75,3 kB)**
 > **JS + CSS inicial: 82.794 B gzip (80,9 kB)**

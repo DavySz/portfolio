@@ -1,14 +1,43 @@
 <!doctype html>
-<html lang="pt-BR">
+<!-- O idioma real é definido em runtime por src/i18n: o site é bilíngue -->
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      Anti-flash do tema. Inline e síncrono de propósito, e antes de qualquer
+      CSS: qualquer coisa adiada — módulo, defer, React — chega depois do
+      primeiro paint, e o flash é exatamente o que este script evita.
+      Repete a regra de src/shared/theme.ts: escolha salva > sistema.
+      O try/catch cobre modo privado, onde localStorage lança.
+    -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("davysz:theme");
+          var dark =
+            saved === "dark" ||
+            (saved !== "light" &&
+              matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.classList.add("dark");
+          document.documentElement.style.colorScheme = dark
+            ? "dark"
+            : "light";
+        } catch (e) {}
+      })();
+    </script>
 
     <!-- SEO Meta Tags -->
     <meta
       name="robots"
       content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
     />
+    <!--
+      Duas de novo, revertendo I12 de propósito: lá elas traziam a mesma cor e
+      eram só ruído; aqui trazem cores diferentes, que é para o que a media
+      query existe. É a cor da barra do navegador no mobile.
+    -->
     <meta
       name="theme-color"
       content="#7947DF"
@@ -16,22 +45,22 @@
     />
     <meta
       name="theme-color"
-      content="#7947DF"
+      content="#0E0A1A"
       media="(prefers-color-scheme: dark)"
     />
     <meta name="author" content="Davy de Souza Assuncao" />
-    <meta name="format-detection" content="telephone=no" />
 
-    <!-- Performance Optimization -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-
-    <!-- Fonts with display=swap for better performance -->
+    <!-- Poppins é self-hospedada (@font-face em src/index.css), então não há
+         mais preconnect: nenhum host de terceiro entra no caminho crítico.
+         Só o corte do <h1> é pré-carregado; os outros quatro chegam quando o
+         CSS pede. `crossorigin` é obrigatório em preload de fonte, mesmo na
+         mesma origem — sem ele o navegador baixa duas vezes. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/poppins-700.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
 
     <!-- Favicon and PWA -->
@@ -59,6 +88,12 @@
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://davysz.com" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Davy de Souza Assunção — Artigos"
+      href="/rss.xml"
+    />
 
     <!-- Default Title and Meta (will be updated by useSEO hook) -->
     <title>
@@ -66,11 +101,11 @@
     </title>
     <meta
       name="description"
-      content="Frontend Engineer especializado em Fintech. Construo interfaces financeiras de alta performance com React, TypeScript e Next.js. Experiência real na Fretepago."
+      content="Frontend Engineer specialized in Fintech. I build high-performance financial interfaces with React, TypeScript and Next.js."
     />
     <meta
       name="keywords"
-      content="frontend engineer, fintech developer, react specialist, typescript expert, nextjs, fretepago, davy souza, davy assunção"
+      content="frontend engineer, fintech developer, react specialist, typescript expert, nextjs, frontend architecture, design systems, financial applications, davy souza, davy assuncao"
     />
 
     <!-- Open Graph / Facebook -->
@@ -82,10 +117,12 @@
     />
     <meta
       property="og:description"
-      content="Frontend Engineer especializado em Fintech. Construo interfaces financeiras que pessoas confiam."
+      content="Frontend Engineer specialized in Fintech. I build financial interfaces people trust."
     />
     <meta property="og:image" content="https://davysz.com/images/user.jpeg" />
-    <meta property="og:locale" content="pt_BR" />
+    <!-- O site abre em inglês; o useSEO troca os dois na mudança de idioma -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="pt_BR" />
     <meta
       property="og:site_name"
       content="Davy de Souza Assunção - Frontend Engineer"
@@ -100,17 +137,18 @@
     />
     <meta
       name="twitter:description"
-      content="Frontend Engineer especializado em Fintech. Construo interfaces financeiras que pessoas confiam."
+      content="Frontend Engineer specialized in Fintech. I build financial interfaces people trust."
     />
     <meta name="twitter:image" content="https://davysz.com/images/user.jpeg" />
   </head>
   <body>
     <noscript>
       <div style="text-align: center; padding: 2rem">
-        <h1>JavaScript Necessário</h1>
-        <p>
-          Este site requer JavaScript para funcionar corretamente. Por favor,
-          habilite o JavaScript no seu navegador.
+        <h1>JavaScript required</h1>
+        <p>This site needs JavaScript to run. Please enable it in your browser.</p>
+        <p lang="pt-BR">
+          Este site requer JavaScript para funcionar. Habilite o JavaScript no
+          seu navegador.
         </p>
       </div>
     </noscript>

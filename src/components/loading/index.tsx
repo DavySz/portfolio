@@ -1,9 +1,6 @@
 import { memo } from "react";
 import clsx from "clsx";
-
-interface LoadingProps {
-  size?: "sm" | "md" | "lg";
-}
+import type { LoadingProps } from "./types";
 
 export const Loading = memo<LoadingProps>(({ size = "md" }) => {
   const getSizeClasses = () => {

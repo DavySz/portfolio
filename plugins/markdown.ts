@@ -1,0 +1,153 @@
+import { readFileSync } from "node:fs";
+import { Marked } from "marked";
+import hljs from "highlight.js";
+import type { Plugin } from "vite";
+
+/**
+ * Converte os `.md` dos artigos em HTML **em tempo de build**.
+ *
+ * O objetivo é não embarcar nenhuma biblioteca de markdown no site: `marked` e
+ * `highlight.js` são devDependencies e rodam só aqui. Cada `.md` vira um módulo
+ * que exporta HTML pronto, então o Vite o trata como qualquer outro módulo e o
+ * separa em chunk próprio quando importado dinamicamente.
+ *
+ * O destaque de sintaxe usa **classes** (`hljs-keyword`, …) em vez de estilo
+ * inline: o tema vive uma vez no CSS e o HTML de cada artigo fica curto.
+ */
+
+export interface ArticleHeading {
+  id: string;
+  text: string;
+  level: number;
+}
+
+interface ArticleModule {
+  html: string;
+  readingMinutes: number;
+  headings: ArticleHeading[];
+}
+
+/** Palavras por minuto de leitura técnica, usado para estimar o tempo. */
+const WORDS_PER_MINUTE = 200;
+
+/** Nome de exibição das linguagens; o resto cai no identificador cru. */
+const LANGUAGE_NAMES: Record<string, string> = {
+  typescript: "TypeScript",
+  tsx: "TSX",
+  javascript: "JavaScript",
+  js: "JavaScript",
+  json: "JSON",
+  css: "CSS",
+  html: "HTML",
+  bash: "Shell",
+  sh: "Shell",
+  nginx: "nginx",
+  yaml: "YAML",
+  sql: "SQL",
+};
+
+const createMarked = (headings: ArticleHeading[]) => {
+  const marked = new Marked({ gfm: true, breaks: false });
+
+  marked.use({
+    renderer: {
+      code({ text, lang }) {
+        const language = lang && hljs.getLanguage(lang) ? lang : null;
+        const highlighted = language
+          ? hljs.highlight(text, { language }).value
+          : escapeHtml(text);
+        const label = language ? (LANGUAGE_NAMES[language] ?? language) : "";
+
+        // <figure> com barra: o nome da linguagem dá contexto e a barra vira o
+        // lugar do botão de copiar, injetado em runtime pela página do artigo.
+        return `<figure class="article-code" data-language="${language ?? ""}">` +
+          `<figcaption class="article-code-bar">` +
+          `<span class="article-code-lang">${escapeHtml(label)}</span>` +
+          `</figcaption>` +
+          `<pre class="article-code-pre"><code class="hljs${
+            language ? ` language-${language}` : ""
+          }">${highlighted}</code></pre>` +
+          `</figure>`;
+      },
+      heading({ tokens, depth }) {
+        const text = this.parser.parseInline(tokens);
+        // O <h1> da página é o título do artigo. Nos textos o nível mais alto
+        // usado é "##", que deve virar <h2> — rebaixar criaria um salto de
+        // nível (h1 -> h3), que é falha de acessibilidade. O max(2, …) só
+        // protege o caso de algum artigo futuro começar com "#".
+        const level = Math.max(2, depth);
+        const plain = stripTags(text);
+        const id = slugify(plain);
+
+        // Só h2 e h3 entram no sumário; mais fundo que isso vira ruído.
+        if (level <= 3) headings.push({ id, text: plain, level });
+
+        // Âncora copiável ao lado do título, como em docs técnicas.
+        return (
+          `<h${level} id="${id}" class="article-heading">${text}` +
+          `<a href="#${id}" class="article-anchor" aria-label="Link para: ${plain}">#</a>` +
+          `</h${level}>`
+        );
+      },
+      link({ href, title, tokens }) {
+        const text = this.parser.parseInline(tokens);
+        const external = /^https?:\/\//.test(href);
+        const attrs = [
+          `href="${href}"`,
+          title ? `title="${title}"` : "",
+          external ? 'target="_blank" rel="noreferrer noopener"' : "",
+        ]
+          .filter(Boolean)
+          .join(" ");
+        return `<a ${attrs}>${text}</a>`;
+      },
+    },
+  });
+
+  return marked;
+};
+
+const escapeHtml = (value: string): string =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+const stripTags = (value: string): string => value.replace(/<[^>]*>/g, "");
+
+const slugify = (value: string): string =>
+  value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+export const markdownArticles = (): Plugin => {
+  return {
+    name: "markdown-articles",
+    enforce: "pre",
+
+    async transform(_code, id) {
+      if (!id.endsWith(".md")) return null;
+
+      const source = readFileSync(id, "utf8");
+      // um coletor por arquivo: o parser é reusado, a lista não pode ser
+      const headings: ArticleHeading[] = [];
+      const html = await createMarked(headings).parse(source);
+
+      const words = stripTags(source).split(/\s+/).filter(Boolean).length;
+      const module: ArticleModule = {
+        html,
+        readingMinutes: Math.max(1, Math.round(words / WORDS_PER_MINUTE)),
+        headings,
+      };
+
+      return {
+        code: `export default ${JSON.stringify(module)};`,
+        map: null,
+      };
+    },
+  };
+};
