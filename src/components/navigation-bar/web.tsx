@@ -14,7 +14,7 @@ export const WebNavigationBar: React.FC = () => {
 
   return (
     <nav
-      className="flex gap-8 w-full items-center xl:justify-end lg:justify-center py-8 mb-8 md:px-[24px] mb:px-[100px] xl:px-[100px]"
+      className="flex gap-8 w-full items-center xl:justify-end lg:justify-center py-8 md:px-[24px] mb:px-[100px] xl:px-[100px]"
       role="navigation"
       aria-label="Navegação principal"
     >
