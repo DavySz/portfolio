@@ -55,6 +55,10 @@ export const useArticleRoute = (): string | null => {
  * Por isso aqui a gente espera o elemento aparecer E continua realinhando
  * enquanto a altura do documento muda, até o layout ficar quieto. Se a pessoa
  * rolar por conta própria nesse meio tempo, a intenção dela vence e paramos.
+ *
+ * Nada disso vale quando a seção JÁ existe: aí quem rola é o navegador, com o
+ * `scroll-behavior: smooth` do CSS. Assumir o scroll nesse caso trocaria a
+ * navegação macia da home por um salto seco.
  */
 export const useAnchorScroll = (enabled: boolean): void => {
   useEffect(() => {
@@ -122,16 +126,26 @@ export const useAnchorScroll = (enabled: boolean): void => {
 
       deadline = window.setTimeout(stop, ANCHOR_TIMEOUT);
 
+      // Só assumimos o scroll se a seção não estava pronta. Se ela já existe,
+      // o navegador resolve a âncora sozinho — e aí vale o `scroll-behavior:
+      // smooth` do CSS, que é a navegação macia de sempre dentro da home.
+      let waited = false;
+
       const waitForTarget = () => {
         if (stopped) return;
 
         const target = document.getElementById(id);
         if (target) {
+          if (!waited) {
+            stop();
+            return;
+          }
           align(target);
           holdUntilSettled(target);
           return;
         }
 
+        waited = true;
         frame = requestAnimationFrame(waitForTarget);
       };
 
