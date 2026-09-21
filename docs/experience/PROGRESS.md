@@ -9,7 +9,7 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 |---|------|------|------------|--------|--------|-------------|
 | 00 | Discovery e baseline de performance | só leitura | não | **concluída** | — (sem branch, por spec) | `BASELINE.md` criado e commitado direto no master. Bundle medido; **Lighthouse pendente de execução manual** (pendência 1). 15 ajustes levantados para as próximas tasks. |
 | 01 | Núcleo do Experience + fundo em shader no hero | feature | não | **aguardando revisão** | `feat/experience-core` | three@0.186 em chunk dinâmico (**240.672 B gzip**). JS inicial +601 B (+0,78%). **Hero virou escuro** e as cores do texto mudaram para passar AA — precisa de aval visual. |
-| 02 | Pipeline de assets 3D (glTF + Draco + KTX2) | infra | não | pendente | — | |
+| 02 | Pipeline de assets 3D (glTF + Draco + KTX2) | infra | não | **aguardando revisão** | `feat/experience-assets` (ramificada de `feat/experience-core`, **não** do master) | Pipeline 4 passos + loaders + página de debug + `ASSETS.md`. Cubo de teste: 3,1 kB → 2,4 kB (−22,7%). **`ktx` não instalado → saída em WebP.** Bundle inalterado. |
 | 03 | Objeto-assinatura no hero | feature | **sim, antes de codar** | pendente | — | Checkpoint de conceito. |
 | 04 | Canvas global + cenas por seção | refactor | não | pendente | — | Ponto de montagem provável: `PageTemplate`. |
 | 05 | Cena de domínio: fluxo de transações | feature | **sim, antes de codar** | pendente | — | Checkpoint de seção e narrativa. |
@@ -30,6 +30,9 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 5 | Alinhar CLAUDE.md × repositório quanto ao Prettier (citado na stack, não instalado) | Davy | Não bloqueia. |
 | 6 | **Aval visual do hero escuro** (task 01) + checklist de browsers da spec 01 | Davy | Aceite da task 01. |
 | 7 | Decidir se `prefers-reduced-motion` deve reagir em runtime (hoje é lido só na montagem) | Davy | Candidata à task 08. |
+| 8 | **Os `.blend` ficam versionados (Git LFS) ou fora do repo?** (pergunta da task 02) | Davy | Não bloqueia; documentar no `ASSETS.md`. |
+| 9 | Instalar o binário `ktx` (KTX-Software) e rodar `yarn assets:optimize` de novo | Davy | Sem ele as texturas saem em WebP em vez de KTX2 (perde economia de VRAM). Instruções no `ASSETS.md`. |
+| 10 | Abrir `/debug-assets.html` no Chrome e no Firefox para confirmar Draco + textura decodificando | Davy | Aceite da task 02. |
 
 ## Números de referência
 
@@ -53,3 +56,5 @@ Depois da task 01 (branch `feat/experience-core`, ainda não mergeada):
 | 2026-09-20 | Task 00 executada sobre o commit `9ffa418`. `BASELINE.md` e `PROGRESS.md` criados. Lighthouse não executável no ambiente (sem Chrome no WSL); instruções manuais registradas. |
 | 2026-09-20 | Task 00 commitada direto no master (`cb3a30b`) e enviada ao origin. |
 | 2026-09-20 | Task 01 executada na branch `feat/experience-core`. three@0.186 + @types/three instalados; núcleo, HeroBackground e ExperienceCanvas portados. Hero convertido para superfície escura por exigência de contraste AA. Typecheck, lint e build passando. |
+| 2026-09-20 | Task 01 commitada em `feat/experience-core` (`ede6ee1`), sem push. |
+| 2026-09-20 | Task 02 executada na branch `feat/experience-assets`, ramificada de `feat/experience-core` porque a 01 ainda não está no master. Pipeline glTF, loaders, cubo de teste, página de debug e `ASSETS.md`. |

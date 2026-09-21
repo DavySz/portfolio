@@ -24,3 +24,10 @@ dist-ssr
 *.sw?
 
 .env
+# Decoders derivados de node_modules (yarn assets:decoders / postinstall)
+public/decoders
+
+# Cubo de teste do pipeline de assets: gerado por `yarn assets:test-cube`.
+# Derivado, e não deve ir para produção junto com os modelos reais.
+assets-src/models/_test-cube.glb
+public/models/_test-cube.glb
