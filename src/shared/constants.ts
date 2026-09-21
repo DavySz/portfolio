@@ -1,3 +1,6 @@
+/** Âncora do bloco de contato, usada pelo CTA, pela nav e pelo rodapé. */
+export const CONTACT_SECTION_ID = "contact";
+
 export const CONTACTS = {
   LINKEDIN:
     "https://www.linkedin.com/in/davy-de-souza-assun%C3%A7%C3%A3o-0b7483180",

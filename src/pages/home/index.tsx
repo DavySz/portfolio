@@ -22,6 +22,9 @@ const Projects = lazy(() =>
 const Articles = lazy(() =>
   import("./articles").then((module) => ({ default: module.Articles })),
 );
+const Contact = lazy(() =>
+  import("./contact").then((module) => ({ default: module.Contact })),
+);
 const Footer = lazy(() =>
   import("./footer").then((module) => ({ default: module.Footer })),
 );
@@ -68,6 +71,9 @@ export const Home: React.FC = () => {
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
         <Articles />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>
+        <Contact />
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
         <Footer />

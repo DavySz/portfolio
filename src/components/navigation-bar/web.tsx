@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { CONTACTS } from "../../shared/constants";
-import { ExternalLink } from "../external-link";
+import { ContactCta } from "../contact-cta";
 import { Link } from "../link";
 import { Toggle } from "../toggle";
 import { getLinks, SECTION_IDS } from "./constants";
@@ -27,9 +26,7 @@ export const WebNavigationBar: React.FC = () => {
         </Link>
       ))}
       <Toggle />
-      <ExternalLink href={CONTACTS.LINKEDIN}>
-        {t("navigation-bar.hire-me")}
-      </ExternalLink>
+      <ContactCta />
     </nav>
   );
 };

@@ -73,6 +73,13 @@
       }
     }
   },
+  "contact": {
+    "title": "Contato",
+    "description": "Três formas de falar comigo. E-mail e telefone ficam aqui mesmo; o LinkedIn abre em outra aba.",
+    "copy": "Copiar",
+    "copied": "E-mail copiado",
+    "failed": "Não deu para copiar — use o link ao lado"
+  },
   "footer": {
     "description": "Frontend Engineer especializado em Fintech. Atualmente construindo o futuro dos pagamentos na Fretepago. Aberto para oportunidades desafiadoras e conversas sobre tecnologia, arquitetura frontend e inovação financeira.",
     "copyright": "© Desenvolvido com React, TypeScript e ☕",

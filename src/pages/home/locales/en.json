@@ -73,6 +73,13 @@
       }
     }
   },
+  "contact": {
+    "title": "Contact",
+    "description": "Three ways to reach me. Email and phone stay right here; LinkedIn opens in a new tab.",
+    "copy": "Copy",
+    "copied": "Email address copied",
+    "failed": "Could not copy — use the link instead"
+  },
   "footer": {
     "description": "Frontend Engineer specialized in Fintech. Currently building the future of payments at Fretepago. Open to challenging opportunities and conversations about technology, frontend architecture, and financial innovation.",
     "copyright": "© Built with React, TypeScript and ☕",
