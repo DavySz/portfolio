@@ -21,7 +21,12 @@ export const PageTemplate: React.FC<PageTemplateProps> = memo(
         {/* Canvas único atrás da página inteira. Depois do skip link, que
             precisa continuar sendo o primeiro elemento focável. */}
         <ExperienceRoot />
-        <NavigationBar />
+        {/* Sticky: numa página de 7 seções mais artigos longos, perder a
+            navegação ao rolar obriga a voltar tudo. z-40 fica acima do
+            conteúdo e abaixo do painel do menu mobile (z-50). */}
+        <div className="sticky top-0 z-40">
+          <NavigationBar />
+        </div>
         <main id="main-content" role="main">
           {children}
         </main>

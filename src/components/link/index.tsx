@@ -3,6 +3,7 @@ import type { LinkProps } from "./types";
 
 export const Link: React.FC<LinkProps> = ({
   variant = "primary",
+  active = false,
   children,
   href,
 }) => {
@@ -10,6 +11,7 @@ export const Link: React.FC<LinkProps> = ({
     <div className="group relative">
       <a
         href={href}
+        aria-current={active ? "true" : undefined}
         className="rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-4"
       >
         <p
@@ -18,7 +20,8 @@ export const Link: React.FC<LinkProps> = ({
             "relative z-10",
             {
               "text-secondary-900 hover:text-primary-600":
-                variant === "primary",
+                variant === "primary" && !active,
+              "text-primary-700 font-medium": variant === "primary" && active,
               "text-white hover:text-primary-300": variant === "secondary",
             }
           )}
@@ -28,8 +31,9 @@ export const Link: React.FC<LinkProps> = ({
       </a>
       <div
         className={clsx(
-          "absolute bottom-0 left-0 h-[2px] w-0 rounded-full",
+          "absolute bottom-0 left-0 h-[2px] rounded-full",
           "group-hover:w-full group-focus-within:w-full",
+          active ? "w-full" : "w-0",
           "transition-all duration-300 ease-out",
           {
             "bg-primary-500": variant === "primary",

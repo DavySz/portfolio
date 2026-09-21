@@ -14,6 +14,13 @@
     scroll-behavior: smooth;
   }
 
+  /* O header é sticky: sem isto, pular para uma âncora deixa o título da
+     seção escondido atrás dele. */
+  section[id],
+  [id="main-content"] {
+    scroll-margin-top: 6rem;
+  }
+
   body {
     font-family: "Poppins", sans-serif;
     -webkit-font-smoothing: antialiased;
