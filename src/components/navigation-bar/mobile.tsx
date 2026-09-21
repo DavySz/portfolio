@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { CONTACTS } from "../../shared/constants";
 import { Button } from "../button";
 import { Toggle } from "../toggle";
-import { getLinks } from "./constants";
+import { getLinks, SECTION_IDS } from "./constants";
 import { FiMenu } from "react-icons/fi";
 import type { IconType } from "react-icons";
 import { AiOutlineClose } from "react-icons/ai";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
+import { useActiveSection } from "../../hooks/useActiveSection/use-active-section";
 
 const MENU_ID = "mobile-menu";
 
@@ -59,7 +60,10 @@ const restoreScroll = (lock: ScrollLock): void => {
 export const MobileNavigationBar: React.FC = () => {
   const { t } = useTranslation("component");
   const [isVisible, setIsVisible] = useState(false);
-  const [activeLink, setActiveLink] = useState<string>("/");
+  /* O mesmo scroll-spy do desktop. Antes isto era um `useState("/")` que só
+     guardava o último clique: começava num valor que nenhum link casa e
+     ficava desatualizado assim que a pessoa rolava a página. */
+  const active = useActiveSection(SECTION_IDS);
 
   const toggleOptions = (): void => {
     setIsVisible((prev) => !prev);
@@ -73,8 +77,7 @@ export const MobileNavigationBar: React.FC = () => {
     return isVisible ? AiOutlineClose : FiMenu;
   };
 
-  const handleSelectOption = (href: string): void => {
-    setActiveLink(href);
+  const handleSelectOption = (): void => {
     toggleOptions();
   };
 
@@ -161,16 +164,19 @@ export const MobileNavigationBar: React.FC = () => {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    onClick={() => handleSelectOption(link.href)}
+                    aria-current={
+                      link.href === `#${active}` ? "true" : undefined
+                    }
+                    onClick={handleSelectOption}
                     className={clsx(
                       "flex items-center px-6 py-4 text-base font-medium transition-all duration-200",
                       "hover:bg-primary-50 hover:text-primary-700",
                       "border-l-4 transition-all duration-200",
                       {
                         "border-primary-500 bg-primary-50 text-primary-700":
-                          activeLink === link.href,
+                          link.href === `#${active}`,
                         "border-transparent text-gray-700 hover:border-primary-200":
-                          activeLink !== link.href,
+                          link.href !== `#${active}`,
                       }
                     )}
                   >
