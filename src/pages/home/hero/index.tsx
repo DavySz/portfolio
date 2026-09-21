@@ -21,7 +21,7 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative isolate flex flex-col-reverse xl:flex-row w-full gap-16 items-center justify-center py-12 md:py-16 px-6 xl:px-[100px]">
+    <section className="relative isolate flex flex-col-reverse xl:flex-row w-full gap-16 items-center justify-center pb-12 md:pb-16 xl:py-16 px-6 xl:px-[100px]">
       <ExperienceCanvas />
       <div className="flex flex-col items-center xl:items-start animate-fade-in-left">
         <Text
