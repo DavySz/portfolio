@@ -3,8 +3,12 @@ import { useEffect, useState } from "react";
 /** Prefixo da rota de leitura: `#/artigos/<slug>`. */
 export const ARTICLE_ROUTE = "#/artigos/";
 
-/** Teto de espera pela seção aparecer, em ms. */
-const ANCHOR_TIMEOUT = 3000;
+/** Teto absoluto de tentativa, em ms. */
+const ANCHOR_TIMEOUT = 4000;
+/** Silêncio do layout que conta como "parou de mexer", em ms. */
+const SETTLE_DELAY = 300;
+
+const USER_INTENT_EVENTS = ["wheel", "touchstart", "keydown"] as const;
 
 export const articleHref = (slug: string): string => `${ARTICLE_ROUTE}${slug}`;
 
@@ -36,24 +40,79 @@ export const useArticleRoute = (): string | null => {
 };
 
 /**
- * Rola até a âncora do hash assim que ela existir no DOM.
+ * Leva até a âncora do hash e a mantém no lugar enquanto a página assenta.
  *
- * As seções da home são `lazy`, então o elemento de `#projects` e companhia
- * não está montado quando o navegador tenta rolar. Isso quebra dois casos:
- * clicar num item do menu estando num artigo (a home monta depois do salto) e
- * abrir um link direto tipo `/#skills` (a seção chega depois do primeiro
- * paint). Aqui a gente espera o elemento aparecer, com teto de tempo para não
- * ficar tentando para sempre num hash que não existe.
+ * Duas coisas conspiram contra a âncora nesta home:
+ *
+ * 1. As seções são `lazy`. Quando o hash muda, o elemento de `#skills` e
+ *    companhia ainda não existe no DOM, então o navegador tenta rolar, não
+ *    acha e desiste.
+ * 2. As seções ACIMA do alvo também são lazy, e o fallback do Suspense tem
+ *    200px contra ~800px da seção real. Rolar assim que o alvo aparece não
+ *    resolve: `Self` e `Services` carregam depois e empurram `#skills` mais
+ *    de mil pixels para baixo.
+ *
+ * Por isso aqui a gente espera o elemento aparecer E continua realinhando
+ * enquanto a altura do documento muda, até o layout ficar quieto. Se a pessoa
+ * rolar por conta própria nesse meio tempo, a intenção dela vence e paramos.
  */
 export const useAnchorScroll = (enabled: boolean): void => {
   useEffect(() => {
     if (!enabled) return;
 
-    let cancelled = false;
+    let stopped = false;
     let frame = 0;
+    let settleTimer = 0;
+    let deadline = 0;
+    let observer: ResizeObserver | null = null;
+    let detachUserIntent: (() => void) | null = null;
+
+    const stop = () => {
+      stopped = true;
+      cancelAnimationFrame(frame);
+      window.clearTimeout(settleTimer);
+      window.clearTimeout(deadline);
+      observer?.disconnect();
+      observer = null;
+      detachUserIntent?.();
+      detachUserIntent = null;
+    };
+
+    const align = (target: HTMLElement) => {
+      // Instantâneo: vindo de um artigo, um scroll suave atravessaria a
+      // página inteira, e cada reajuste viraria uma animação por cima da outra.
+      target.scrollIntoView({ behavior: "instant", block: "start" });
+    };
+
+    const holdUntilSettled = (target: HTMLElement) => {
+      const onUserIntent = () => stop();
+      for (const type of USER_INTENT_EVENTS) {
+        window.addEventListener(type, onUserIntent, { passive: true });
+      }
+      detachUserIntent = () => {
+        for (const type of USER_INTENT_EVENTS) {
+          window.removeEventListener(type, onUserIntent);
+        }
+      };
+
+      const restartSettle = () => {
+        window.clearTimeout(settleTimer);
+        settleTimer = window.setTimeout(stop, SETTLE_DELAY);
+      };
+
+      // Cada seção lazy que entra muda a altura do body e desloca o alvo.
+      observer = new ResizeObserver(() => {
+        if (stopped) return;
+        align(target);
+        restartSettle();
+      });
+      observer.observe(document.body);
+      restartSettle();
+    };
 
     const scrollToHash = () => {
-      cancelAnimationFrame(frame);
+      stop();
+      stopped = false;
 
       const { hash } = window.location;
       if (!hash || hash.startsWith(ARTICLE_ROUTE)) return;
@@ -61,39 +120,30 @@ export const useAnchorScroll = (enabled: boolean): void => {
       const id = decodeURIComponent(hash.slice(1));
       if (!id) return;
 
-      const started = performance.now();
-      let waited = false;
+      deadline = window.setTimeout(stop, ANCHOR_TIMEOUT);
 
-      const attempt = () => {
-        if (cancelled) return;
+      const waitForTarget = () => {
+        if (stopped) return;
 
         const target = document.getElementById(id);
         if (target) {
-          // Se o elemento já estava lá, o próprio navegador tratou a âncora —
-          // rolar de novo seria redundante. Só assumimos quando foi preciso
-          // esperar, e aí instantâneo: vindo de um artigo, um scroll suave
-          // atravessaria a página inteira.
-          if (waited) {
-            target.scrollIntoView({ behavior: "instant", block: "start" });
-          }
+          align(target);
+          holdUntilSettled(target);
           return;
         }
 
-        waited = true;
-        if (performance.now() - started > ANCHOR_TIMEOUT) return;
-        frame = requestAnimationFrame(attempt);
+        frame = requestAnimationFrame(waitForTarget);
       };
 
-      frame = requestAnimationFrame(attempt);
+      frame = requestAnimationFrame(waitForTarget);
     };
 
-    // ao voltar de um artigo, o hash já é o da seção quando isto roda
+    // Ao chegar de um artigo, o hash já é o da seção quando isto roda.
     scrollToHash();
     window.addEventListener("hashchange", scrollToHash);
 
     return () => {
-      cancelled = true;
-      cancelAnimationFrame(frame);
+      stop();
       window.removeEventListener("hashchange", scrollToHash);
     };
   }, [enabled]);
