@@ -131,7 +131,7 @@ export const ARTICLES: ArticleMeta[] = [
   {
     slug: "bff-frontend-revolucao",
     date: "2025-12-14",
-    bodies: ["pt"],
+    bodies: ["pt", "en"],
     thumb: { src: BFFThumb },
     mediumUrl:
       "https://medium.com/@davysz/bff-por-que-o-frontend-deveria-liderar-essa-revolução-3b1f298be38a",
@@ -171,7 +171,7 @@ export const ARTICLES: ArticleMeta[] = [
   {
     slug: "efeito-enem-no-codigo",
     date: "2025-12-14",
-    bodies: ["pt"],
+    bodies: ["pt", "en"],
     thumb: { src: ENEMThumb, half: ENEMThumbHalf, width: 1200 },
     mediumUrl:
       "https://medium.com/@davysz/o-efeito-enem-no-código-como-estudar-para-passar-criou-uma-geração-de-devs-inseguros-f3a95dde7e6c",
