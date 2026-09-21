@@ -13,6 +13,46 @@ no código ou no build** — nada é palpite. Cada item tem onde dói e como cor
 
 ---
 
+## ✅ Situação — todos resolvidos
+
+Executados em seis commits, nesta ordem.
+
+| Bloco | Itens | Commit |
+|---|---|---|
+| Acessibilidade e bugs | A1 A2 A3 A4 A8 · B1 B2 B3 · U1 · F1 | `08ce750` |
+| Imagens | F2 U7 A5 A6 | `eaa4e83` |
+| Navegação | U2 U3 | `0f7cda9` |
+| Artigos | U4 U5 A7 | `6ff2091` |
+| Conteúdo e SEO | benchmark 6, 7 | `df9606d` |
+| Manutenção | P1 P2 P3 P4 P6 · B4 · F4 | `a98bc69` |
+
+**Resultado medido:**
+
+| | Antes | Depois |
+|---|---:|---:|
+| Imagens | 8.634 kB | **553 kB (−94%)** |
+| Fonte | 18 variantes | 5 |
+| JS inicial | 79.430 B | 80.291 B |
+| CSS inicial | 7.142 B | 7.431 B |
+
+O JS e o CSS subiram pouco: o JS é quase todo tradução nova (o i18n carrega
+todos os locales no caminho inicial — item 7.2 do `REPORT.md`, ainda aberto) e o
+CSS é o sumário, as âncoras e o estado ativo do menu. Contra isso, **8 MB de
+imagem saíram do caminho**.
+
+### O que ficou de fora, e por quê
+
+| Item | Motivo |
+|---|---|
+| P5 `key={index}` | corrigido onde havia chave natural (sociais, links de menu, projetos, skills). Onde a lista é estática e não tem id, trocar por índice mascarado não ganharia nada |
+| Benchmark 8 — modo escuro | decisão de design, não de código |
+| Benchmark 9 — transição de página | depende de View Transitions, que muda o roteamento |
+| `bff-thumb.svg` (245 kB) | é vetor de verdade; precisa de SVGO, não de conversão |
+| 7.2 do REPORT — i18n | refatorar para namespaces sob demanda é maior que "pequeno" |
+
+
+---
+
 ## 🐞 Bugs
 
 ### B1 — Todo `Button` é `type="submit"` 🔴
