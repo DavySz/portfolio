@@ -1,3 +1,58 @@
+/*
+ * Poppins self-hospedada.
+ *
+ * Antes vinha por `<link rel="stylesheet">` para fonts.googleapis.com: um CSS
+ * de terceiro no caminho crítico, que só depois disparava o download dos
+ * `.woff2` em fonts.gstatic.com. Eram dois handshakes antes de qualquer texto
+ * aparecer — caro num Android de entrada em 4G, que é o aparelho de
+ * referência do projeto.
+ *
+ * Só o subset `latin` (U+0000-00FF e afins). Verificado que nenhuma letra do
+ * site ou dos artigos cai fora dele: os acentos do português vivem todos no
+ * Latin-1 Supplement. Sem `unicode-range` de propósito — não há outro subset
+ * para escolher, e o que a fonte não cobrir cai no fallback por caractere,
+ * como já caía.
+ */
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/poppins-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/poppins-400-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/poppins-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/poppins-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/poppins-700.woff2") format("woff2");
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
