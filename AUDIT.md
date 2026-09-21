@@ -1,12 +1,12 @@
 # Auditoria de UI/UX e Acessibilidade — davysz.com
 
 > Auditoria estática, feita sobre o código em `724a75a` (branch `chore/experience-audit`).
-> **Etapas 1 a 5 implementadas** em `b0e0742..c1fe06e`. 26 dos 29 achados
-> estão fechados, com ✅ e hash na tabela.
+> **Auditoria concluída.** Etapas 1 a 5 em `b0e0742..c1fe06e` (branch
+> `chore/experience-audit`) e A29 em `6e59def` (branch `feat/path-routing`).
 >
-> Em aberto: **A16** (suspenso, depende de A29), **A29** (investigado, não
-> implementado) e **A19** (fechado sem alteração — nunca foi confirmado no
-> navegador).
+> **28 dos 29 achados fechados.** O único que não foi implementado é **A19**,
+> encerrado sem alteração de código por nunca ter sido confirmado no
+> navegador — a causa continua provada, o efeito não.
 
 ## Premissas usadas
 
@@ -19,7 +19,7 @@ errei** — os achados de copy e de CTA dependem disto:
 | Produto | davysz.com — portfólio pessoal e vitrine profissional |
 | Público | Recrutadores técnicos, tech leads e engenheiros avaliando contratação |
 | Objetivo da página | Credibilidade técnica → contato |
-| CTA principal | "Let's talk" (nav) → abre o LinkedIn em nova aba |
+| CTA principal | "Let's talk" (nav) → âncora para o bloco de contato (`#contact`). *Na auditoria original abria o LinkedIn em nova aba; mudou em A18.* |
 | Stack | React 18 + TypeScript + Vite + Tailwind v3, SPA renderizada no cliente |
 
 ## Método e limites
@@ -68,7 +68,7 @@ página para o topo e fechar não devolve a posição.
 | ✅ A13 | Expertise | Bug | Títulos e descrições usam `hover:` onde precisam de `group-hover:` — não reagem ao hover do card | Médio | P | `components/service-cards/index.tsx` | `1b92c41` |
 | ✅ A14 | Global (CSS) | Consistência | `td, th { px-[50px] py-[40px] }` — seletor de tipo global dentro de `@layer utilities` | Médio | M | `src/index.css` | `f69135e` |
 | ✅ A15 | `<head>` | SEO | Metas estáticas em português + `og:locale pt_BR` num site que abre em inglês; `useSEO` **acrescenta** metas sem remover as estáticas → `description` duplicada | Médio | M | `index.html`, `hooks/useSEO/use-seo.ts` | `9067d32` |
-| A16 | Artigos | SEO | `canonical` aponta para o Medium nos 4 publicados lá — **suspenso: depende de A29**, porque com rota de hash o canonical do próprio site equivale à home | Médio | P | `pages/article/index.tsx` |  |
+| ✅ A16 | Artigos | SEO | `canonical` apontava para o Medium nos 4 publicados lá | Médio | P | `pages/article/index.tsx` | `6e59def` |
 | ✅ A17 | Artigos (home) | UX | O card não mostra data nem tempo de leitura, embora os dois existam no dado | Médio | P | `components/article-card/index.tsx` | `1e326d4` |
 | ✅ A18 | Hero | UX / Conversão | Nenhum CTA de contato no hero; o único CTA de conversão está na nav e leva para fora do site | Médio | M | `pages/home/hero/index.tsx` | `9f0c3d2` |
 | ⏸️ A19 | Hero | Responsivo | `w-screen` dentro de um pai com `px-6` e sem `overflow-x` global → provável rolagem horizontal de 48px no mobile — **fechado sem alteração: nunca confirmado no navegador** | Médio | P | `pages/home/hero/index.tsx` | — |
@@ -81,7 +81,7 @@ página para o topo e fechar não devolve a posição.
 | ✅ A26 | Console | Bug | `WELCOME_LOG_MESSAGE` começa com `U+FFFD` (bytes `EF BF BD`) e é só em português | Baixo | P | `src/shared/constants.ts` | `c1fe06e` |
 | ✅ A27 | Global | Limpeza | Chaves `articles.items.*` mortas nos dois locales; `relative` duplicado; `mr-7` solto | Baixo | P | vários | `c1fe06e` |
 | ✅ A28 | `<head>` | Performance | Google Fonts como `<link rel=stylesheet>` de terceiro, bloqueando render | Médio | M | `index.html` | `15ff06d` |
-| A29 | Global | SEO / Arquitetura | Rota por hash faz os 8 artigos serem a mesma URL que a home para o buscador; o sitemap declara 9 `<loc>` que colapsam em 1 | Alto | G | `useHashRoute/`, `scripts/content/build-feeds.js`, `vite.config.ts` |  |
+| ✅ A29 | Global | SEO / Arquitetura | Rota por hash faz os 8 artigos serem a mesma URL que a home para o buscador; o sitemap declara 9 `<loc>` que colapsam em 1 | Alto | G | `useHashRoute/`, `scripts/content/build-feeds.js`, `vite.config.ts` | `6e59def` |
 
 ---
 
@@ -553,7 +553,7 @@ para medir antes e depois com o build que já existe.
 10. **A05** — foco no menu modal: mover, prender, devolver
 11. **A08 + A09** — `<a>` no lugar de `window.open`, com `rel` correto
 
-**Etapa 3 — SEO e conversão** — ✅ concluída (A16 suspenso por A29)
+**Etapa 3 — SEO e conversão** — ✅ concluída (A16 saiu depois, com A29)
 
 12. **A15** — `useSEO` atualiza em vez de acrescentar; estáticas em inglês
 13. **A16** — canonical para o próprio site
@@ -719,7 +719,9 @@ importar indexação do *corpo* do texto.
 
 ## Achados durante a implementação
 
-Registrados na Etapa 1, **não corrigidos**.
+Coisas que apareceram enquanto os achados eram corrigidos. Cada um traz o
+estado atual: ✅ com o hash quando foi resolvido, ⏸️ quando foi adiado, e sem
+marca quando continua aberto.
 
 ### I01 — Conflito entre A07 e A13, resolvido a favor de A07
 
@@ -741,7 +743,7 @@ A recomendação original de A04 dizia que `gray-400` daria **5,79:1** sobre
 não muda (os dois passam de 4,5:1) e o texto de A04 já está corrigido, mas fica
 o registro porque esta auditoria se propõe a calcular, não estimar.
 
-### I03 — Numeração 01–04 na tabela de Expertise
+### I03 — Numeração 01–04 na tabela de Expertise · ✅ `f69135e`
 
 `ServiceTable` renderiza `(index + 1).padStart(2, "0")` numa coluna própria a
 partir de `xl`. Marcador numerado transmite "isto é uma sequência", e os quatro
@@ -751,7 +753,7 @@ que o conteúdo não tem.
 
 Cabe decidir junto com A02, que já vai reescrever o componente.
 
-### I04 — As setas continuam sugerindo destino
+### I04 — As setas continuam sugerindo destino · ✅ `f69135e`
 
 A07 tirou o `cursor-pointer` e o hover elaborado, mas os ícones permaneceram:
 `GoArrowUpRight` nos itens destacados e `GoArrowDownRight` nos demais. Uma seta
@@ -785,7 +787,7 @@ A08 trocou o `aria-label` do "Vamos conversar" por texto `sr-only`, e a chave
 `a11y.hireOnLinkedIn` deixou de ter consumidor nos dois locales. Encaixa em
 A27, que já junta as chaves mortas de `articles.items.*`.
 
-### I08 — O nome acessível do CTA perdeu o destino
+### I08 — O nome acessível do CTA perdeu o destino · ✅ `9f0c3d2`
 
 O `aria-label` antigo dizia "Get in touch on LinkedIn" / "Falar comigo no
 LinkedIn". Agora o nome acessível do link é "Let's talk — opens in new tab":
@@ -833,7 +835,7 @@ Afeta `pages/article/index.tsx`, que mostra a data completa. O card novo
 oito atuais. A correção é ler a data como local (`new Date(y, m - 1, d)`) ou
 formatar com `timeZone: "UTC"`.
 
-### I11 — `twitter:url` não acompanha a rota
+### I11 — `twitter:url` não acompanha a rota · ✅ `6e59def`
 
 O `useSEO` atualiza `og:url` por página, mas `twitter:url` ficou só no
 `index.html`, fixo em `https://davysz.com/`. Hoje isso não muda nada, porque
@@ -857,6 +859,10 @@ duplicada que sobrou depois de A15, e é inofensiva.
 | Etapa 3 | **I06 adiado** — sem subtítulos abaixo dos `h2` | Fica registrado para depois; as seções seguem com o rótulo puro definido em A10 |
 | Etapa 3 | **A16 suspenso** até A29 | Com rota de hash, canonical para o próprio site equivale a canonical para a home |
 | Etapa 5 | **A19 fechado sem alteração** | O achado foi levantado três vezes e a confirmação no navegador nunca chegou. A causa continua provada no código; o efeito, não. Reabrir é barato: basta rodar o script do achado a 375px |
+| A29 | **Apex `davysz.com`** como canônico | É o que as 48 ocorrências do projeto já usavam; `www` redireciona para cá na Vercel |
+| A29 | **Canonical dos 8 no próprio site** | Criar URLs reais e continuar apontando metade para o Medium desperdiçaria a migração |
+| A29 | **Pré-render C1, não SSG** | Resolve identidade de URL, canonical e cartão de compartilhamento pelo menor custo. C2/C3 só se passar a importar indexação do corpo do texto |
+| A29 | **`feat/path-routing` a partir de `chore/experience-audit`** | A master está 79 commits atrás; sair dela deixaria a auditoria inteira de fora |
 | Etapa 5 | **vitest adotado** (`^2`, não `^5`) | A linha 5 exige Vite 6 (`vite/module-runner`) e o projeto está no Vite 5.4. A entrada em `resolutions` mantém uma instância só de Vite, senão `vitest/config` e os plugins apontam para tipos diferentes |
 
 ### I13 — O projeto não tem runner de testes · ✅ `4a7b43f`
