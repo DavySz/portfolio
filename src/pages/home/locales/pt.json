@@ -32,15 +32,6 @@
       }
     }
   },
-  "observability": {
-    "title": "Lendo um trace",
-    "description": "Uma única requisição de checkout, span a span. É assim que eu olho um sistema antes de mexer nele: para onde o tempo realmente vai, o que roda em paralelo e o que está esperando o quê.",
-    "summary": "Trace distribuído de uma requisição de checkout, 20 spans em 9 serviços, 418 milissegundos de ponta a ponta. O caminho crítico passa por autenticação, carrinho, catálogo, precificação e risco em paralelo, depois reserva no ledger e autorização de pagamento em sequência.",
-    "note": "Trace inventado, feito só para ilustrar a leitura. Nenhum serviço, rota ou métrica real.",
-    "labels": {
-      "duration": "Duração"
-    }
-  },
   "skills": {
     "title": "Stack & Ferramentas",
     "description": "Tecnologias que domino para criar produtos frontend de classe mundial, com foco em performance, escalabilidade e developer experience."

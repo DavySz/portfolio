@@ -13,11 +13,6 @@ const Self = lazy(() =>
 const Services = lazy(() =>
   import("./services").then((module) => ({ default: module.Services })),
 );
-const Observability = lazy(() =>
-  import("./observability").then((module) => ({
-    default: module.Observability,
-  })),
-);
 const Skills = lazy(() =>
   import("./skills").then((module) => ({ default: module.Skills })),
 );
@@ -60,9 +55,6 @@ export const Home: React.FC = () => {
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
         <Services />
-      </Suspense>
-      <Suspense fallback={<LoadingFallback />}>
-        <Observability />
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
         <Skills />

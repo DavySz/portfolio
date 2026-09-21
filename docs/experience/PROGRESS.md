@@ -13,7 +13,7 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 03 | Objeto-assinatura no hero | feature | **sim, antes de codar** | **aguardando revisão** | `feat/experience-signature-object` (de `feat/experience-assets`) | Conceito **C — Alinhamento (giroscópio)**, escolha delegada a mim. 7.760 tris `high` / 3.092 `low` (39,8%). JS inicial **−6 B**. **Posicionamento precisa de aval visual.** |
 | 04 | Canvas global + cenas por seção | refactor | não | **aguardando revisão** | `refactor/experience-global-canvas` | Canvas único fixo no `PageTemplate`, recortado por seção via scissor. JS inicial +159 B. Bug de eixo Y invertido encontrado pelo Davy e corrigido (`97811fa`); **visual conferido por ele depois da correção.** |
 | 05 | Cena de domínio: fluxo de transações | feature | **sim, antes de codar** | **aguardando revisão** | `feat/experience-transactions-scene` | Seção `services`, narrativa A (caos→fluxo). 7.000 instâncias `high` / 1.500 `low`. Primeira versão cobria 103% da área e lia como textura; corrigida em `b875f49` para ~10% de cobertura. **fps e CPU ainda precisam ser medidos.** |
-| 06 | Waterfall de traces (**sem WebGL**, opção A) | feature | **sim, antes de codar** | **aguardando revisão** | `feat/experience-trace-scene` | Davy escolheu SVG/DOM. Seção nova `observability` com 20 spans inventados, cópia em en+pt. JS inicial +614 B, **todo em traduções** (o i18n carrega todos os locales no bundle inicial). Chunk do experience inalterado. |
+| 06 | Waterfall de traces | feature | **sim, antes de codar** | **revertida** | `feat/experience-trace-scene` (código removido em `feat/physics-easter-egg`) | Feita em DOM (opção A) e depois **removida a pedido do Davy**: a seção `observability` não entrou no site. O commit `d0c524b` tem o código inteiro, caso volte a fazer sentido. |
 | 07 | Easter egg com física | feature | não | **aguardando revisão** | `feat/physics-easter-egg` | Rapier 0.20 em chunk próprio de **796 KB gzip**, baixado só na ativação. Konami + botão no rodapé. 12 elementos com `data-physics`. JS inicial +673 B. |
 | 08 | Auditoria final de performance e acessibilidade | qualidade | não | pendente | — | |
 
@@ -41,8 +41,8 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 16 | ~~Escolher seção e narrativa da task 05~~ — delegado a mim: `services` + narrativa A | — | Resolvido. |
 | 17 | **Medir fps por tier e o tempo de CPU do `update` no Performance** (task 05) | Davy | Aceite da task 05. |
 | 18 | Conferir que a cena fica igual em WebGPU e em WebGL2 (`forceWebGL: true`) | Davy | Aceite da task 05. |
-| 19 | ~~Task 06: SVG ou seção nova~~ — Davy escolheu **A (SVG/DOM)**. Criei a seção `observability`; **a cópia é rascunho meu, para ele editar**. | Davy | Revisar texto e decidir se entra no menu. |
-| 22 | O i18n importa **todos** os locales estaticamente: cada texto novo entra no bundle inicial, mesmo em seção lazy | — | Candidata à task 08. Custou +614 B nesta task. |
+| 19 | ~~Task 06~~ — feita em DOM e depois removida a pedido do Davy. | — | Encerrada. |
+| 22 | O i18n importa **todos** os locales estaticamente: cada texto novo entra no bundle inicial, mesmo em seção lazy | — | Candidata à task 08. |
 | 23 | **Testar o easter egg no toque** (Galaxy A13 e iPhone): arrastar, arremessar e sair | Davy | Aceite da task 07. |
 | 24 | Conferir na aba Network que o chunk do Rapier só baixa ao ativar | Davy | Aceite da task 07. |
 | 20 | ~~Site abre em inglês vs CLAUDE.md pedindo pt-BR~~ — Davy confirmou: **inglês é intencional**. CLAUDE.md corrigido. | — | Resolvido. |
@@ -82,13 +82,6 @@ Depois da task 05 (branch `feat/experience-transactions-scene`):
 - **CSS inicial:** 5.983 B gzip (+5 B vs task 04)
 - **Chunk `Experience` (dinâmico):** 245.765 B gzip (+1.692 B vs task 04)
 - **Instâncias:** 7.000 `high` · 1.500 `low` · congelado em `progress`=1 com `animate:false`
-
-Depois da task 06 (branch `feat/experience-trace-scene`, **sem WebGL**):
-
-- **JS inicial:** 78.503 B gzip (+614 B vs task 05; +1.375 B / +1,78% vs baseline) — todo em traduções
-- **CSS inicial:** 6.165 B gzip (+182 B vs task 05)
-- **Chunk `Experience`:** 245.760 B gzip (inalterado — a task não toca no WebGL)
-- **Chunk lazy da seção:** ~1.950 B gzip
 
 Depois da task 07 (branch `feat/physics-easter-egg`):
 
@@ -154,3 +147,4 @@ através de `self`, `skills`, `projects` e `articles`. Decidir o que fazer com
 | 2026-09-21 | Davy decidiu: pode citar o nome da empresa, e o site abre em inglês mesmo. CLAUDE.md atualizado nas duas regras. |
 | 2026-09-21 | Davy escolheu a opção A da task 06: waterfall em DOM, sem WebGL. Executada em `feat/experience-trace-scene`, com seção nova `observability`. |
 | 2026-09-21 | Task 07 executada em `feat/physics-easter-egg`. Rapier isolado em chunk próprio, carregado só na ativação. |
+| 2026-09-21 | Davy pediu para remover a seção "Lendo um trace". Task 06 revertida em cima da 07; o código fica preservado no commit `d0c524b`. |
