@@ -1,7 +1,7 @@
 # Auditoria de UI/UX e Acessibilidade — davysz.com
 
 > Auditoria estática, feita sobre o código em `724a75a` (branch `chore/experience-audit`).
-> **Etapas 1 a 3 implementadas** em `b0e0742..9f0c3d2` — os itens concluídos
+> **Etapas 1 a 4 implementadas** em `b0e0742..e2cf44b` — os itens concluídos
 > estão marcados com ✅ e o hash na tabela. A16 está suspenso por A29; as
 > etapas 4 e 5 seguem pendentes.
 
@@ -68,8 +68,8 @@ página para o topo e fechar não devolve a posição.
 | A16 | Artigos | SEO | `canonical` aponta para o Medium nos 4 publicados lá — **suspenso: depende de A29**, porque com rota de hash o canonical do próprio site equivale à home | Médio | P | `pages/article/index.tsx` |  |
 | ✅ A17 | Artigos (home) | UX | O card não mostra data nem tempo de leitura, embora os dois existam no dado | Médio | P | `components/article-card/index.tsx` | `1e326d4` |
 | ✅ A18 | Hero | UX / Conversão | Nenhum CTA de contato no hero; o único CTA de conversão está na nav e leva para fora do site | Médio | M | `pages/home/hero/index.tsx` | `9f0c3d2` |
-| A19 | Hero | Responsivo | `w-screen` dentro de um pai com `px-6` e sem `overflow-x` global → provável rolagem horizontal de 48px no mobile **[VISUAL]** | Médio | P | `pages/home/hero/index.tsx` |  |
-| A20 | Nav | UX / i18n | Bandeira 🇺🇸/🇧🇷 como única pista visível do seletor de idioma; alvo de 56×28px | Médio | P | `components/toggle/index.tsx` |  |
+| A19 | Hero | Responsivo | `w-screen` dentro de um pai com `px-6` e sem `overflow-x` global → provável rolagem horizontal de 48px no mobile — **aguardando confirmação no navegador** | Médio | P | `pages/home/hero/index.tsx` |  |
+| ✅ A20 | Nav | UX / i18n | Bandeira 🇺🇸/🇧🇷 como única pista visível do seletor de idioma; alvo de 56×28px | Médio | P | `components/toggle/index.tsx` | `e2cf44b` |
 | A21 | Artigos | A11y (motion) | `scrollIntoView({behavior:"smooth"})` — a opção JS vence o `scroll-behavior:auto` do `prefers-reduced-motion` | Baixo | P | `pages/article/index.tsx` |  |
 | A22 | Artigos | Copy | Botão "Back"/"Voltar" não volta no histórico: vai para a home | Baixo | P | `pages/article/index.tsx` |  |
 | ✅ A23 | Artigos (home) | UI | Sem thumb, a tag aparece duas vezes empilhada (capa + linha de tag) | Baixo | P | `components/article-card/index.tsx` | `1e326d4` |
@@ -557,7 +557,7 @@ para medir antes e depois com o build que já existe.
 14. **A17 + A23** — data no card; tag sem repetição
 15. **A18** — reavaliar o CTA depois que A01 estiver de pé
 
-**Etapa 4 — confirmar na tela primeiro**
+**Etapa 4 — confirmar na tela primeiro** — A20 ✅; A19 aguardando confirmação
 
 16. **A19** — rolagem horizontal do hero **[VISUAL]**
 17. **A20** — `EN | PT` no lugar da bandeira
@@ -813,7 +813,7 @@ a conferência visual:
 O layout continua sendo faixas horizontais de duas colunas no desktop e cards
 empilhados no mobile, sem numeração e sem setas.
 
-### I10 — Data do artigo erra um dia a oeste de UTC
+### I10 — Data do artigo erra um dia a oeste de UTC · ✅ `3aeb9d1`
 
 `new Date("2026-09-21")` é interpretado como meia-noite **UTC**, e
 `Intl.DateTimeFormat` formata no fuso local. Em Manaus e em São Paulo o
@@ -853,3 +853,27 @@ duplicada que sobrou depois de A15, e é inofensiva.
 | Etapa 3 | **Não** adicionar "Contact"/"Contato" à nav nem ao rodapé | O CTA já leva a `#contact`; um link a mais seriam dois destinos iguais na mesma nav, e a estimativa é que a nav desktop já passe de 1024px hoje |
 | Etapa 3 | **I06 adiado** — sem subtítulos abaixo dos `h2` | Fica registrado para depois; as seções seguem com o rótulo puro definido em A10 |
 | Etapa 3 | **A16 suspenso** até A29 | Com rota de hash, canonical para o próprio site equivale a canonical para a home |
+
+### I13 — O projeto não tem runner de testes
+
+Não há `vitest`, `jest`, `playwright`, `puppeteer` nem `cypress` — nem em
+`devDependencies`, nem em `node_modules/.bin`, nem script de teste no
+`package.json`. A verificação obrigatória do `CLAUDE.md` é typecheck, lint e
+build; nenhuma delas executa código.
+
+Apareceu ao implementar I10: o helper `formatCatalogDate` é exatamente o tipo
+de função que um teste tranca em três linhas — fuso negativo, fuso positivo,
+dia 01. Verifiquei rodando `Intl` em quatro fusos pelo terminal, o que prova o
+comportamento hoje mas não impede a regressão amanhã.
+
+Não instalei um runner porque a Etapa 4 não pedia isso, e adicionar
+infraestrutura de teste é decisão de projeto, não efeito colateral de um
+achado. Se for adiante, `vitest` é o de menor atrito aqui: usa a config do
+Vite que já existe, e `src/shared/date.ts` e `src/experience/quality.ts` são os
+dois melhores primeiros alvos.
+
+### I14 — `a11y.hireOnLinkedIn` continua órfã
+
+Registrada em I07 e ainda presente nos dois locales. A20 removeu
+`a11y.switchLanguage` porque o par de botões a substituiu diretamente, mas
+`hireOnLinkedIn` ficou — some junto com A27, que junta as chaves mortas.
