@@ -35,6 +35,10 @@
     "menuTitle": "Menu",
     "openProfile": "Open {{network}} profile",
     "opensInNewTab": "opens in new tab",
-    "language": "Language"
+    "language": "Language",
+    "theme": "Theme",
+    "themeSystem": "Follow the system",
+    "themeLight": "Light",
+    "themeDark": "Dark"
   }
 }

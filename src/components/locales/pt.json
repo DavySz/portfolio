@@ -35,6 +35,10 @@
     "menuTitle": "Menu",
     "openProfile": "Abrir perfil no {{network}}",
     "opensInNewTab": "abre em nova aba",
-    "language": "Idioma"
+    "language": "Idioma",
+    "theme": "Tema",
+    "themeSystem": "Seguir o sistema",
+    "themeLight": "Claro",
+    "themeDark": "Escuro"
   }
 }
