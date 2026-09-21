@@ -7,14 +7,15 @@ export const ServiceCards: React.FC<ServiceCardsProps> = ({ data }) => {
       {data.map(({ description, isHighlighted, title }, index) => (
         <div
           key={index}
+          /* Sem cursor-pointer, sem sombra e sem deslocamento no hover: o
+             card não leva a lugar nenhum, e todo esse vocabulário dizia que
+             sim. Sobra um fundo sutil, igual ao da tabela no desktop. */
           className={clsx(
-            "flex flex-col gap-6 py-8 px-6 rounded-xl transition-all duration-300 ease-out",
-            "hover:shadow-lg hover:-translate-y-1 cursor-pointer",
+            "flex flex-col gap-6 py-8 px-6 rounded-xl transition-colors duration-300 ease-out",
             {
-              "bg-gradient-to-r from-primary-500 to-primary-900 hover:from-primary-400 hover:to-primary-800 hover:shadow-primary":
+              "bg-gradient-to-r from-primary-500 to-primary-900 hover:from-primary-400 hover:to-primary-800":
                 isHighlighted,
-              "bg-white hover:bg-primary-50 hover:shadow-primary/20":
-                !isHighlighted,
+              "bg-white hover:bg-primary-50": !isHighlighted,
             }
           )}
         >
