@@ -5,17 +5,26 @@ import { MdArrowBack } from "react-icons/md";
 import { Text } from "../../components/text";
 import { Button } from "../../components/button";
 import { Loading } from "../../components/loading";
-import { findArticle, loadArticleContent } from "../../content/articles";
+import { articleHref } from "../../hooks/useHashRoute/use-hash-route";
+import { ArticleToc } from "../../components/article-toc";
+import { ReadingProgress } from "../../components/reading-progress";
+import {
+  findArticle,
+  findNeighbours,
+  loadArticleContent,
+} from "../../content/articles";
 import type { ArticlePageProps } from "./types";
 
 interface Content {
   html: string;
   readingMinutes: number;
+  headings: Array<{ id: string; text: string; level: number }>;
 }
 
 export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
   const { t, i18n } = useTranslation("component");
   const meta = findArticle(slug);
+  const { previous, next } = findNeighbours(slug);
   const [content, setContent] = useState<Content | null>(null);
   const [failed, setFailed] = useState(false);
 
@@ -129,7 +138,11 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
   }).format(new Date(meta.date));
 
   return (
-    <article className="mx-auto w-full max-w-3xl px-6 py-12 md:py-16">
+    <div className="mx-auto w-full max-w-7xl px-6 py-12 md:py-16">
+      {content && <ReadingProgress />}
+
+      <div className="xl:grid xl:grid-cols-[1fr_16rem] xl:gap-12">
+        <article className="mx-auto w-full max-w-3xl">
       <div className="mb-10">
         <Button variant="tertiary" icon={MdArrowBack} onClick={goBack}>
           {t("article.back")}
@@ -202,6 +215,53 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
           <Loading size="lg" />
         </div>
       )}
-    </article>
+
+      {/* Sem isto o artigo termina no vazio: o único caminho era o botão
+          "Voltar" lá no topo. */}
+      <nav
+        aria-label={t("article.allArticles")}
+        className="mt-16 grid gap-4 border-t border-gray-200 pt-8 sm:grid-cols-2"
+      >
+        {previous ? (
+          <a
+            href={articleHref(previous.slug)}
+            className="group rounded-xl border border-gray-200 p-4 transition-colors duration-300 hover:border-primary-300 hover:bg-primary-50
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+          >
+            <span className="font-poppins text-body-xs uppercase tracking-wider text-gray-500">
+              {t("article.previous")}
+            </span>
+            <span className="mt-1 block font-poppins text-body-md font-semibold text-gray-900 group-hover:text-primary-700">
+              {previous.title}
+            </span>
+          </a>
+        ) : (
+          <span />
+        )}
+
+        {next && (
+          <a
+            href={articleHref(next.slug)}
+            className="group rounded-xl border border-gray-200 p-4 text-right transition-colors duration-300 hover:border-primary-300 hover:bg-primary-50
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+          >
+            <span className="font-poppins text-body-xs uppercase tracking-wider text-gray-500">
+              {t("article.next")}
+            </span>
+            <span className="mt-1 block font-poppins text-body-md font-semibold text-gray-900 group-hover:text-primary-700">
+              {next.title}
+            </span>
+          </a>
+        )}
+      </nav>
+        </article>
+
+        {content && (
+          <aside className="hidden xl:block">
+            <ArticleToc headings={content.headings} label={t("article.toc")} />
+          </aside>
+        )}
+      </div>
+    </div>
   );
 };

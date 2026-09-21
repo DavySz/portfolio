@@ -108,12 +108,26 @@ export const ARTICLES: ArticleMeta[] = [
 export const findArticle = (slug: string): ArticleMeta | undefined =>
   ARTICLES.find((article) => article.slug === slug);
 
+/** Vizinhos na ordem da lista (mais recente primeiro) para o fim do artigo. */
+export const findNeighbours = (slug: string) => {
+  const index = ARTICLES.findIndex((article) => article.slug === slug);
+  if (index < 0) return { previous: undefined, next: undefined };
+  return {
+    previous: ARTICLES[index - 1],
+    next: ARTICLES[index + 1],
+  };
+};
+
 /**
  * Mapa slug → carregador do conteúdo. `import.meta.glob` sem `eager` dá um
  * chunk por artigo: abrir um não baixa os outros sete.
  */
 const loaders = import.meta.glob<{
-  default: { html: string; readingMinutes: number };
+  default: {
+    html: string;
+    readingMinutes: number;
+    headings: Array<{ id: string; text: string; level: number }>;
+  };
 }>("./*.md");
 
 export const loadArticleContent = async (slug: string) => {

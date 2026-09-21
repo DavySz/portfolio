@@ -3,6 +3,7 @@ declare module "*.md" {
   const article: {
     html: string;
     readingMinutes: number;
+    headings: Array<{ id: string; text: string; level: number }>;
   };
   export default article;
 }

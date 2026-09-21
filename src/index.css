@@ -148,6 +148,23 @@
   @apply mt-5;
 }
 
+/* Âncora copiável ao lado do título, como em docs técnicas. Só aparece no
+   hover ou no foco, para não poluir a leitura — mas existe no DOM e é
+   alcançável por teclado. */
+.article-heading {
+  @apply relative;
+}
+
+.article-anchor {
+  @apply ml-2 align-middle text-primary-400 no-underline opacity-0 transition-opacity duration-200;
+  @apply focus:outline-none focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-primary-500;
+}
+
+.article-heading:hover .article-anchor,
+.article-anchor:focus-visible {
+  @apply opacity-100;
+}
+
 .article-content h2 {
   @apply mt-12 text-heading-xl font-bold leading-snug text-gray-900 md:text-display-sm;
 }

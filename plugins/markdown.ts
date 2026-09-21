@@ -15,9 +15,16 @@ import type { Plugin } from "vite";
  * inline: o tema vive uma vez no CSS e o HTML de cada artigo fica curto.
  */
 
+export interface ArticleHeading {
+  id: string;
+  text: string;
+  level: number;
+}
+
 interface ArticleModule {
   html: string;
   readingMinutes: number;
+  headings: ArticleHeading[];
 }
 
 /** Palavras por minuto de leitura técnica, usado para estimar o tempo. */
@@ -39,7 +46,7 @@ const LANGUAGE_NAMES: Record<string, string> = {
   sql: "SQL",
 };
 
-const createMarked = () => {
+const createMarked = (headings: ArticleHeading[]) => {
   const marked = new Marked({ gfm: true, breaks: false });
 
   marked.use({
@@ -69,8 +76,18 @@ const createMarked = () => {
         // nível (h1 -> h3), que é falha de acessibilidade. O max(2, …) só
         // protege o caso de algum artigo futuro começar com "#".
         const level = Math.max(2, depth);
-        const id = slugify(stripTags(text));
-        return `<h${level} id="${id}">${text}</h${level}>`;
+        const plain = stripTags(text);
+        const id = slugify(plain);
+
+        // Só h2 e h3 entram no sumário; mais fundo que isso vira ruído.
+        if (level <= 3) headings.push({ id, text: plain, level });
+
+        // Âncora copiável ao lado do título, como em docs técnicas.
+        return (
+          `<h${level} id="${id}" class="article-heading">${text}` +
+          `<a href="#${id}" class="article-anchor" aria-label="Link para: ${plain}">#</a>` +
+          `</h${level}>`
+        );
       },
       link({ href, title, tokens }) {
         const text = this.parser.parseInline(tokens);
@@ -108,8 +125,6 @@ const slugify = (value: string): string =>
     .replace(/(^-|-$)/g, "");
 
 export const markdownArticles = (): Plugin => {
-  const marked = createMarked();
-
   return {
     name: "markdown-articles",
     enforce: "pre",
@@ -118,12 +133,15 @@ export const markdownArticles = (): Plugin => {
       if (!id.endsWith(".md")) return null;
 
       const source = readFileSync(id, "utf8");
-      const html = await marked.parse(source);
+      // um coletor por arquivo: o parser é reusado, a lista não pode ser
+      const headings: ArticleHeading[] = [];
+      const html = await createMarked(headings).parse(source);
 
       const words = stripTags(source).split(/\s+/).filter(Boolean).length;
       const module: ArticleModule = {
         html,
         readingMinutes: Math.max(1, Math.round(words / WORDS_PER_MINUTE)),
+        headings,
       };
 
       return {

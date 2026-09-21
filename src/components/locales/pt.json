@@ -21,7 +21,11 @@
     "notFound": "Artigo não encontrado",
     "copy": "Copiar",
     "copied": "Copiado",
-    "copyFailed": "Não deu para copiar"
+    "copyFailed": "Não deu para copiar",
+    "toc": "Nesta página",
+    "previous": "Anterior",
+    "next": "Próximo",
+    "allArticles": "Todos os artigos"
   },
   "a11y": {
     "skipToContent": "Pular para o conteúdo principal",
