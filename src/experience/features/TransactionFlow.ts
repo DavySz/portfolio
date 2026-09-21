@@ -57,6 +57,24 @@ const CLEAR_BAND_END = 0.55;
 
 const LANES = 14;
 
+/**
+ * Tamanho da partícula em unidades de mundo (a seção tem 2 de altura).
+ *
+ * Este número é de cobertura, não de gosto: com N partículas de área
+ * `SIZE² · STRETCH · π/4` numa seção de `2·aspect × 2` da qual só ~55% recebe
+ * partículas, a fração coberta é N·área / (4·aspect·0,55).
+ *
+ * A primeira versão usava 0.016 com stretch 3.4 e dava **103% de cobertura**:
+ * as partículas se sobrepunham até saturar na própria cor e a cena virava uma
+ * textura malhada em vez de partículas. 0.006 com stretch 2.4 dá ~10%, que é
+ * a faixa em que dá pra distinguir uma partícula da outra.
+ */
+const SIZE = 0.006;
+const STRETCH = 2.4;
+
+/** Menor que o espaçamento entre faixas (1.62/13 ≈ 0.125), senão elas borram. */
+const WOBBLE = 0.012;
+
 const COUNT = { high: 7000, low: 1500 } as const;
 
 export class TransactionFlow implements Feature {
@@ -164,7 +182,7 @@ export class TransactionFlow implements Feature {
       // fract dá o wrap: a partícula reaparece na borda oposta
       const flowX = fract(r2.add(uTime.mul(speed))).mul(2.4).sub(1.2);
       // ondulação leve para a faixa não virar régua
-      const wobble = sin(flowX.mul(2.4).add(r2.mul(6.28318))).mul(0.03);
+      const wobble = sin(flowX.mul(2.4).add(r2.mul(6.28318))).mul(WOBBLE);
       const flowY = laneY.add(wobble);
 
       const x = mix(chaosX, flowX, organize);
@@ -176,8 +194,8 @@ export class TransactionFlow implements Feature {
       mask.assign(smoothstep(CLEAR_BAND_START, CLEAR_BAND_END, fromTop));
 
       // organizadas viram traço: esticam no eixo do movimento
-      const stretch = mix(float(1), float(3.4), organize);
-      const scale = vec3(float(0.016).mul(stretch), float(0.016), 1);
+      const stretch = mix(float(1), STRETCH, organize);
+      const scale = vec3(float(SIZE).mul(stretch), float(SIZE), 1);
 
       return vec3(x.mul(uAspect), y, 0).add(positionLocal.mul(scale));
     })();
