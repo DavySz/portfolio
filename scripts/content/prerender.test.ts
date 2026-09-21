@@ -16,14 +16,24 @@ const temDist = existsSync(resolve(DIST, "index.html"));
 const contar = (html: string, padrao: RegExp) =>
   (html.match(padrao) ?? []).length;
 
+/**
+ * Chave de identidade de uma `<meta>`.
+ *
+ * O `media` entra na chave porque uma meta PODE repetir quando cada
+ * ocorrência responde a uma media query diferente — é o caso do
+ * `theme-color`, que tem uma cor para claro e outra para escuro. Duas com a
+ * mesma chave, aí sim, é duplicata: a segunda é ignorada e vira ruído.
+ */
 const metaChaves = (head: string) => {
   const chaves: string[] = [];
   for (const m of head.matchAll(/<meta\s+([^>]*?)\/?>/g)) {
     const atributos = m[1];
     const nome = /\bname="([^"]+)"/.exec(atributos);
     const prop = /\bproperty="([^"]+)"/.exec(atributos);
-    if (nome) chaves.push(`name=${nome[1]}`);
-    else if (prop) chaves.push(`property=${prop[1]}`);
+    const media = /\bmedia="([^"]+)"/.exec(atributos);
+    const sufixo = media ? ` @${media[1]}` : "";
+    if (nome) chaves.push(`name=${nome[1]}${sufixo}`);
+    else if (prop) chaves.push(`property=${prop[1]}${sufixo}`);
   }
   return chaves;
 };

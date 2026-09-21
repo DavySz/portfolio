@@ -5,13 +5,49 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!--
+      Anti-flash do tema. Inline e síncrono de propósito, e antes de qualquer
+      CSS: qualquer coisa adiada — módulo, defer, React — chega depois do
+      primeiro paint, e o flash é exatamente o que este script evita.
+      Repete a regra de src/shared/theme.ts: escolha salva > sistema.
+      O try/catch cobre modo privado, onde localStorage lança.
+    -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("davysz:theme");
+          var dark =
+            saved === "dark" ||
+            (saved !== "light" &&
+              matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.classList.add("dark");
+          document.documentElement.style.colorScheme = dark
+            ? "dark"
+            : "light";
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- SEO Meta Tags -->
     <meta
       name="robots"
       content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
     />
-    <!-- Uma só: as duas anteriores traziam a mesma cor por media query -->
-    <meta name="theme-color" content="#7947DF" />
+    <!--
+      Duas de novo, revertendo I12 de propósito: lá elas traziam a mesma cor e
+      eram só ruído; aqui trazem cores diferentes, que é para o que a media
+      query existe. É a cor da barra do navegador no mobile.
+    -->
+    <meta
+      name="theme-color"
+      content="#7947DF"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#0E0A1A"
+      media="(prefers-color-scheme: dark)"
+    />
     <meta name="author" content="Davy de Souza Assuncao" />
 
     <!-- Poppins é self-hospedada (@font-face em src/index.css), então não há
