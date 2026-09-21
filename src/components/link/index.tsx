@@ -16,7 +16,7 @@ export const Link: React.FC<LinkProps> = ({
       >
         <p
           className={clsx(
-            "font-poppins font-normal text-base lg:text-xl transition-all duration-300 ease-out",
+            "font-poppins font-normal text-base xl:text-lg transition-all duration-300 ease-out",
             "relative z-10",
             {
               "text-ink hover:text-accent":

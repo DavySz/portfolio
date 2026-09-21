@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "../button";
 import { ContactCta } from "../contact-cta";
 import { Toggle } from "../toggle";
+import { ThemeToggle } from "../theme-toggle";
 import { getLinks, SECTION_IDS } from "./constants";
 import { FiMenu } from "react-icons/fi";
 import type { IconType } from "react-icons";
@@ -172,7 +173,10 @@ export const MobileNavigationBar: React.FC = () => {
     <>
       {/* Header Bar */}
       <div className="relative z-50 flex items-center justify-between w-full py-4 px-6 bg-page/95 backdrop-blur-sm border-b border-line">
-        <Toggle />
+        <div className="flex items-center gap-1">
+          <Toggle />
+          <ThemeToggle />
+        </div>
         <Button
           id={TRIGGER_ID}
           variant="secondary"
