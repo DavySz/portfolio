@@ -2,7 +2,10 @@ import { lazy, Suspense } from "react";
 import { PageTemplate } from "./components/page-template";
 import { Home } from "./pages/home";
 import { useLog } from "./hooks";
-import { useArticleRoute } from "./hooks/useHashRoute/use-hash-route";
+import {
+  useAnchorScroll,
+  useArticleRoute,
+} from "./hooks/useHashRoute/use-hash-route";
 import { Loading } from "./components/loading";
 import {
   WELCOME_LOG_MESSAGE,
@@ -16,6 +19,10 @@ const ArticlePage = lazy(() =>
 
 function Entry() {
   const slug = useArticleRoute();
+
+  // Só na home: é lá que as âncoras do menu existem, e elas chegam tarde
+  // porque as seções são lazy.
+  useAnchorScroll(!slug);
 
   useLog({
     styles: WELCOME_LOG_MESSAGE_STYLES,
