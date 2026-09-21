@@ -92,6 +92,32 @@ describe.skipIf(!temDist)("saída do pré-render", () => {
     expect(contar(html, /rel="canonical"/g)).toBe(1);
   });
 
+  /**
+   * O script anti-flash precisa estar em TODA página servida, e antes do CSS.
+   *
+   * Ele se propaga sozinho, porque o pré-render monta cada página a partir do
+   * `dist/index.html`. "Se propaga sozinho" é exatamente o tipo de afirmação
+   * que envelhece mal — daí o teste: se alguém reordenar o `<head>` ou mover
+   * o script para um módulo, isto quebra antes do deploy.
+   */
+  it.each([
+    "index.html",
+    "404.html",
+    ...slugs.map((slug) => `artigos/${slug}/index.html`),
+  ])("%s: tem o anti-flash antes do CSS", (arquivo) => {
+    const html = readFileSync(resolve(DIST, arquivo), "utf8");
+    const head = html.slice(html.indexOf("<head>"), html.indexOf("</head>"));
+
+    const script = head.indexOf("davysz:theme");
+    expect(script).toBeGreaterThan(-1);
+
+    // inline: um src externo chegaria tarde demais para evitar o flash
+    expect(head).toMatch(/<script>\s*\(function/);
+
+    const css = head.indexOf('rel="stylesheet"');
+    if (css > -1) expect(script).toBeLessThan(css);
+  });
+
   it("a 404 não carrega o app e não é indexável", () => {
     const html = readFileSync(resolve(DIST, "404.html"), "utf8");
     expect(html).not.toMatch(/type="module"/);
