@@ -17,14 +17,34 @@ type NavigatorHints = Navigator & {
   connection?: { saveData?: boolean };
 };
 
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+
+/**
+ * Avisa quando a preferência de movimento muda.
+ *
+ * Antes ela era lida só na montagem: quem ligasse "reduzir movimento" com a
+ * página aberta continuava vendo tudo animar até recarregar — e recarregar
+ * não é uma instrução razoável para quem acabou de pedir menos movimento.
+ */
+export const watchReducedMotion = (
+  onChange: (animate: boolean) => void
+): (() => void) => {
+  if (typeof window === "undefined") return () => {};
+
+  const media = window.matchMedia(REDUCED_MOTION);
+  const listener = (event: MediaQueryListEvent) => onChange(!event.matches);
+
+  media.addEventListener("change", listener);
+  return () => media.removeEventListener("change", listener);
+};
+
 export const detectQuality = (): Quality => {
   if (typeof window === "undefined") {
     return { tier: "off", animate: false, pixelRatio: 1 };
   }
 
   const nav = navigator as NavigatorHints;
-  const animate = !window.matchMedia("(prefers-reduced-motion: reduce)")
-    .matches;
+  const animate = !window.matchMedia(REDUCED_MOTION).matches;
 
   if (nav.connection?.saveData) return { tier: "off", animate, pixelRatio: 1 };
 

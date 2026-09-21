@@ -2,6 +2,7 @@ import * as THREE from "three/webgpu";
 import type { Quality } from "./quality";
 import type { Feature, FrameContext } from "./types";
 import { getSections, subscribeSections } from "./sections";
+import { watchReducedMotion } from "./quality";
 import { HeroBackground } from "./features/HeroBackground";
 import { SignatureObject } from "./features/SignatureObject";
 import { TransactionFlow } from "./features/TransactionFlow";
@@ -46,6 +47,8 @@ export class Experience {
   private painted = false;
   /** usado no tier animate:false para só repintar quando o scroll muda */
   private lastScrollY = Number.NaN;
+  /** definido só enquanto o ponteiro está sendo observado */
+  private pointerCleanup?: () => void;
 
   static async create(container: HTMLElement, quality: Quality) {
     const experience = new Experience(container, quality);
@@ -101,6 +104,7 @@ export class Experience {
     this.add(new SignatureObject(ctx.quality));
     this.add(new TransactionFlow(ctx.quality));
 
+    this.observeReducedMotion();
     this.observeViewport();
     this.observeLayout();
     this.observeSectionRegistry();
@@ -288,6 +292,26 @@ export class Experience {
     this.renderer.setSize(width, height, false);
   }
 
+  /**
+   * Liga e desliga a animação ao vivo.
+   *
+   * Sair do modo reduzido precisa religar o ponteiro, que não é observado
+   * quando a preferência está ativa; entrar precisa repintar uma vez, para a
+   * cena parar numa pose e não no meio de um frame.
+   */
+  private observeReducedMotion() {
+    this.cleanups.push(
+      watchReducedMotion((animate) => {
+        if (this.ctx.quality.animate === animate) return;
+        this.ctx.quality.animate = animate;
+
+        if (animate && !this.pointerCleanup) this.observePointer();
+        this.lastScrollY = Number.NaN;
+        this.renderFrame(0);
+      })
+    );
+  }
+
   private observeViewport() {
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
@@ -327,9 +351,10 @@ export class Experience {
       this.pointerY = event.clientY;
     };
     window.addEventListener("pointermove", onMove, { passive: true });
-    this.cleanups.push(() =>
-      window.removeEventListener("pointermove", onMove)
-    );
+
+    this.pointerCleanup = () =>
+      window.removeEventListener("pointermove", onMove);
+    this.cleanups.push(this.pointerCleanup);
   }
 
   dispose() {

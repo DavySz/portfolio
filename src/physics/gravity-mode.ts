@@ -22,6 +22,27 @@ export const isGravityAvailable = (): boolean => {
   return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 };
 
+/**
+ * Avisa quando a preferência de movimento muda, para o botão sumir ou voltar
+ * sem recarregar. Se ela for ligada com o modo ativo, desliga na hora: é
+ * justamente esse movimento que a pessoa acabou de pedir para não acontecer.
+ */
+export const watchGravityAvailability = (
+  listener: (available: boolean) => void
+): (() => void) => {
+  if (typeof window === "undefined") return () => {};
+
+  const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const onChange = (event: MediaQueryListEvent) => {
+    const available = !event.matches;
+    if (!available) setGravityActive(false);
+    listener(available);
+  };
+
+  media.addEventListener("change", onChange);
+  return () => media.removeEventListener("change", onChange);
+};
+
 export const setGravityActive = (next: boolean): void => {
   if (active === next) return;
   if (next && !isGravityAvailable()) return;
