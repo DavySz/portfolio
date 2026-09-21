@@ -77,7 +77,7 @@ export const ARTICLES: ArticleMeta[] = [
   {
     slug: "frontend-como-plataforma",
     date: "2026-03-28",
-    bodies: ["pt"],
+    bodies: ["pt", "en"],
     en: {
       title: "Frontend as a platform",
       excerpt:
