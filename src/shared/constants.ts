@@ -3,7 +3,10 @@ export const CONTACTS = {
     "https://www.linkedin.com/in/davy-de-souza-assun%C3%A7%C3%A3o-0b7483180",
   INSTAGRAM: "https://instagram.com/davy_sz",
   GITHUB: "https://github.com/davysz",
+  /** E.164, que é o formato aceito por `tel:` e pelo schema.org. */
   PHONE: "+5592992939794",
+  /** Só para exibir: um número corrido é difícil de ler e pior de ouvir. */
+  PHONE_DISPLAY: "+55 92 99293-9794",
   GMAIL: "davydesouzabar@gmail.com",
   MEDIUM: "https://medium.com/@davysz",
 };

@@ -32,28 +32,34 @@ export const Footer: React.FC = () => {
           </Text>
         </div>
         <div className="flex flex-col gap-6">
-          <div className="flex gap-5 items-center">
-            <MdOutlineMailOutline size={20} color="#ffff" />
-            <Text
-              as="span"
-              variant="bodyText"
-              color="white"
-              className="text-body-md"
-            >
-              {CONTACTS.GMAIL}
-            </Text>
-          </div>
-          <div className="flex gap-5 items-center">
-            <LuPhone size={20} color="#ffff" />
-            <Text
-              as="span"
-              variant="bodyText"
-              color="white"
-              className="text-body-md"
-            >
-              {CONTACTS.PHONE}
-            </Text>
-          </div>
+          {/* Contato é o objetivo da página: precisa ser acionável, não um
+              texto para selecionar e copiar. A linha inteira é o link, para o
+              alvo de toque não ser só a altura da fonte. */}
+          <a
+            href={`mailto:${CONTACTS.GMAIL}`}
+            className="flex gap-5 items-center rounded-sm text-white transition-colors duration-300
+                       hover:text-primary-300
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-900"
+          >
+            <MdOutlineMailOutline
+              size={20}
+              color="currentColor"
+              aria-hidden="true"
+            />
+            <span className="font-poppins text-body-md">{CONTACTS.GMAIL}</span>
+          </a>
+          <a
+            href={`tel:${CONTACTS.PHONE}`}
+            className="flex gap-5 items-center rounded-sm text-white transition-colors duration-300
+                       hover:text-primary-300
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-900"
+          >
+            <LuPhone size={20} color="currentColor" aria-hidden="true" />
+            {/* O `tel:` leva o E.164; quem lê e quem ouve recebe o formatado. */}
+            <span className="font-poppins text-body-md">
+              {CONTACTS.PHONE_DISPLAY}
+            </span>
+          </a>
           <div className="flex gap-5 items-center">
             {SOCIALS.map((social) => (
               <Button
