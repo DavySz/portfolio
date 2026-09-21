@@ -43,7 +43,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
       )}
 
       <div className="flex flex-1 flex-col gap-3 p-6">
-        <p className="font-poppins text-label-lg uppercase tracking-wider text-primary-600">
+        <p className="font-poppins text-body-sm uppercase tracking-wider text-primary-600">
           {article.tag}
         </p>
 

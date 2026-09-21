@@ -23,6 +23,22 @@ interface ArticleModule {
 /** Palavras por minuto de leitura técnica, usado para estimar o tempo. */
 const WORDS_PER_MINUTE = 200;
 
+/** Nome de exibição das linguagens; o resto cai no identificador cru. */
+const LANGUAGE_NAMES: Record<string, string> = {
+  typescript: "TypeScript",
+  tsx: "TSX",
+  javascript: "JavaScript",
+  js: "JavaScript",
+  json: "JSON",
+  css: "CSS",
+  html: "HTML",
+  bash: "Shell",
+  sh: "Shell",
+  nginx: "nginx",
+  yaml: "YAML",
+  sql: "SQL",
+};
+
 const createMarked = () => {
   const marked = new Marked({ gfm: true, breaks: false });
 
@@ -33,10 +49,18 @@ const createMarked = () => {
         const highlighted = language
           ? hljs.highlight(text, { language }).value
           : escapeHtml(text);
+        const label = language ? (LANGUAGE_NAMES[language] ?? language) : "";
 
-        return `<pre class="article-code"><code class="hljs${
-          language ? ` language-${language}` : ""
-        }">${highlighted}</code></pre>`;
+        // <figure> com barra: o nome da linguagem dá contexto e a barra vira o
+        // lugar do botão de copiar, injetado em runtime pela página do artigo.
+        return `<figure class="article-code" data-language="${language ?? ""}">` +
+          `<figcaption class="article-code-bar">` +
+          `<span class="article-code-lang">${escapeHtml(label)}</span>` +
+          `</figcaption>` +
+          `<pre class="article-code-pre"><code class="hljs${
+            language ? ` language-${language}` : ""
+          }">${highlighted}</code></pre>` +
+          `</figure>`;
       },
       heading({ tokens, depth }) {
         const text = this.parser.parseInline(tokens);

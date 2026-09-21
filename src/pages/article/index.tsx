@@ -44,6 +44,58 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
     };
   }, [slug]);
 
+  /**
+   * Acrescenta um botão de copiar à barra de cada bloco de código.
+   *
+   * O HTML do artigo é gerado no build e não passa pelo React, então o botão
+   * é injetado aqui — depois que o conteúdo entra no DOM. Fica contido: tudo
+   * que é criado é removido na limpeza do efeito.
+   */
+  useEffect(() => {
+    if (!content) return;
+
+    const blocks = [
+      ...document.querySelectorAll<HTMLElement>(".article-code"),
+    ];
+    const cleanups: Array<() => void> = [];
+
+    for (const block of blocks) {
+      const bar = block.querySelector(".article-code-bar");
+      const code = block.querySelector("code");
+      if (!bar || !code) continue;
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "article-code-copy";
+      button.textContent = t("article.copy");
+
+      let resetTimer = 0;
+      const onClick = async () => {
+        try {
+          await navigator.clipboard.writeText(code.textContent ?? "");
+          button.textContent = t("article.copied");
+        } catch {
+          button.textContent = t("article.copyFailed");
+        }
+        window.clearTimeout(resetTimer);
+        resetTimer = window.setTimeout(() => {
+          button.textContent = t("article.copy");
+        }, 2000);
+      };
+
+      button.addEventListener("click", onClick);
+      bar.appendChild(button);
+
+      cleanups.push(() => {
+        window.clearTimeout(resetTimer);
+        button.removeEventListener("click", onClick);
+        button.remove();
+      });
+    }
+
+    return () => cleanups.forEach((cleanup) => cleanup());
+  }, [content, t]);
+
   useEffect(() => {
     if (!meta) return;
     const previous = document.title;
@@ -85,7 +137,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
       </div>
 
       <header className="mb-10 border-b border-gray-200 pb-8">
-        <p className="mb-4 font-poppins text-label-lg uppercase tracking-wider text-primary-600">
+        <p className="mb-4 font-poppins text-body-sm uppercase tracking-wider text-primary-600">
           {meta.tag}
         </p>
 

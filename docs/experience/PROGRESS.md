@@ -42,6 +42,7 @@ continuam linkando para lá, como referência secundária.
 | 25 | Revisar título, resumo, tag e **data** de cada artigo em `src/content/articles/index.ts` — as datas eu inferi do arquivo | Davy |
 | 26 | 4 artigos não têm thumb; hoje recebem uma capa tipográfica na paleta da marca | Davy |
 | 27 | Decidir se os artigos devem ter versão em inglês (hoje são pt-BR, com `lang` marcado) | Davy |
+| 28 | O tema não tem a escala `label-*` (`text-label-md/lg` não existe e falha em silêncio no JSX). Ela só vivia no objeto `typography`, que era código morto. Decidir se entra no `tailwind.config.js` | Davy |
 
 ## Pendências manuais abertas
 

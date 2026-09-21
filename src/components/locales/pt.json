@@ -18,6 +18,9 @@
     "back": "Voltar",
     "readOnMedium": "Também no Medium",
     "readingTime": "{{minutes}} min de leitura",
-    "notFound": "Artigo não encontrado"
+    "notFound": "Artigo não encontrado",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "copyFailed": "Não deu para copiar"
   }
 }

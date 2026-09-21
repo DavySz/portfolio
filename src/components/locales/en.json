@@ -18,6 +18,9 @@
     "back": "Back",
     "readOnMedium": "Also on Medium",
     "readingTime": "{{minutes}} min read",
-    "notFound": "Article not found"
+    "notFound": "Article not found",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyFailed": "Could not copy"
   }
 }

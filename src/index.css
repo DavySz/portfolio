@@ -101,125 +101,6 @@
     animation: shimmer 1.5s infinite;
   }
 
-  /* Conteúdo dos artigos.
-     CSS próprio (e não Tailwind) porque o HTML vem do markdown convertido no
-     build: não há onde pendurar classe elemento a elemento. É exatamente o
-     caso em que o CLAUDE.md abre exceção. Tudo fica escopado em
-     `.article-content` para não vazar para o resto do site. */
-  .article-content {
-    @apply font-poppins text-body-md leading-relaxed text-gray-700;
-  }
-
-  .article-content > * + * {
-    @apply mt-5;
-  }
-
-  .article-content h2 {
-    @apply mt-12 text-heading-xl font-bold leading-snug text-gray-900 md:text-display-sm;
-  }
-
-  .article-content h3 {
-    @apply mt-9 text-heading-lg font-semibold leading-snug text-gray-900;
-  }
-
-  .article-content h4 {
-    @apply mt-7 text-heading-md font-semibold text-gray-900;
-  }
-
-  .article-content strong {
-    @apply font-semibold text-gray-900;
-  }
-
-  .article-content a {
-    @apply text-primary-600 underline underline-offset-4 transition-colors duration-300 hover:text-primary-800;
-  }
-
-  .article-content ul {
-    @apply list-disc space-y-2 pl-6;
-  }
-
-  .article-content ol {
-    @apply list-decimal space-y-2 pl-6;
-  }
-
-  .article-content blockquote {
-    @apply border-l-4 border-primary-300 bg-primary-50 py-3 pl-5 pr-4 italic text-gray-700;
-  }
-
-  .article-content hr {
-    @apply my-10 border-gray-200;
-  }
-
-  /* Código inline (fora de <pre>) */
-  .article-content :not(pre) > code {
-    @apply rounded bg-secondary-50 px-1.5 py-0.5 text-body-sm text-primary-800;
-    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  }
-
-  .article-code {
-    @apply overflow-x-auto rounded-xl bg-[#1b1233] p-4 text-body-sm leading-relaxed md:p-5;
-  }
-
-  .article-code code {
-    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-    @apply text-[#e9e3ff];
-  }
-
-  /* Tema do highlight.js na paleta da marca. Classes, não estilo inline:
-     o tema pesa uma vez no CSS em vez de repetir em cada token do HTML. */
-  .hljs-comment,
-  .hljs-quote {
-    @apply italic text-[#9a8fc4];
-  }
-
-  .hljs-keyword,
-  .hljs-selector-tag,
-  .hljs-literal,
-  .hljs-type {
-    @apply text-[#c4a7ff];
-  }
-
-  .hljs-string,
-  .hljs-regexp,
-  .hljs-addition {
-    @apply text-[#9ae6c4];
-  }
-
-  .hljs-number,
-  .hljs-symbol {
-    @apply text-[#ffc98b];
-  }
-
-  .hljs-title,
-  .hljs-title.function_,
-  .hljs-section {
-    @apply text-[#8fd3ff];
-  }
-
-  .hljs-attr,
-  .hljs-attribute,
-  .hljs-variable,
-  .hljs-property {
-    @apply text-[#ffb4d1];
-  }
-
-  .hljs-built_in,
-  .hljs-class .hljs-title {
-    @apply text-[#ffe08a];
-  }
-
-  .hljs-deletion {
-    @apply text-[#ff9b9b];
-  }
-
-  .hljs-emphasis {
-    @apply italic;
-  }
-
-  .hljs-strong {
-    @apply font-semibold;
-  }
-
   /* Marcador do fallback: qualquer seção com cena declara este elemento com
      a sua cor de fundo. Ele é o que aparece no tier "off", sem WebGPU/WebGL2
      e até o experience assumir — e precisa se apagar quando ele assume,
@@ -244,6 +125,170 @@
       #0e0a1a;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Artigos — FORA de @layer de propósito.
+   O Tailwind poda o que está dentro de @layer e não encontra no `content`.
+   Estas classes vivem no HTML gerado do markdown em tempo de build, e os
+   `hljs-*` são emitidos pelo highlight.js: nenhum dos dois existe em arquivo
+   que o Tailwind varra, então dentro de um @layer eles seriam apagados.
+   --------------------------------------------------------------------------- */
+
+/* Conteúdo dos artigos.
+   CSS próprio (e não Tailwind) porque o HTML vem do markdown convertido no
+   build: não há onde pendurar classe elemento a elemento. É exatamente o
+   caso em que o CLAUDE.md abre exceção. Tudo fica escopado em
+   `.article-content` para não vazar para o resto do site. */
+.article-content {
+  @apply font-poppins text-body-md leading-relaxed text-gray-700;
+}
+
+.article-content > * + * {
+  @apply mt-5;
+}
+
+.article-content h2 {
+  @apply mt-12 text-heading-xl font-bold leading-snug text-gray-900 md:text-display-sm;
+}
+
+.article-content h3 {
+  @apply mt-9 text-heading-lg font-semibold leading-snug text-gray-900;
+}
+
+.article-content h4 {
+  @apply mt-7 text-heading-md font-semibold text-gray-900;
+}
+
+.article-content strong {
+  @apply font-semibold text-gray-900;
+}
+
+.article-content a {
+  @apply text-primary-600 underline underline-offset-4 transition-colors duration-300 hover:text-primary-800;
+}
+
+.article-content ul {
+  @apply list-disc space-y-2 pl-6;
+}
+
+.article-content ol {
+  @apply list-decimal space-y-2 pl-6;
+}
+
+.article-content blockquote {
+  @apply border-l-4 border-primary-300 bg-primary-50 py-3 pl-5 pr-4 italic text-gray-700;
+}
+
+.article-content hr {
+  @apply my-10 border-gray-200;
+}
+
+/* Código inline (fora de <pre>) */
+.article-content :not(pre) > code {
+  @apply rounded bg-secondary-50 px-1.5 py-0.5 text-body-sm text-primary-800;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+/* Bloco de código: barra com a linguagem + área rolável.
+   `figure`/`figcaption` porque o bloco é uma peça com legenda, não um <pre> solto. */
+.article-code {
+  @apply my-6 overflow-hidden rounded-xl border border-[#2c2150] bg-[#15102b];
+}
+
+.article-code-bar {
+  @apply flex items-center justify-between gap-4 border-b border-[#2c2150] bg-[#1d1640] px-4 py-2;
+}
+
+.article-code-lang {
+  @apply font-poppins text-body-xs font-semibold uppercase tracking-wider text-[#b8a6f0];
+}
+
+.article-code-copy {
+  @apply rounded-md px-2 py-1 font-poppins text-body-xs font-medium text-[#b8a6f0];
+  @apply transition-colors duration-200 hover:bg-white/10 hover:text-white;
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-300;
+}
+
+.article-code-pre {
+  /* rolagem horizontal fica DENTRO do bloco: a página nunca rola de lado */
+  @apply overflow-x-auto p-4 text-body-sm leading-[1.7] md:p-5;
+}
+
+.article-code-pre code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  @apply text-[#e9e3ff];
+  /* tabulação de 8 é larga demais para o espaço de um artigo */
+  tab-size: 2;
+}
+
+/* barra de rolagem discreta, no tom do bloco */
+.article-code-pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+.article-code-pre::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-white/20;
+}
+
+.article-code-pre::-webkit-scrollbar-thumb:hover {
+  @apply bg-white/30;
+}
+
+/* Tema do highlight.js na paleta da marca. Classes, não estilo inline:
+   o tema pesa uma vez no CSS em vez de repetir em cada token do HTML. */
+.hljs-comment,
+.hljs-quote {
+  @apply italic text-[#9a8fc4];
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-type {
+  @apply text-[#c4a7ff];
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition {
+  @apply text-[#9ae6c4];
+}
+
+.hljs-number,
+.hljs-symbol {
+  @apply text-[#ffc98b];
+}
+
+.hljs-title,
+.hljs-title.function_,
+.hljs-section {
+  @apply text-[#8fd3ff];
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-variable,
+.hljs-property {
+  @apply text-[#ffb4d1];
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  @apply text-[#ffe08a];
+}
+
+.hljs-deletion {
+  @apply text-[#ff9b9b];
+}
+
+.hljs-emphasis {
+  @apply italic;
+}
+
+.hljs-strong {
+  @apply font-semibold;
+}
+
 
 /* Keyframes */
 @keyframes float {
