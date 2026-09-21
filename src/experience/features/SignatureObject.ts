@@ -54,11 +54,17 @@ interface RingConfig {
   tilt: number;
 }
 
+/**
+ * Espessura em unidades de mundo. A primeira versão usava 0.030, que dá 26px
+ * num hero de 700px: nessa escala os anéis deixam de ser fundo e viram um
+ * elemento gráfico disputando com o retrato. Aqui ficam por volta de 10px —
+ * presentes, sem puxar o olho para longe do texto.
+ */
 const RINGS: RingConfig[] = [
-  { radius: 1.0, tube: 0.03, axis: "x", tilt: 1.15 },
-  { radius: 0.78, tube: 0.026, axis: "y", tilt: -0.95 },
-  { radius: 0.58, tube: 0.022, axis: "x", tilt: 0.7 },
-  { radius: 0.38, tube: 0.018, axis: "y", tilt: -0.48 },
+  { radius: 1.0, tube: 0.013, axis: "x", tilt: 1.15 },
+  { radius: 0.78, tube: 0.011, axis: "y", tilt: -0.95 },
+  { radius: 0.58, tube: 0.009, axis: "x", tilt: 0.7 },
+  { radius: 0.38, tube: 0.008, axis: "y", tilt: -0.48 },
 ];
 
 export class SignatureObject implements Feature {
@@ -107,7 +113,7 @@ export class SignatureObject implements Feature {
       this.group.add(mesh);
     }
 
-    const core = new THREE.IcosahedronGeometry(0.09, isHigh ? 1 : 0);
+    const core = new THREE.IcosahedronGeometry(0.045, isHigh ? 1 : 0);
     this.geometries.push(core);
     this.group.add(new THREE.Mesh(core, this.material));
 
@@ -136,7 +142,8 @@ export class SignatureObject implements Feature {
 
       const base = mix(color(DEEP), color(BRAND), smoothstep(0.15, 0.95, key));
 
-      return vec4(base.add(color(RIM).mul(rim).mul(0.9)), 1);
+      // rim discreto: a 0.9 ele dava um brilho de plástico que pesava a cena
+      return vec4(base.add(color(RIM).mul(rim).mul(0.45)), 1);
     })();
   }
 
