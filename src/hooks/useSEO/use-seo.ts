@@ -1,17 +1,20 @@
 import { useEffect, useMemo, useRef } from "react";
 import type { MetaTag, SEOProps } from "./use-seo.types";
 
+/**
+ * Só o que não depende de idioma. O texto vem dos locales, passado por quem
+ * chama — antes estes padrões eram português fixo, inclusive `locale: pt_BR`,
+ * num site que abre em inglês.
+ */
 const defaultSEO: Required<SEOProps> = {
-  title: "Davy de Souza Assunção | Frontend Engineer & Fintech Specialist",
-  description:
-    "Frontend Engineer especializado em Fintech. Construo interfaces financeiras de alta performance com React, TypeScript e Next.js. Experiência real na Fretepago.",
-  keywords:
-    "frontend engineer, fintech developer, react specialist, typescript expert, nextjs, frontend architecture, fretepago, design systems, mobile-first, financial applications, davy souza, davy assunção",
+  title: "Davy de Souza Assunção",
+  description: "",
+  keywords: "",
   image: "/images/user.jpeg",
   url: "https://davysz.com",
   type: "website",
-  locale: "pt_BR",
-  siteName: "Davy de Souza Assunção - Frontend Engineer",
+  locale: "en_US",
+  siteName: "Davy de Souza Assunção",
   author: "Davy de Souza Assunção",
   canonicalUrl: "https://davysz.com",
 };

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Hero } from "./hero";
 import { useSEO } from "../../hooks";
@@ -30,15 +30,19 @@ export const Home: React.FC = () => {
   const { t } = useTranslation("home");
   const { language } = useLocales();
 
-  useSEO({
-    title: "Davy de Souza Assunção | Full Stack Developer",
-    description: t("hero.description"),
-    keywords:
-      "davy de souza assuncao, davysz, full stack developer, react, react native, typescript, nodejs, javascript, frontend, backend, mobile, web development, brasil, manaus",
-    image: "/images/user.jpeg",
-    url: "https://davysz.com",
-    type: "website",
-  });
+  // useMemo porque o useSEO compara o objeto para decidir se mexe no <head>;
+  // um literal novo a cada render faria o efeito rodar à toa.
+  useSEO(
+    useMemo(
+      () => ({
+        title: t("seo.title"),
+        description: t("seo.description"),
+        keywords: t("seo.keywords"),
+        locale: language === "pt" ? "pt_BR" : "en_US",
+      }),
+      [t, language]
+    )
+  );
 
   const LoadingFallback = () => (
     <div className="flex justify-center items-center min-h-[200px]">

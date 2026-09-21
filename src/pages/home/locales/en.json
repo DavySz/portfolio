@@ -84,5 +84,10 @@
       "projects": "PROJECTS",
       "articles": "ARTICLES"
     }
+  },
+  "seo": {
+    "title": "Davy de Souza Assunção | Frontend Engineer & Fintech Specialist",
+    "description": "Frontend Engineer specialized in Fintech. I build high-performance financial interfaces with React, TypeScript and Next.js.",
+    "keywords": "frontend engineer, fintech developer, react specialist, typescript expert, nextjs, frontend architecture, design systems, mobile-first, financial applications, davy souza, davy assuncao"
   }
 }
