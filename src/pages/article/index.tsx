@@ -6,6 +6,7 @@ import { Text } from "../../components/text";
 import { Button } from "../../components/button";
 import { Loading } from "../../components/loading";
 import { useSEO } from "../../hooks";
+import type { Language } from "../../i18n";
 import { articleHref } from "../../hooks/useHashRoute/use-hash-route";
 import { ArticleToc } from "../../components/article-toc";
 import { ReadingProgress } from "../../components/reading-progress";
@@ -14,22 +15,19 @@ import {
   findNeighbours,
   loadArticleContent,
 } from "../../content/articles";
+import type { ArticleContent } from "../../content/articles";
 import type { ArticlePageProps } from "./types";
 
 const SITE = "https://davysz.com";
 const AUTHOR = "Davy de Souza Assunção";
 
-interface Content {
-  html: string;
-  readingMinutes: number;
-  headings: Array<{ id: string; text: string; level: number }>;
-}
-
 export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
   const { t, i18n } = useTranslation("component");
+  const language: Language = i18n.language === "pt" ? "pt" : "en";
   const meta = findArticle(slug);
+  const text = meta?.[language];
   const { previous, next } = findNeighbours(slug);
-  const [content, setContent] = useState<Content | null>(null);
+  const [content, setContent] = useState<ArticleContent | null>(null);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
@@ -42,7 +40,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
     setContent(null);
     setFailed(false);
 
-    loadArticleContent(slug)
+    loadArticleContent(slug, language)
       .then((loaded) => {
         if (cancelled) return;
         if (loaded) setContent(loaded);
@@ -55,7 +53,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
     return () => {
       cancelled = true;
     };
-  }, [slug]);
+  }, [slug, language]);
 
   /**
    * Acrescenta um botão de copiar à barra de cada bloco de código.
@@ -116,11 +114,11 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
   useSEO(
     useMemo(
       () =>
-        meta
+        meta && text
           ? {
-              title: `${meta.title} | ${AUTHOR}`,
-              description: meta.excerpt,
-              keywords: meta.tag,
+              title: `${text.title} | ${AUTHOR}`,
+              description: text.excerpt,
+              keywords: text.tag,
               // og:image precisa de URL, não do par src/half
               image: meta.thumb?.src ?? "/images/user.jpeg",
               url: `${SITE}/#/artigos/${meta.slug}`,
@@ -128,7 +126,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
               type: "article",
             }
           : {},
-      [meta]
+      [meta, text]
     )
   );
 
@@ -136,7 +134,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
     window.location.hash = "";
   };
 
-  if (!meta || failed) {
+  if (!meta || !text || failed) {
     return (
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 py-24">
         <Text as="h1" variant="sectionTitle" color="primary" align="center">
@@ -169,7 +167,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
 
       <header className="mb-10 border-b border-gray-200 pb-8">
         <p className="mb-4 font-poppins text-body-sm uppercase tracking-wider text-primary-600">
-          {meta.tag}
+          {text.tag}
         </p>
 
         <Text
@@ -178,7 +176,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
           color="primary"
           className="mb-4 text-display-sm md:text-display-md"
         >
-          {meta.title}
+          {text.title}
         </Text>
 
         <Text
@@ -187,7 +185,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
           color="secondary"
           className="mb-6 text-body-md md:text-body-lg"
         >
-          {meta.excerpt}
+          {text.excerpt}
         </Text>
 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-poppins text-body-sm text-gray-600">
@@ -219,12 +217,20 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
         </div>
       </header>
 
+      {content && content.language !== language && (
+        /* Honesto em vez de esconder: o artigo existe e é legível, só não
+           está traduzido ainda. */
+        <p className="mb-8 rounded-xl border border-primary-200 bg-primary-50 px-4 py-3 font-poppins text-body-sm text-primary-800">
+          {t("article.onlyInPortuguese")}
+        </p>
+      )}
+
       {content ? (
         <div
           /* Os artigos são escritos em português, mesmo com a interface em
              inglês: marcar o idioma aqui é o que faz leitor de tela e tradutor
              do navegador tratarem o texto corretamente. */
-          lang="pt-BR"
+          lang={content.language === "pt" ? "pt-BR" : "en"}
           className="article-content"
           dangerouslySetInnerHTML={{ __html: content.html }}
         />
@@ -250,7 +256,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
               {t("article.previous")}
             </span>
             <span className="mt-1 block font-poppins text-body-md font-semibold text-gray-900 group-hover:text-primary-700">
-              {previous.title}
+              {previous[language].title}
             </span>
           </a>
         ) : (
@@ -267,7 +273,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
               {t("article.next")}
             </span>
             <span className="mt-1 block font-poppins text-body-md font-semibold text-gray-900 group-hover:text-primary-700">
-              {next.title}
+              {next[language].title}
             </span>
           </a>
         )}

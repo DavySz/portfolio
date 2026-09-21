@@ -50,10 +50,16 @@ const readArticles = async () => {
       const field = (name) =>
         block.match(new RegExp(`${name}:\\s*\\n?\\s*"([^"]*)"`))?.[1];
       const slug = field("slug");
-      const title = field("title");
       const date = field("date");
+      // O feed sai em português: é o idioma em que os textos foram escritos.
+      // O bloco `pt:` é o último do objeto, então pegamos o título dali.
+      const ptBlock = block.slice(block.indexOf("pt: {"));
+      const ptField = (name) =>
+        ptBlock.match(new RegExp(`${name}:\\s*\\n?\\s*"([^"]*)"`))?.[1];
+
+      const title = ptField("title");
       if (!slug || !title || !date) return null;
-      return { slug, title, date, excerpt: field("excerpt") ?? "" };
+      return { slug, title, date, excerpt: ptField("excerpt") ?? "" };
     })
     .filter(Boolean);
 };

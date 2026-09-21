@@ -14,6 +14,7 @@ import type { ArticleCardProps } from "./types";
  */
 export const ArticleCard: React.FC<ArticleCardProps> = ({
   article,
+  text,
   labels,
 }) => {
   return (
@@ -39,14 +40,14 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           className="flex h-[180px] w-full items-center justify-center bg-gradient-to-br from-primary-500 to-primary-900 px-6"
         >
           <span className="text-center font-poppins text-heading-md font-bold text-white/90">
-            {article.tag}
+            {text.tag}
           </span>
         </div>
       )}
 
       <div className="flex flex-1 flex-col gap-3 p-6">
         <p className="font-poppins text-body-sm uppercase tracking-wider text-primary-600">
-          {article.tag}
+          {text.tag}
         </p>
 
         <Text
@@ -61,7 +62,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
             className="after:absolute after:inset-0 after:content-['']
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
           >
-            {article.title}
+            {text.title}
           </a>
         </Text>
 
@@ -71,7 +72,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           color="muted"
           className="flex-1 text-body-sm"
         >
-          {article.excerpt}
+          {text.excerpt}
         </Text>
 
         <div className="flex items-center justify-between gap-4 pt-1">

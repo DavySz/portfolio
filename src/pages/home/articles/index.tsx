@@ -8,7 +8,8 @@ import { ARTICLES } from "../../../content/articles";
 
 export const Articles: React.FC = () => {
   const { t } = useTranslation("home");
-  const { t: tc } = useTranslation("component");
+  const { t: tc, i18n } = useTranslation("component");
+  const language = i18n.language === "pt" ? "pt" : "en";
 
   const labels = {
     read: tc("article.read"),
@@ -42,7 +43,11 @@ export const Articles: React.FC = () => {
       <ul className="grid w-full max-w-7xl grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {ARTICLES.map((article) => (
           <li key={article.slug} className="h-full">
-            <ArticleCard article={article} labels={labels} />
+            <ArticleCard
+              article={article}
+              text={article[language]}
+              labels={labels}
+            />
           </li>
         ))}
       </ul>
