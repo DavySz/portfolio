@@ -228,13 +228,16 @@ export class Experience {
 
       this.applySectionContext(section);
 
+      // A API do three usa origem no TOPO-esquerda e cada backend adapta:
+      // o WebGPU passa direto, o fallback WebGL converte com
+      // `height - height - y`. Então `y` aqui é a distância do topo da tela,
+      // não do rodapé — é exatamente o screenTop do rect do DOM.
+
       // viewport = retângulo inteiro da seção, mesmo a parte fora da tela,
       // para a cena não esticar conforme entra e sai
-      const viewportY =
-        this.viewportHeight - (section.screenTop + section.height);
       renderer.setViewport(
         section.screenLeft,
-        viewportY,
+        section.screenTop,
         section.width,
         section.height
       );
@@ -247,7 +250,7 @@ export class Experience {
       );
       renderer.setScissor(
         section.screenLeft,
-        this.viewportHeight - clipBottom,
+        clipTop,
         section.width,
         clipBottom - clipTop
       );
