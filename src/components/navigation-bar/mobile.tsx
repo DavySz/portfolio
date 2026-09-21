@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CONTACTS } from "../../shared/constants";
 import { Button } from "../button";
 import { Toggle } from "../toggle";
@@ -11,6 +11,18 @@ import { useTranslation } from "react-i18next";
 import { useActiveSection } from "../../hooks/useActiveSection/use-active-section";
 
 const MENU_ID = "mobile-menu";
+const TRIGGER_ID = "mobile-menu-trigger";
+/** O conteúdo da página, que fica atrás do painel. */
+const PAGE_CONTENT_ID = "main-content";
+
+const FOCUSABLE = [
+  "a[href]",
+  "button:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  '[tabindex]:not([tabindex="-1"])',
+].join(",");
 
 /**
  * `inert` tira a subárvore inteira da ordem de foco e do leitor de tela.
@@ -64,6 +76,7 @@ export const MobileNavigationBar: React.FC = () => {
      guardava o último clique: começava num valor que nenhum link casa e
      ficava desatualizado assim que a pessoa rolava a página. */
   const active = useActiveSection(SECTION_IDS);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   const toggleOptions = (): void => {
     setIsVisible((prev) => !prev);
@@ -91,6 +104,66 @@ export const MobileNavigationBar: React.FC = () => {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isVisible]);
 
+  /**
+   * Contrato de diálogo modal: foco entra, fica preso e volta.
+   *
+   * O painel já declarava `role="dialog"` e `aria-modal="true"`, mas o foco
+   * continuava no hambúrguer — que está FORA do diálogo. Como `aria-modal`
+   * esconde o resto da página do leitor de tela, a pessoa ficava com o foco
+   * num elemento que, para ela, tinha deixado de existir.
+   *
+   * O `inert` vai no conteúdo da página, não na barra do topo: o ícone do
+   * hambúrguer vira um X enquanto o menu está aberto e continua sendo o
+   * caminho de fechar para quem usa mouse. Quem usa teclado fecha pelo botão
+   * do painel ou pelo Esc, e o Tab não chega até lá.
+   */
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    const content = document.getElementById(PAGE_CONTENT_ID);
+    content?.setAttribute("inert", "");
+
+    const focusables = (): HTMLElement[] =>
+      [...panel.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
+        (element) => element.getClientRects().length > 0
+      );
+
+    // O primeiro focável do painel é o botão de fechar.
+    focusables()[0]?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Tab") return;
+
+      const items = focusables();
+      if (!items.length) return;
+
+      const first = items[0];
+      const last = items[items.length - 1];
+      const current = document.activeElement;
+      const escaped = !(current instanceof Node) || !panel.contains(current);
+
+      if (event.shiftKey && (escaped || current === first)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (escaped || current === last)) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      content?.removeAttribute("inert");
+      // Fechar pelo botão, pelo Esc ou por um link devolve o foco a quem abriu.
+      document.getElementById(TRIGGER_ID)?.focus();
+    };
+  }, [isVisible]);
+
   // Trava só enquanto o menu está aberto. Antes isto rodava na montagem
   // mesmo com o menu fechado, escrevendo estilo inline no body sem motivo.
   useEffect(() => {
@@ -105,6 +178,7 @@ export const MobileNavigationBar: React.FC = () => {
       <div className="relative z-50 flex items-center justify-between w-full py-4 px-6 bg-white/95 backdrop-blur-sm border-b border-gray-100">
         <Toggle />
         <Button
+          id={TRIGGER_ID}
           variant="secondary"
           icon={getIcon()}
           onClick={toggleOptions}
@@ -125,6 +199,7 @@ export const MobileNavigationBar: React.FC = () => {
 
       {/* Slide-in Menu Panel */}
       <div
+        ref={panelRef}
         id={MENU_ID}
         role="dialog"
         aria-modal="true"
