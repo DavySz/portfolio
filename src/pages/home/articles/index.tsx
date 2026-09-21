@@ -1,24 +1,19 @@
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
 import { FaMedium } from "react-icons/fa";
-import { ProjectCard } from "../../../components/project-card";
-import { ProjectCardSkeleton } from "../../../components/project-card-skeleton";
+import { ArticleCard } from "../../../components/article-card";
 import { Text } from "../../../components/text";
 import { Button } from "../../../components/button";
 import { CONTACTS } from "../../../shared/constants";
-import { getArticles } from "./constants";
+import { ARTICLES } from "../../../content/articles";
 
 export const Articles: React.FC = () => {
   const { t } = useTranslation("home");
-  const [isLoading, setIsLoading] = useState(true);
+  const { t: tc } = useTranslation("component");
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
-  }, []);
+  const labels = {
+    read: tc("article.read"),
+    onMedium: tc("article.onMedium"),
+  };
 
   return (
     <section
@@ -45,45 +40,23 @@ export const Articles: React.FC = () => {
         {t("articles.description")}
       </Text>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 justify-center w-full max-w-7xl">
-        {isLoading
-          ? // Skeleton loading state
-            Array.from({ length: 4 }).map((_, index) => (
-              <div
-                key={`skeleton-${index}`}
-                className="h-full"
-                style={{
-                  animationDelay: `${index * 0.1}s`,
-                }}
-              >
-                <ProjectCardSkeleton />
-              </div>
-            ))
-          : // Real content
-            getArticles(t).map((article, index) => (
-              <div
-                key={index}
-                className="animate-fade-in-up h-full"
-                style={{
-                  animationDelay: `${index * 0.2}s`,
-                }}
-              >
-                <ProjectCard {...article} />
-              </div>
-            ))}
-      </div>
+      <ul className="grid w-full max-w-7xl grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {ARTICLES.map((article) => (
+          <li key={article.slug} className="h-full">
+            <ArticleCard article={article} labels={labels} />
+          </li>
+        ))}
+      </ul>
 
-      {!isLoading && (
-        <div className="mt-12 animate-fade-in-up">
-          <Button
-            variant="secondary"
-            icon={FaMedium}
-            onClick={() => window.open(CONTACTS.MEDIUM, "_blank")}
-          >
-            {t("articles.seeMore")}
-          </Button>
-        </div>
-      )}
+      <div className="mt-12">
+        <Button
+          variant="secondary"
+          icon={FaMedium}
+          onClick={() => window.open(CONTACTS.MEDIUM, "_blank")}
+        >
+          {t("articles.seeMore")}
+        </Button>
+      </div>
     </section>
   );
 };

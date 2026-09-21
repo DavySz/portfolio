@@ -11,5 +11,13 @@
   "gravity": {
     "enable": "Desligar a gravidade",
     "restore": "Arrumar a página"
+  },
+  "article": {
+    "read": "Ler aqui",
+    "onMedium": "Medium",
+    "back": "Voltar",
+    "readOnMedium": "Também no Medium",
+    "readingTime": "{{minutes}} min de leitura",
+    "notFound": "Artigo não encontrado"
   }
 }

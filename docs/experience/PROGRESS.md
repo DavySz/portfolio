@@ -19,6 +19,30 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 
 ---
 
+## Fora da série: leitor de artigos
+
+Pedido direto do Davy, não é uma das tasks. Branch `feat/articles-reader`.
+
+Os 8 artigos de `Documents/artigos` agora vivem em `src/content/articles/*.md` e
+são lidos no próprio site, em `#/artigos/<slug>`. Os 4 que estão no Medium
+continuam linkando para lá, como referência secundária.
+
+- Markdown vira HTML **no build**, por um plugin do Vite (`plugins/markdown.ts`).
+  `marked` e `highlight.js` são devDependencies: nenhuma biblioteca de markdown
+  vai para o site.
+- Um chunk por artigo (86 kB gzip somados, mas só o aberto é baixado).
+- Rota por hash, porque o deploy ainda é desconhecido (pendência 2) e hash
+  dispensa rewrite no servidor.
+- Custo no bundle inicial: **+428 B de JS e +512 B de CSS**.
+
+### Pendências
+
+| # | O que falta | Quem |
+|---|---|---|
+| 25 | Revisar título, resumo, tag e **data** de cada artigo em `src/content/articles/index.ts` — as datas eu inferi do arquivo | Davy |
+| 26 | 4 artigos não têm thumb; hoje recebem uma capa tipográfica na paleta da marca | Davy |
+| 27 | Decidir se os artigos devem ter versão em inglês (hoje são pt-BR, com `lang` marcado) | Davy |
+
 ## Pendências manuais abertas
 
 | # | O que falta | Quem | Bloqueia |
@@ -148,3 +172,4 @@ através de `self`, `skills`, `projects` e `articles`. Decidir o que fazer com
 | 2026-09-21 | Davy escolheu a opção A da task 06: waterfall em DOM, sem WebGL. Executada em `feat/experience-trace-scene`, com seção nova `observability`. |
 | 2026-09-21 | Task 07 executada em `feat/physics-easter-egg`. Rapier isolado em chunk próprio, carregado só na ativação. |
 | 2026-09-21 | Davy pediu para remover a seção "Lendo um trace". Task 06 revertida em cima da 07; o código fica preservado no commit `d0c524b`. |
+| 2026-09-21 | Fora da série: leitor de artigos no próprio site, com os 8 textos de `Documents/artigos`. Branch `feat/articles-reader`. |
