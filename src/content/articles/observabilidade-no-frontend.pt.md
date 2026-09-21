@@ -1139,9 +1139,9 @@ Mas o frontend — onde o usuário realmente está — continuou sendo tratado c
 
 **O problema não é falta de ferramentas. O problema é mentalidade.**
 
-Assim como no [efeito ENEM no código](O%20efeito%20ENEM%20no%20código%20como%20estudar%20para%20passar%20criou%20uma%20geração%20de%20devs%20inseguros.md), onde aprendemos a entregar sem entender, muitos times aprenderam a "fazer funcionar no dev" sem saber se funciona pro usuário.
+Assim como no [efeito ENEM no código](#/artigos/efeito-enem-no-codigo), onde aprendemos a entregar sem entender, muitos times aprenderam a "fazer funcionar no dev" sem saber se funciona pro usuário.
 
-E assim como em [testes unitários](Testes%20Unitários%20no%20Frontend%20a%20arte%20de%20testar%20o%20que%20importa.md), onde cobertura 100% não significa confiança, logar tudo não significa visibilidade.
+E assim como em [testes unitários](#/artigos/testes-unitarios-no-frontend), onde cobertura 100% não significa confiança, logar tudo não significa visibilidade.
 
 A verdadeira habilidade não está em ter dashboard — está em **agir sobre o que os dados mostram**.
 

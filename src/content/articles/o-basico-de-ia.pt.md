@@ -239,7 +239,7 @@ function ProductList() {
 </ProductRepositoryProvider>
 ```
 
-Repare que esse é exatamente o espírito do [BFF](BFF%20Por%20que%20o%20Frontend%20deveria%20liderar%20essa%20revolução.md) e do contexto compartilhado dos [Micro Frontends](Micro%20Frontends%20a%20arquitetura%20que%20vai%20salvar%20seu%20monolito%20frontend.md): você programa contra contratos, não contra implementações. Inversão de dependência é o princípio que faz o resto da sua arquitetura ser possível.
+Repare que esse é exatamente o espírito do [BFF](#/artigos/bff-frontend-revolucao) e do contexto compartilhado dos [Micro Frontends](#/artigos/micro-frontends): você programa contra contratos, não contra implementações. Inversão de dependência é o princípio que faz o resto da sua arquitetura ser possível.
 
 ## 🤖 Agora a parte que importa: SOLID é só o exemplo
 
@@ -267,11 +267,11 @@ Essas bases não são o que você **digita**. São o que te permite **avaliar e 
 
 ### A armadilha do "funciona" — agora turbinada
 
-Já falamos disso aqui antes. No [efeito ENEM no código](O%20efeito%20ENEM%20no%20código%20como%20estudar%20para%20passar%20criou%20uma%20geração%20de%20devs%20inseguros.md), o vício era entregar o mínimo para passar de fase sem entender o porquê. A IA não criou esse problema — ela **colocou esteroides nele.**
+Já falamos disso aqui antes. No [efeito ENEM no código](#/artigos/efeito-enem-no-codigo), o vício era entregar o mínimo para passar de fase sem entender o porquê. A IA não criou esse problema — ela **colocou esteroides nele.**
 
 Antes, o dev que não entendia pelo menos era forçado a ler StackOverflow, juntar peças, tropeçar e aprender alguma coisa no caminho. A fricção ensinava. Agora a fricção sumiu: o código aparece pronto, funciona, e a oportunidade de aprender evaporou junto. O "marca o X e fecha a task" virou "aceita o diff e fecha a task".
 
-E assim como em [testes unitários](Testes%20Unitários%20no%20Frontend%20a%20arte%20de%20testar%20o%20que%20importa.md) — onde 100% de cobertura podia significar 0% de confiança — agora temos algo novo: **100% de produtividade aparente com 0% de compreensão.** Você entrega três vezes mais rápido e entende três vezes menos do que entrega.
+E assim como em [testes unitários](#/artigos/testes-unitarios-no-frontend) — onde 100% de cobertura podia significar 0% de confiança — agora temos algo novo: **100% de produtividade aparente com 0% de compreensão.** Você entrega três vezes mais rápido e entende três vezes menos do que entrega.
 
 O dev que sabe SOLID lê o output da IA e pensa "isso vai me custar caro daqui a dois meses". O dev que não sabe lê o mesmo output e pensa "funcionou, próximo". Os dois usam a mesma ferramenta. Só um deles está no controle.
 

@@ -750,7 +750,7 @@ profile-mfe: React 16
 
 ## 🎪 A combinação perfeita: Micro Frontends + BFF
 
-Lembra do [artigo sobre BFF](BFF%20Por%20que%20o%20Frontend%20deveria%20liderar%20essa%20revolução.md)? Micro Frontends e BFF são feitos um para o outro.
+Lembra do [artigo sobre BFF](#/artigos/bff-frontend-revolucao)? Micro Frontends e BFF são feitos um para o outro.
 
 ### Arquitetura completa
 
@@ -1149,7 +1149,7 @@ Micro frontends trazem a mesma revolução para o frontend.
 
 **O problema não é técnico. O problema é permitir que times cresçam sem se atropelarem.**
 
-Assim como no [efeito ENEM no código](O%20efeito%20ENEM%20no%20código%20como%20estudar%20para%20passar%20criou%20uma%20geração%20de%20devs%20inseguros.md), onde aprendemos que decorar padrões não é o mesmo que entender, micro frontends nos ensinam que modularizar pastas não é o mesmo que criar autonomia.
+Assim como no [efeito ENEM no código](#/artigos/efeito-enem-no-codigo), onde aprendemos que decorar padrões não é o mesmo que entender, micro frontends nos ensinam que modularizar pastas não é o mesmo que criar autonomia.
 
 A verdadeira habilidade não está em configurar webpack — está em estruturar times e código para que ambos possam evoluir.
 

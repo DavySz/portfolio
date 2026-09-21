@@ -1,49 +1,49 @@
-_Como abandonar a ilusão de cobertura e aprender a escrever testes que realmente protegem seu código_
+_How to drop the coverage illusion and learn to write tests that actually protect your code_
 
-## 🎭 A farsa dos 100% de cobertura
+## 🎭 The 100% coverage charade
 
-Imagine a seguinte cena: é sexta-feira, 17h45. O PR está aberto há três dias. O CI/CD está verde. Os testes passam. A cobertura está em 94%. Tudo perfeito, certo?
+Picture this: it's Friday, 5:45 pm. The PR has been open for three days. CI is green. Tests pass. Coverage is at 94%. All good, right?
 
-Na segunda-feira, um bug crítico em produção. Um usuário não consegue fazer login quando o email tem caracteres especiais. Você abre o código e vê: existe um teste para o formulário de login. Existe cobertura. O teste passa.
+Monday, a critical bug in production. A user cannot log in when their email has special characters. You open the code and see it: there is a test for the login form. There is coverage. The test passes.
 
-Mas o teste só verifica se o componente renderiza. Não valida comportamento. Não simula interação real. Não testa a lógica que realmente importa.
+But the test only checks that the component renders. It does not validate behaviour. It does not simulate real interaction. It does not test the logic that actually matters.
 
-**Você tem 94% de cobertura e 0% de confiança.**
+**You have 94% coverage and 0% confidence.**
 
-Esse é o maior problema dos testes no frontend moderno: não é que as pessoas não testem — é que elas testam as coisas erradas, pelos motivos errados, da forma errada.
+That is the biggest problem with testing in modern frontend: it is not that people don't test — it is that they test the wrong things, for the wrong reasons, in the wrong way.
 
-É como trancar todas as janelas da casa, mas deixar a porta da frente escancarada. Tecnicamente, você "fez sua parte". Praticamente, está vulnerável.
+It is like locking every window in the house and leaving the front door wide open. Technically you "did your part." Practically, you are exposed.
 
-## 🎯 O problema não é técnico, é cultural
+## 🎯 The problem is not technical, it is cultural
 
-Antes de falar sobre Jest, React Testing Library ou coverage thresholds, precisamos entender por que tantos times escrevem testes inúteis.
+Before we talk about Jest, React Testing Library or coverage thresholds, we need to understand why so many teams write useless tests.
 
-A resposta está na mesma raiz do [efeito ENEM no código](#/artigos/efeito-enem-no-codigo): fazer o mínimo para passar.
+The answer shares a root with [the exam effect in code](#/artigos/efeito-enem-no-codigo): do the minimum required to pass.
 
-### A métrica virou o objetivo
+### The metric became the goal
 
-Quando definimos "cobertura mínima de 80%", criamos um incentivo perverso:
+When we set "minimum 80% coverage," we create a perverse incentive:
 
-- Devs escrevem testes que aumentam o número, não a confiança
-- Code review aprova porque "tem testes"
-- O CI passa, o deploy acontece
-- Bugs em produção aparecem do mesmo jeito
+- Developers write tests that raise the number, not the confidence
+- Code review approves because "it has tests"
+- CI passes, the deploy happens
+- Production bugs show up anyway
 
-Kent C. Dodds, criador da React Testing Library, cunhou uma frase que deveria estar estampada em toda sala de desenvolvimento:
+Kent C. Dodds, who created React Testing Library, coined a line that should be printed on every engineering room wall:
 
 > "The more your tests resemble the way your software is used, the more confidence they can give you."
 
-Traduzindo: teste como o usuário usa, não como o código está estruturado.
+In other words: test the way a user uses it, not the way the code happens to be structured.
 
-## 🧪 O que realmente importa testar?
+## 🧪 What actually deserves a test?
 
-A pergunta certa não é "como chego em 100% de cobertura?", mas sim "o que precisa ser protegido por testes?".
+The right question is not "how do I get to 100% coverage?" but "what needs to be protected by tests?".
 
-### 1. Comportamento crítico de negócio
+### 1. Critical business behaviour
 
-**Não teste implementação. Teste comportamento.**
+**Don't test implementation. Test behaviour.**
 
-❌ **Teste inútil:**
+❌ **A useless test:**
 
 ```typescript
 // LoginForm.test.tsx
@@ -53,9 +53,9 @@ it("should have an email input", () => {
 });
 ```
 
-Este teste quebra se você mudar o label, mas não detecta se o login realmente funciona.
+This test breaks if you change the label, and it never notices whether login actually works.
 
-✅ **Teste útil:**
+✅ **A useful test:**
 
 ```typescript
 // LoginForm.test.tsx
@@ -64,51 +64,51 @@ it("should authenticate user with valid credentials", async () => {
   render(<LoginForm onLogin={mockLogin} />);
 
   await userEvent.type(screen.getByLabelText(/email/i), "user@example.com");
-  await userEvent.type(screen.getByLabelText(/senha/i), "senha123");
-  await userEvent.click(screen.getByRole("button", { name: /entrar/i }));
+  await userEvent.type(screen.getByLabelText(/password/i), "secret123");
+  await userEvent.click(screen.getByRole("button", { name: /sign in/i }));
 
   expect(mockLogin).toHaveBeenCalledWith({
     email: "user@example.com",
-    password: "senha123",
+    password: "secret123",
   });
 });
 ```
 
-Este teste valida o fluxo completo: interação do usuário → validação → submissão.
+This one validates the whole flow: user interaction → validation → submission.
 
-### 2. Tratamento de erros
+### 2. Error handling
 
-Erros são onde os bugs vivem. Se você não testa cenários de erro, não está testando.
+Errors are where bugs live. If you do not test failure paths, you are not testing.
 
 ```typescript
 // LoginForm.test.tsx
 it("should display error message when login fails", async () => {
   const mockLogin = jest
     .fn()
-    .mockRejectedValue(new Error("Credenciais inválidas"));
+    .mockRejectedValue(new Error("Invalid credentials"));
   render(<LoginForm onLogin={mockLogin} />);
 
   await userEvent.type(screen.getByLabelText(/email/i), "wrong@example.com");
-  await userEvent.type(screen.getByLabelText(/senha/i), "wrongpass");
-  await userEvent.click(screen.getByRole("button", { name: /entrar/i }));
+  await userEvent.type(screen.getByLabelText(/password/i), "wrongpass");
+  await userEvent.click(screen.getByRole("button", { name: /sign in/i }));
 
   expect(await screen.findByRole("alert")).toHaveTextContent(
-    /credenciais inválidas/i
+    /invalid credentials/i
   );
   expect(mockLogin).toHaveBeenCalledTimes(1);
 });
 ```
 
-### 3. Lógica de transformação de dados
+### 3. Data transformation logic
 
-Funções puras que transformam dados são candidatas ideais para testes.
+Pure functions that transform data are ideal test candidates.
 
 ```typescript
 // utils/formatters.ts
 export function formatCurrency(value: number): string {
-  return new Intl.NumberFormat("pt-BR", {
+  return new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "BRL",
+    currency: "USD",
   }).format(value);
 }
 
@@ -125,15 +125,15 @@ export function parseFilters(searchParams: URLSearchParams) {
 // utils/formatters.test.ts
 describe("formatCurrency", () => {
   it("should format positive numbers correctly", () => {
-    expect(formatCurrency(1234.56)).toBe("R$ 1.234,56");
+    expect(formatCurrency(1234.56)).toBe("$1,234.56");
   });
 
   it("should handle zero", () => {
-    expect(formatCurrency(0)).toBe("R$ 0,00");
+    expect(formatCurrency(0)).toBe("$0.00");
   });
 
   it("should format negative numbers", () => {
-    expect(formatCurrency(-500)).toBe("-R$ 500,00");
+    expect(formatCurrency(-500)).toBe("-$500.00");
   });
 });
 
@@ -160,9 +160,9 @@ describe("parseFilters", () => {
 });
 ```
 
-### 4. Estados condicionais da UI
+### 4. Conditional UI states
 
-Quando a interface muda baseado em estado, teste cada variação.
+When the interface changes based on state, test every variation.
 
 ```typescript
 // ProductCard.tsx
@@ -183,13 +183,13 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
     <div role="article" aria-label={product.name}>
       <h3>{product.name}</h3>
       <p>{formatCurrency(product.price)}</p>
-      <p>{product.stock} em estoque</p>
+      <p>{product.stock} in stock</p>
 
       {isOutOfStock ? (
-        <span role="status">Indisponível</span>
+        <span role="status">Out of stock</span>
       ) : (
         <button onClick={() => onAddToCart(product.id)}>
-          Adicionar ao carrinho
+          Add to cart
         </button>
       )}
     </div>
@@ -202,7 +202,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
 describe("ProductCard", () => {
   const mockProduct = {
     id: "1",
-    name: "Teclado Mecânico",
+    name: "Mechanical Keyboard",
     price: 299.9,
     stock: 5,
   };
@@ -211,9 +211,7 @@ describe("ProductCard", () => {
     const handleAdd = jest.fn();
     render(<ProductCard product={mockProduct} onAddToCart={handleAdd} />);
 
-    const button = screen.getByRole("button", {
-      name: /adicionar ao carrinho/i,
-    });
+    const button = screen.getByRole("button", { name: /add to cart/i });
     expect(button).toBeInTheDocument();
   });
 
@@ -221,9 +219,9 @@ describe("ProductCard", () => {
     const outOfStockProduct = { ...mockProduct, stock: 0 };
     render(<ProductCard product={outOfStockProduct} onAddToCart={jest.fn()} />);
 
-    expect(screen.getByRole("status")).toHaveTextContent(/indisponível/i);
+    expect(screen.getByRole("status")).toHaveTextContent(/out of stock/i);
     expect(
-      screen.queryByRole("button", { name: /adicionar/i })
+      screen.queryByRole("button", { name: /add to cart/i })
     ).not.toBeInTheDocument();
   });
 
@@ -231,44 +229,44 @@ describe("ProductCard", () => {
     const handleAdd = jest.fn();
     render(<ProductCard product={mockProduct} onAddToCart={handleAdd} />);
 
-    await userEvent.click(screen.getByRole("button", { name: /adicionar/i }));
+    await userEvent.click(screen.getByRole("button", { name: /add to cart/i }));
     expect(handleAdd).toHaveBeenCalledWith("1");
   });
 });
 ```
 
-## 🎪 O que NÃO precisa ser testado
+## 🎪 What does NOT need a test
 
-Tão importante quanto saber o que testar é saber o que ignorar.
+Knowing what to ignore matters as much as knowing what to cover.
 
-### ❌ Implementação de bibliotecas externas
+### ❌ Third-party library internals
 
 ```typescript
-// ❌ Não faça isso
+// ❌ Don't do this
 it("should render a button", () => {
   render(<button>Click me</button>);
   expect(screen.getByRole("button")).toBeInTheDocument();
 });
 ```
 
-Você está testando o React, não seu código.
+You are testing React, not your code.
 
-### ❌ Estilos visuais
+### ❌ Visual styling
 
 ```typescript
-// ❌ Não faça isso
+// ❌ Don't do this
 it("should have blue background", () => {
   render(<Button />);
   expect(screen.getByRole("button")).toHaveClass("bg-blue-500");
 });
 ```
 
-Classes CSS não garantem comportamento. Use testes visuais (Storybook + Chromatic) para isso.
+CSS classes do not guarantee behaviour. Use visual testing (Storybook + Chromatic) for that.
 
-### ❌ Detalhes de implementação
+### ❌ Implementation details
 
 ```typescript
-// ❌ Não faça isso
+// ❌ Don't do this
 it("should call useState with initial value", () => {
   const spy = jest.spyOn(React, "useState");
   render(<Counter />);
@@ -276,11 +274,11 @@ it("should call useState with initial value", () => {
 });
 ```
 
-Se você refatorar para usar `useReducer`, o teste quebra mesmo que o comportamento continue igual.
+Refactor to `useReducer` and the test breaks, even though the behaviour is identical.
 
-## 🔧 Configuração robusta de testes
+## 🔧 A solid test setup
 
-### Setup básico (Jest + React Testing Library)
+### The basics (Jest + React Testing Library)
 
 ```typescript
 // jest.config.js
@@ -316,12 +314,12 @@ import "@testing-library/jest-dom";
 import { cleanup } from "@testing-library/react";
 import { afterEach } from "vitest";
 
-// Limpa após cada teste
+// Clean up after each test
 afterEach(() => {
   cleanup();
 });
 
-// Mock de APIs globais
+// Mock global APIs
 global.matchMedia =
   global.matchMedia ||
   function () {
@@ -333,7 +331,7 @@ global.matchMedia =
   };
 ```
 
-### Helpers reutilizáveis
+### Reusable helpers
 
 ```typescript
 // src/test/utils.tsx
@@ -370,27 +368,27 @@ export function renderWithProviders(
   return render(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
-// Re-exporta tudo
+// Re-export everything
 export * from "@testing-library/react";
 export { userEvent } from "@testing-library/user-event";
 ```
 
-Uso:
+Usage:
 
 ```typescript
 import { renderWithProviders, screen, userEvent } from "@/test/utils";
 
 it("should navigate to product page", async () => {
   renderWithProviders(<App />, { initialRoute: "/products" });
-  // Seus testes aqui
+  // your tests here
 });
 ```
 
-## 🎭 Mocks: a arte de simular realidade
+## 🎭 Mocks: the art of faking reality
 
-Mocks são como stunt doubles no cinema: eles representam a coisa real em cenários controlados.
+Mocks are the stunt doubles of software: they stand in for the real thing in a controlled scene.
 
-### Mock de módulos externos
+### Mocking external modules
 
 ```typescript
 // src/services/api.ts
@@ -412,14 +410,14 @@ describe("UserProfile", () => {
   it("should display user data when loaded", async () => {
     mockFetchUser.mockResolvedValue({
       id: "1",
-      name: "João Silva",
-      email: "joao@example.com",
+      name: "Jane Doe",
+      email: "jane@example.com",
     });
 
     renderWithProviders(<UserProfile userId="1" />);
 
-    expect(await screen.findByText("João Silva")).toBeInTheDocument();
-    expect(screen.getByText("joao@example.com")).toBeInTheDocument();
+    expect(await screen.findByText("Jane Doe")).toBeInTheDocument();
+    expect(screen.getByText("jane@example.com")).toBeInTheDocument();
   });
 
   it("should show error message when fetch fails", async () => {
@@ -428,13 +426,13 @@ describe("UserProfile", () => {
     renderWithProviders(<UserProfile userId="1" />);
 
     expect(await screen.findByRole("alert")).toHaveTextContent(
-      /erro ao carregar/i
+      /failed to load/i
     );
   });
 });
 ```
 
-### Mock de hooks customizados
+### Mocking custom hooks
 
 ```typescript
 // src/hooks/useAuth.ts
@@ -443,7 +441,7 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // lógica de autenticação
+    // authentication logic
   }, []);
 
   return { user, loading, logout, login };
@@ -467,46 +465,46 @@ describe("Dashboard", () => {
     });
 
     render(<Dashboard />);
-    expect(screen.getByRole("status")).toHaveTextContent(/carregando/i);
+    expect(screen.getByRole("status")).toHaveTextContent(/loading/i);
   });
 
   it("should show user data when authenticated", () => {
     mockUseAuth.mockReturnValue({
-      user: { id: "1", name: "Maria", email: "maria@example.com" },
+      user: { id: "1", name: "Mary", email: "mary@example.com" },
       loading: false,
       logout: jest.fn(),
       login: jest.fn(),
     });
 
     render(<Dashboard />);
-    expect(screen.getByText("Bem-vinda, Maria")).toBeInTheDocument();
+    expect(screen.getByText("Welcome, Mary")).toBeInTheDocument();
   });
 });
 ```
 
-### Quando NÃO mockar
+### When NOT to mock
 
-Nem tudo deve ser mockado. Mockar demais cria testes frágeis que não refletem a realidade.
+Not everything should be mocked. Over-mocking produces brittle tests that do not reflect reality.
 
-**✅ Mocke:**
+**✅ Mock these:**
 
-- Requisições de rede (fetch, axios)
-- Serviços externos (analytics, tracking)
-- Timers e datas
+- Network requests (fetch, axios)
+- External services (analytics, tracking)
+- Timers and dates
 - LocalStorage / SessionStorage
 
-**❌ Não mocke:**
+**❌ Don't mock these:**
 
-- Componentes internos (teste integrado é melhor)
-- Lógica de negócio simples
-- Utilidades puras (formatters, validators)
+- Internal components (an integration test is better)
+- Simple business logic
+- Pure utilities (formatters, validators)
 
-## 📊 Coverage: a métrica que mente
+## 📊 Coverage: the metric that lies
 
-Coverage (cobertura) mede quantas linhas do código foram executadas durante os testes. Mas executar ≠ validar.
+Coverage measures how many lines ran during your tests. But running ≠ validating.
 
 ```typescript
-// Este código tem 100% de cobertura...
+// This code has 100% coverage...
 export function divide(a: number, b: number) {
   return a / b;
 }
@@ -516,9 +514,9 @@ it("should divide numbers", () => {
 });
 ```
 
-O teste executa a função, mas não valida nada. Não detecta divisão por zero. Não verifica o resultado. É inútil, mas conta como "coberto".
+The test runs the function and validates nothing. It does not catch division by zero. It does not check the result. It is useless — and it counts as "covered."
 
-### Cobertura inteligente
+### Coverage with intent
 
 ```typescript
 describe("divide", () => {
@@ -540,9 +538,9 @@ describe("divide", () => {
 });
 ```
 
-### O que deve estar no coverage
+### What belongs in your coverage targets
 
-Configure thresholds específicos por tipo de arquivo:
+Set thresholds per kind of file:
 
 ```javascript
 // jest.config.js
@@ -560,44 +558,44 @@ coverageThresholds: {
     lines: 95,
   },
   './src/components/ui/': {
-    statements: 60, // Componentes simples de UI não precisam de tanto
+    statements: 60, // simple UI components don't need as much
     branches: 50,
   },
 }
 ```
 
-**Priorize cobertura em:**
+**Push coverage up in:**
 
-- `utils/` e `helpers/` → 90-95%
-- `hooks/` customizados → 85-90%
-- Lógica de negócio → 85-90%
-- Componentes com lógica → 75-85%
+- `utils/` and `helpers/` → 90–95%
+- custom `hooks/` → 85–90%
+- business logic → 85–90%
+- components with logic → 75–85%
 
-**Relaxe cobertura em:**
+**Let it go in:**
 
-- Componentes puramente visuais → 50-60%
-- Tipos TypeScript → 0% (não são executáveis)
-- Arquivos de configuração → não inclua
+- purely visual components → 50–60%
+- TypeScript types → 0% (they don't run)
+- config files → leave them out
 
-## 🎯 Patterns e antipatterns
+## 🎯 Patterns and antipatterns
 
 ### ✅ Pattern: AAA (Arrange, Act, Assert)
 
 ```typescript
 it("should add item to cart", async () => {
-  // Arrange - Prepara o cenário
+  // Arrange - set the scene
   const mockAddToCart = jest.fn();
   render(<ProductCard product={mockProduct} onAddToCart={mockAddToCart} />);
 
-  // Act - Executa a ação
-  await userEvent.click(screen.getByRole("button", { name: /adicionar/i }));
+  // Act - do the thing
+  await userEvent.click(screen.getByRole("button", { name: /add to cart/i }));
 
-  // Assert - Valida o resultado
+  // Assert - check the result
   expect(mockAddToCart).toHaveBeenCalledWith(mockProduct.id);
 });
 ```
 
-### ✅ Pattern: Test factories
+### ✅ Pattern: test factories
 
 ```typescript
 // src/test/factories.ts
@@ -622,23 +620,21 @@ export function createProduct(overrides?: Partial<Product>): Product {
 }
 ```
 
-Uso:
+Usage:
 
 ```typescript
 it("should show admin controls for admin users", () => {
   const adminUser = createUser({ role: "admin" });
   render(<Dashboard user={adminUser} />);
 
-  expect(
-    screen.getByRole("button", { name: /gerenciar/i })
-  ).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /manage/i })).toBeInTheDocument();
 });
 ```
 
-### ❌ Antipattern: Teste duplicado
+### ❌ Antipattern: the duplicated test
 
 ```typescript
-// ❌ Não faça isso
+// ❌ Don't do this
 it("should render email input", () => {
   render(<LoginForm />);
   expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
@@ -646,55 +642,55 @@ it("should render email input", () => {
 
 it("should render password input", () => {
   render(<LoginForm />);
-  expect(screen.getByLabelText(/senha/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
 });
 
 it("should render submit button", () => {
   render(<LoginForm />);
-  expect(screen.getByRole("button", { name: /entrar/i })).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /sign in/i })).toBeInTheDocument();
 });
 ```
 
 ```typescript
-// ✅ Faça isso
+// ✅ Do this
 it("should render login form with all fields", () => {
   render(<LoginForm />);
 
   expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-  expect(screen.getByLabelText(/senha/i)).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: /entrar/i })).toBeInTheDocument();
+  expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /sign in/i })).toBeInTheDocument();
 });
 ```
 
-### ❌ Antipattern: Teste frágil
+### ❌ Antipattern: the brittle test
 
 ```typescript
-// ❌ Frágil - quebra com qualquer mudança no DOM
+// ❌ Brittle - breaks on any DOM change
 it("should show error", async () => {
   render(<Form />);
   const button = container.querySelector(".submit-btn");
   fireEvent.click(button!);
 
   await waitFor(() => {
-    expect(container.querySelector(".error-msg")).toHaveTextContent("Erro");
+    expect(container.querySelector(".error-msg")).toHaveTextContent("Error");
   });
 });
 ```
 
 ```typescript
-// ✅ Robusto - usa queries semânticas
+// ✅ Robust - uses semantic queries
 it("should show error message when form is invalid", async () => {
   render(<Form />);
 
-  await userEvent.click(screen.getByRole("button", { name: /enviar/i }));
+  await userEvent.click(screen.getByRole("button", { name: /submit/i }));
 
-  expect(await screen.findByRole("alert")).toHaveTextContent(/erro/i);
+  expect(await screen.findByRole("alert")).toHaveTextContent(/error/i);
 });
 ```
 
-## 🏗️ Testando componentes complexos
+## 🏗️ Testing complex components
 
-### Componente com múltiplas responsabilidades
+### A component with several responsibilities
 
 ```typescript
 // src/components/CheckoutForm.tsx
@@ -723,11 +719,11 @@ export function CheckoutForm({ items, onSubmit }: CheckoutFormProps) {
     try {
       await onSubmit(formData as CheckoutData);
     } catch (error) {
-      setErrors({ submit: "Erro ao processar pagamento" });
+      setErrors({ submit: "Could not process payment" });
     }
   }
 
-  // ... resto da implementação
+  // ... rest of the implementation
 }
 ```
 
@@ -735,16 +731,16 @@ export function CheckoutForm({ items, onSubmit }: CheckoutFormProps) {
 // src/components/CheckoutForm.test.tsx
 describe("CheckoutForm", () => {
   const mockItems = [
-    createProduct({ id: "1", name: "Produto 1", price: 100, quantity: 2 }),
-    createProduct({ id: "2", name: "Produto 2", price: 50, quantity: 1 }),
+    createProduct({ id: "1", name: "Product 1", price: 100, quantity: 2 }),
+    createProduct({ id: "2", name: "Product 2", price: 50, quantity: 1 }),
   ];
 
   it("should display cart summary with correct total", () => {
     render(<CheckoutForm items={mockItems} onSubmit={jest.fn()} />);
 
-    expect(screen.getByText("Produto 1")).toBeInTheDocument();
-    expect(screen.getByText("Produto 2")).toBeInTheDocument();
-    expect(screen.getByText(/total: r\$ 250,00/i)).toBeInTheDocument();
+    expect(screen.getByText("Product 1")).toBeInTheDocument();
+    expect(screen.getByText("Product 2")).toBeInTheDocument();
+    expect(screen.getByText(/total: \$250\.00/i)).toBeInTheDocument();
   });
 
   it("should complete checkout flow successfully", async () => {
@@ -752,27 +748,27 @@ describe("CheckoutForm", () => {
     render(<CheckoutForm items={mockItems} onSubmit={handleSubmit} />);
 
     // Step 1: Address
-    await userEvent.type(screen.getByLabelText(/endereço/i), "Rua Teste, 123");
-    await userEvent.type(screen.getByLabelText(/cidade/i), "São Paulo");
-    await userEvent.click(screen.getByRole("button", { name: /próximo/i }));
+    await userEvent.type(screen.getByLabelText(/address/i), "123 Test Street");
+    await userEvent.type(screen.getByLabelText(/city/i), "Springfield");
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
 
     // Step 2: Payment
     await userEvent.type(
-      screen.getByLabelText(/número do cartão/i),
+      screen.getByLabelText(/card number/i),
       "4111111111111111"
     );
     await userEvent.type(screen.getByLabelText(/cvv/i), "123");
-    await userEvent.click(screen.getByRole("button", { name: /próximo/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
 
     // Step 3: Review & Submit
     await userEvent.click(
-      screen.getByRole("button", { name: /finalizar compra/i })
+      screen.getByRole("button", { name: /place order/i })
     );
 
     expect(handleSubmit).toHaveBeenCalledWith(
       expect.objectContaining({
-        address: "Rua Teste, 123",
-        city: "São Paulo",
+        address: "123 Test Street",
+        city: "Springfield",
         cardNumber: "4111111111111111",
       })
     );
@@ -781,12 +777,10 @@ describe("CheckoutForm", () => {
   it("should show validation errors for incomplete fields", async () => {
     render(<CheckoutForm items={mockItems} onSubmit={jest.fn()} />);
 
-    await userEvent.click(screen.getByRole("button", { name: /próximo/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
 
-    expect(
-      await screen.findByText(/endereço é obrigatório/i)
-    ).toBeInTheDocument();
-    expect(screen.getByText(/cidade é obrigatória/i)).toBeInTheDocument();
+    expect(await screen.findByText(/address is required/i)).toBeInTheDocument();
+    expect(screen.getByText(/city is required/i)).toBeInTheDocument();
   });
 
   it("should display error message when payment fails", async () => {
@@ -795,46 +789,46 @@ describe("CheckoutForm", () => {
       .mockRejectedValue(new Error("Payment failed"));
     render(<CheckoutForm items={mockItems} onSubmit={handleSubmit} />);
 
-    // Preenche o formulário completo...
-    // (código omitido por brevidade)
+    // fill the whole form...
+    // (omitted for brevity)
 
-    await userEvent.click(screen.getByRole("button", { name: /finalizar/i }));
+    await userEvent.click(screen.getByRole("button", { name: /place order/i }));
 
     expect(await screen.findByRole("alert")).toHaveTextContent(
-      /erro ao processar pagamento/i
+      /could not process payment/i
     );
   });
 });
 ```
 
-## 🎓 Melhores práticas consolidadas
+## 🎓 Practices worth keeping
 
-### 1. Nomeação descritiva
+### 1. Descriptive names
 
 ```typescript
-// ❌ Vago
+// ❌ Vague
 it('should work', () => { ... });
 it('test login', () => { ... });
 
-// ✅ Específico
+// ✅ Specific
 it('should authenticate user with valid credentials', () => { ... });
 it('should display error message when email is invalid', () => { ... });
 ```
 
-### 2. Um conceito por teste
+### 2. One concept per test
 
 ```typescript
-// ❌ Testa muita coisa junto
+// ❌ Too much in one place
 it("should handle form submission", async () => {
   render(<Form />);
   await userEvent.type(screen.getByLabelText(/email/i), "test@example.com");
   expect(screen.getByLabelText(/email/i)).toHaveValue("test@example.com");
   await userEvent.click(screen.getByRole("button"));
   expect(mockSubmit).toHaveBeenCalled();
-  expect(screen.getByText(/sucesso/i)).toBeInTheDocument();
+  expect(screen.getByText(/success/i)).toBeInTheDocument();
 });
 
-// ✅ Testes separados e focados
+// ✅ Separate and focused
 it("should update email field value when user types", async () => {
   render(<Form />);
   await userEvent.type(screen.getByLabelText(/email/i), "test@example.com");
@@ -845,82 +839,82 @@ it("should call onSubmit when form is submitted", async () => {
   const mockSubmit = jest.fn();
   render(<Form onSubmit={mockSubmit} />);
   await fillForm(); // helper function
-  await userEvent.click(screen.getByRole("button", { name: /enviar/i }));
+  await userEvent.click(screen.getByRole("button", { name: /submit/i }));
   expect(mockSubmit).toHaveBeenCalled();
 });
 
 it("should display success message after submission", async () => {
   render(<Form onSubmit={jest.fn().mockResolvedValue(undefined)} />);
   await fillForm();
-  await userEvent.click(screen.getByRole("button", { name: /enviar/i }));
-  expect(await screen.findByText(/sucesso/i)).toBeInTheDocument();
+  await userEvent.click(screen.getByRole("button", { name: /submit/i }));
+  expect(await screen.findByText(/success/i)).toBeInTheDocument();
 });
 ```
 
-### 3. Use queries acessíveis
+### 3. Use accessible queries
 
-Prioridade de queries segundo a React Testing Library:
+Query priority, according to React Testing Library:
 
-1. `getByRole` → Melhor para acessibilidade
-2. `getByLabelText` → Ótimo para formulários
-3. `getByPlaceholderText` → Bom para inputs
-4. `getByText` → Use para conteúdo visível
-5. `getByTestId` → Último recurso
+1. `getByRole` → best for accessibility
+2. `getByLabelText` → great for forms
+3. `getByPlaceholderText` → fine for inputs
+4. `getByText` → use for visible content
+5. `getByTestId` → last resort
 
 ```typescript
-// ✅ Priorize queries semânticas
-screen.getByRole("button", { name: /enviar/i });
+// ✅ Prefer semantic queries
+screen.getByRole("button", { name: /submit/i });
 screen.getByLabelText(/email/i);
-screen.getByText(/bem-vindo/i);
+screen.getByText(/welcome/i);
 
-// ❌ Evite queries frágeis
+// ❌ Avoid brittle queries
 screen.getByTestId("submit-btn");
 container.querySelector(".btn-primary");
 ```
 
-### 4. Teste assíncrono corretamente
+### 4. Get async right
 
 ```typescript
-// ❌ Não usa await - falha silenciosamente
+// ❌ No await - fails silently
 it("should show success message", () => {
   render(<AsyncComponent />);
   userEvent.click(screen.getByRole("button"));
-  expect(screen.getByText(/sucesso/i)).toBeInTheDocument(); // Pode não existir ainda
+  expect(screen.getByText(/success/i)).toBeInTheDocument(); // may not exist yet
 });
 
-// ✅ Usa async/await e findBy
+// ✅ async/await with findBy
 it("should show success message after async operation", async () => {
   render(<AsyncComponent />);
   await userEvent.click(screen.getByRole("button"));
-  expect(await screen.findByText(/sucesso/i)).toBeInTheDocument();
+  expect(await screen.findByText(/success/i)).toBeInTheDocument();
 });
 ```
 
-### 5. Isole testes
+### 5. Isolate your tests
 
 ```typescript
-// ❌ Testes compartilham estado
+// ❌ Tests share state
 let user: User;
 
 beforeAll(() => {
-  user = createUser(); // Criado uma vez para todos os testes
+  user = createUser(); // created once for every test
 });
 
 it("should update user name", () => {
-  user.name = "New Name"; // Muda o estado compartilhado
+  user.name = "New Name"; // mutates shared state
   expect(user.name).toBe("New Name");
 });
 
 it("should have original name", () => {
-  expect(user.name).toBe("Test User"); // ❌ Falha! Estado foi alterado
+  expect(user.name).toBe("Test User"); // ❌ fails! state was mutated
 });
 
-// ✅ Cada teste tem seu próprio estado
+// ✅ Each test gets its own state
 describe("User operations", () => {
   let user: User;
 
   beforeEach(() => {
-    user = createUser(); // Novo para cada teste
+    user = createUser(); // fresh for every test
   });
 
   it("should update user name", () => {
@@ -929,21 +923,21 @@ describe("User operations", () => {
   });
 
   it("should have original name", () => {
-    expect(user.name).toBe("Test User"); // ✅ Passa!
+    expect(user.name).toBe("Test User"); // ✅ passes
   });
 });
 ```
 
-## 🚨 Red flags: quando seu teste está errado
+## 🚨 Red flags: when your test is wrong
 
-### 1. Teste que nunca falha
+### 1. A test that never fails
 
-Se você comentar o código de produção e o teste continua passando, o teste é inútil.
+If you comment out the production code and the test still passes, the test is useless.
 
-### 2. Teste que testa o mock
+### 2. A test that tests the mock
 
 ```typescript
-// ❌ Só testa se o mock foi chamado, não o comportamento real
+// ❌ Only checks that the mock was called, not the real behaviour
 it("should call fetchUser", async () => {
   const mockFetch = jest.fn();
   render(<Component fetchUser={mockFetch} />);
@@ -951,10 +945,10 @@ it("should call fetchUser", async () => {
 });
 ```
 
-### 3. Teste que depende de ordem de execução
+### 3. A test that depends on execution order
 
 ```typescript
-// ❌ Se trocar a ordem, quebra
+// ❌ Change the order and it breaks
 describe("Counter", () => {
   it("should start at 0", () => {
     render(<Counter />);
@@ -962,17 +956,17 @@ describe("Counter", () => {
   });
 
   it("should increment to 1", async () => {
-    // ❌ Assume que o teste anterior rodou
+    // ❌ assumes the previous test ran
     await userEvent.click(screen.getByRole("button", { name: /increment/i }));
     expect(screen.getByText("1")).toBeInTheDocument();
   });
 });
 ```
 
-### 4. Teste com sleeps e timeouts arbitrários
+### 4. A test with arbitrary sleeps
 
 ```typescript
-// ❌ Flaky e lento
+// ❌ Flaky and slow
 it("should update after delay", async () => {
   render(<Component />);
   await userEvent.click(screen.getByRole("button"));
@@ -980,7 +974,7 @@ it("should update after delay", async () => {
   expect(screen.getByText(/updated/i)).toBeInTheDocument();
 });
 
-// ✅ Use waitFor ou findBy
+// ✅ Use waitFor or findBy
 it("should update after async operation", async () => {
   render(<Component />);
   await userEvent.click(screen.getByRole("button"));
@@ -988,74 +982,74 @@ it("should update after async operation", async () => {
 });
 ```
 
-## 🎯 O mindset certo para testes
+## 🎯 The right mindset for testing
 
-Testes unitários no frontend não são sobre atingir métricas. São sobre confiança.
+Unit tests on the frontend are not about hitting a metric. They are about confidence.
 
-A pergunta que devemos fazer não é "quanto código está coberto?", mas sim:
+The question to ask is not "how much code is covered?" but:
 
-**"Se eu fizer deploy agora, vou dormir tranquilo?"**
+**"If I deploy right now, will I sleep well?"**
 
-Quando você escreve um teste pensando "isso precisa funcionar sempre, de qualquer jeito", você está no caminho certo.
+When you write a test thinking "this has to work every time, no matter what," you are on the right track.
 
-Quando você escreve um teste pensando "preciso chegar em 80% de cobertura", você está criando débito técnico disfarçado de qualidade.
+When you write a test thinking "I need to reach 80% coverage," you are producing technical debt dressed up as quality.
 
-## 🎭 Conclusão: teste com propósito, não com métrica
+## 🎭 Conclusion: test with purpose, not with a metric
 
-A indústria de software criou uma obsessão doentia por cobertura de código. Times celebram "100% de cobertura" como se fosse um troféu, mas na prática isso pode significar absolutamente nada.
+The software industry built an unhealthy obsession with code coverage. Teams celebrate "100% coverage" like a trophy, and in practice it can mean absolutely nothing.
 
-**O problema não é testar. O problema é testar sem pensar.**
+**The problem is not testing. The problem is testing without thinking.**
 
-Assim como no [efeito ENEM no código](#/artigos/efeito-enem-no-codigo), onde aprendemos a passar de fase sem entender, muitos devs aprenderam a escrever testes que passam no CI sem proteger o código.
+Just like in [the exam effect in code](#/artigos/efeito-enem-no-codigo), where we learned to clear the level without understanding it, many developers learned to write tests that pass CI without protecting anything.
 
-A verdadeira habilidade não está em fazer testes passarem — está em fazer testes que significam algo.
+The real skill is not making tests pass — it is making tests that mean something.
 
-### Os princípios para levar
+### The principles worth keeping
 
-1. **Teste comportamento, não implementação** → Testes devem sobreviver a refatorações
-2. **Teste como o usuário usa** → Se seu teste não simula uso real, não serve
-3. **Cobertura é consequência, não objetivo** → Bons testes geram boa cobertura naturalmente
-4. **Mock o mínimo necessário** → Quanto mais você mocka, menos confiança o teste dá
-5. **Um teste deve ter uma razão clara de existir** → Se você não sabe por que está escrevendo, não escreva
+1. **Test behaviour, not implementation** → tests should survive refactors
+2. **Test the way a user uses it** → if your test does not simulate real use, it is not doing its job
+3. **Coverage is a consequence, not a goal** → good tests produce good coverage on their own
+4. **Mock the minimum** → the more you mock, the less confidence the test gives
+5. **Every test should have a clear reason to exist** → if you do not know why you are writing it, do not write it
 
-### A pergunta final
+### The final question
 
-Antes de escrever qualquer teste, pergunte-se:
+Before writing any test, ask yourself:
 
-**"Este teste vai me dar confiança para fazer deploy na sexta à tarde?"**
+**"Will this test give me the confidence to deploy on a Friday afternoon?"**
 
-Se a resposta for não, você está escrevendo o teste errado.
+If the answer is no, you are writing the wrong test.
 
-Se a resposta for sim, você entendeu o propósito.
-
----
-
-_Testes não são sobre garantir que o código compila. São sobre garantir que o produto funciona. E código que funciona não é aquele que passa no CI — é aquele que resolve o problema do usuário._
-
-**Escreva menos testes, mas testes melhores.**
-
-**Teste o que importa. Ignore o resto.**
-
-## 📚 Referências e aprofundamento
-
-Este artigo foi construído com base em práticas consolidadas e vozes respeitadas na comunidade:
-
-- **Kent C. Dodds** — [Testing Library](https://testing-library.com/) e [Testing JavaScript](https://testingjavascript.com/): filosofia de testar como o usuário usa, não como o código está estruturado.
-
-- **Martin Fowler** — [Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html): conceito de pirâmide de testes e quando usar cada tipo.
-
-- **Kent Beck** — _Test-Driven Development: By Example_: fundamentos do TDD e como escrever testes que guiam o design.
-
-- **Vladimir Khorikov** — _Unit Testing Principles, Practices, and Patterns_: distinção entre testes úteis e inúteis, quando usar mocks.
-
-- **React Testing Library Docs** — [Guiding Principles](https://testing-library.com/docs/guiding-principles/): princípios fundamentais para testes de componentes React.
-
-- **Jest Documentation** — [Best Practices](https://jestjs.io/docs/getting-started): setup e configuração de testes no ecossistema JavaScript.
-
-- **Robert C. Martin (Uncle Bob)** — _Clean Code_ e _The Clean Coder_: responsabilidade na qualidade do código e disciplina em testes.
+If the answer is yes, you understood the point.
 
 ---
 
-_Se este artigo te fez repensar sua abordagem de testes, ele cumpriu seu papel. Compartilhe com seu time e vamos elevar o nível dos testes no frontend brasileiro._
+_Tests are not about proving the code compiles. They are about proving the product works. And working code is not the code that passes CI — it is the code that solves the user's problem._
 
-**👏 Gostou? Deixe um clap e compartilhe suas experiências nos comentários!**
+**Write fewer tests, but better ones.**
+
+**Test what matters. Ignore the rest.**
+
+## 📚 References and further reading
+
+This article was built on established practice and on voices the community trusts:
+
+- **Kent C. Dodds** — [Testing Library](https://testing-library.com/) and [Testing JavaScript](https://testingjavascript.com/): the philosophy of testing the way users use, not the way code is structured.
+
+- **Martin Fowler** — [Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html): the test pyramid and when each kind of test earns its place.
+
+- **Kent Beck** — _Test-Driven Development: By Example_: the fundamentals of TDD and how tests can guide design.
+
+- **Vladimir Khorikov** — _Unit Testing Principles, Practices, and Patterns_: separating useful tests from useless ones, and when mocks are warranted.
+
+- **React Testing Library Docs** — [Guiding Principles](https://testing-library.com/docs/guiding-principles/): the core principles for testing React components.
+
+- **Jest Documentation** — [Best Practices](https://jestjs.io/docs/getting-started): setup and configuration in the JavaScript ecosystem.
+
+- **Robert C. Martin (Uncle Bob)** — _Clean Code_ and _The Clean Coder_: responsibility for code quality and discipline in testing.
+
+---
+
+_If this made you rethink how you test, it did its job. Share it with your team._
+
+**👏 Enjoyed it? Leave a clap and share your experience in the comments.**

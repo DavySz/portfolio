@@ -151,7 +151,7 @@ export const ARTICLES: ArticleMeta[] = [
   {
     slug: "testes-unitarios-no-frontend",
     date: "2025-12-14",
-    bodies: ["pt"],
+    bodies: ["pt", "en"],
     thumb: { src: TestingThumb, half: TestingThumbHalf, width: 1200 },
     mediumUrl:
       "https://medium.com/@davysz/testes-unitários-no-frontend-arte-de-testar-o-que-importa-c4fdb27cebf1",
