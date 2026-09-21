@@ -43,7 +43,7 @@ export const ARTICLES: ArticleMeta[] = [
   {
     slug: "mais-codigo-do-que-revisar",
     date: "2026-09-21",
-    bodies: ["pt"],
+    bodies: ["pt", "en"],
     en: {
       title: "More code than anyone can review",
       excerpt:
