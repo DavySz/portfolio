@@ -10,7 +10,8 @@
   },
   "gravity": {
     "enable": "Desligar a gravidade",
-    "restore": "Arrumar a página"
+    "restore": "Arrumar a página",
+    "disable": "Ligar a gravidade de volta"
   },
   "article": {
     "read": "Ler aqui",

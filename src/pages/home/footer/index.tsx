@@ -82,11 +82,14 @@ export const Footer: React.FC = () => {
             <button
               type="button"
               onClick={gravity.toggle}
+              /* O rótulo e o aria-pressed mudam com o estado: um botão que
+                 diz sempre "desligar" mente para quem já desligou. */
+              aria-pressed={gravity.active}
               className="font-poppins text-base font-normal text-[#5F5F5F] underline decoration-dotted underline-offset-4
                          transition-colors duration-300 hover:text-primary-300
                          focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2 focus:ring-offset-secondary-900"
             >
-              {tc("gravity.enable")}
+              {tc(gravity.active ? "gravity.disable" : "gravity.enable")}
             </button>
           )}
           <span className="text-base font-normal font-poppins text-[#5F5F5F]">

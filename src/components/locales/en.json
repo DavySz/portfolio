@@ -10,7 +10,8 @@
   },
   "gravity": {
     "enable": "Turn off gravity",
-    "restore": "Put the page back"
+    "restore": "Put the page back",
+    "disable": "Turn gravity back on"
   },
   "article": {
     "read": "Read here",
