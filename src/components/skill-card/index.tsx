@@ -11,9 +11,6 @@ export const SkillCard: React.FC<SkillCardProps> = ({ data }) => {
       className="group flex flex-col items-center justify-center transition-all duration-300 ease-out
                  hover:scale-105 animate-fade-in-up
                  focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-4 focus-visible:rounded-[30px]"
-      style={{
-        animationDelay: `${Math.random() * 0.5}s`,
-      }}
     >
       <div
         className="bg-secondary-50 rounded-[30px] h-[150px] w-[150px] flex flex-col items-center justify-center mb-5 

@@ -16,15 +16,15 @@ export const WebNavigationBar: React.FC = () => {
     <nav
       className="flex gap-8 w-full items-center xl:justify-end lg:justify-center py-8 md:px-[24px] mb:px-[100px] xl:px-[100px]"
       role="navigation"
-      aria-label="Navegação principal"
+      aria-label={t("a11y.mainNavigation")}
     >
-      {getLinks(t).map((link, index) => (
-        <Link href={link.href} key={index}>
+      {getLinks(t).map((link) => (
+        <Link href={link.href} key={link.href}>
           {link.label}
         </Link>
       ))}
       <Toggle />
-      <Button onClick={openLinkedin} aria-label="Contratar no LinkedIn">
+      <Button onClick={openLinkedin} aria-label={t("a11y.hireOnLinkedIn")}>
         {t("navigation-bar.hire-me")}
       </Button>
     </nav>

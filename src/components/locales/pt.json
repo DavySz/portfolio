@@ -22,5 +22,15 @@
     "copy": "Copiar",
     "copied": "Copiado",
     "copyFailed": "Não deu para copiar"
+  },
+  "a11y": {
+    "skipToContent": "Pular para o conteúdo principal",
+    "mainNavigation": "Navegação principal",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "menuTitle": "Menu",
+    "hireOnLinkedIn": "Falar comigo no LinkedIn",
+    "switchLanguage": "Mudar idioma para {{language}}",
+    "openProfile": "Abrir perfil no {{network}}"
   }
 }

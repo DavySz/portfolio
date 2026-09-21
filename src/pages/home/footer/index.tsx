@@ -54,12 +54,13 @@ export const Footer: React.FC = () => {
             </Text>
           </div>
           <div className="flex gap-5 items-center">
-            {SOCIALS.map((social, index) => (
+            {SOCIALS.map((social) => (
               <Button
                 onClick={() => openLink(social.href)}
                 variant="tertiary"
                 icon={social.icon}
-                key={index}
+                aria-label={tc("a11y.openProfile", { network: social.name })}
+                key={social.name}
               />
             ))}
           </div>

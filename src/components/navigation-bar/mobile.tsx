@@ -9,6 +9,17 @@ import { AiOutlineClose } from "react-icons/ai";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
+const MENU_ID = "mobile-menu";
+
+/**
+ * `inert` tira a subárvore inteira da ordem de foco e do leitor de tela.
+ * Os tipos do React 18 não conhecem o atributo (só a 19 conhece), mas em
+ * minúsculas ele é repassado direto ao DOM — mesmo caso do `fetchpriority`
+ * no hero. Ausente quando o menu está aberto; presente quando fechado.
+ */
+const inertWhenClosed = (closed: boolean) =>
+  (closed ? { inert: "" } : {}) as Record<string, string>;
+
 export const MobileNavigationBar: React.FC = () => {
   const { t } = useTranslation("component");
   const [isVisible, setIsVisible] = useState(false);
@@ -30,6 +41,16 @@ export const MobileNavigationBar: React.FC = () => {
     setActiveLink(href);
     toggleOptions();
   };
+
+  // Esc fecha o menu: é o atalho que todo mundo tenta primeiro num painel.
+  useEffect(() => {
+    if (!isVisible) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsVisible(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isVisible]);
 
   const disableScrollY = useCallback((): void => {
     if (isVisible) {
@@ -68,7 +89,14 @@ export const MobileNavigationBar: React.FC = () => {
       {/* Header Bar */}
       <div className="relative z-50 flex items-center justify-between w-full py-4 px-6 bg-white/95 backdrop-blur-sm border-b border-gray-100">
         <Toggle />
-        <Button variant="secondary" icon={getIcon()} onClick={toggleOptions} />
+        <Button
+          variant="secondary"
+          icon={getIcon()}
+          onClick={toggleOptions}
+          aria-label={t(isVisible ? "a11y.closeMenu" : "a11y.openMenu")}
+          aria-expanded={isVisible}
+          aria-controls={MENU_ID}
+        />
       </div>
 
       {/* Backdrop */}
@@ -82,6 +110,13 @@ export const MobileNavigationBar: React.FC = () => {
 
       {/* Slide-in Menu Panel */}
       <div
+        id={MENU_ID}
+        role="dialog"
+        aria-modal="true"
+        aria-label={t("a11y.menuTitle")}
+        /* Fechado o painel continua no DOM para animar, mas precisa sair da
+           ordem de tabulação — senão o Tab passeia por links invisíveis. */
+        {...inertWhenClosed(!isVisible)}
         className={clsx(
           "fixed top-0 right-0 h-full w-80 max-w-[90vw] z-50",
           "bg-white shadow-2xl shadow-black/20",
@@ -94,11 +129,14 @@ export const MobileNavigationBar: React.FC = () => {
       >
         {/* Menu Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
-          <h3 className="text-lg font-semibold text-secondary-900">Menu</h3>
+          <h3 className="text-lg font-semibold text-secondary-900">
+            {t("a11y.menuTitle")}
+          </h3>
           <Button
             variant="tertiary"
             icon={AiOutlineClose}
             onClick={toggleOptions}
+            aria-label={t("a11y.closeMenu")}
           />
         </div>
 
@@ -107,8 +145,8 @@ export const MobileNavigationBar: React.FC = () => {
           {/* Navigation Links */}
           <nav className="flex-1 py-6">
             <ul className="space-y-2">
-              {getLinks(t).map((link, index) => (
-                <li key={index}>
+              {getLinks(t).map((link) => (
+                <li key={link.href}>
                   <a
                     href={link.href}
                     onClick={() => handleSelectOption(link.href)}

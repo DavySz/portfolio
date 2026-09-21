@@ -1,10 +1,15 @@
 import React from "react";
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 import { useLocales } from "../../hooks/useLocales/use-locales";
 import type { ToggleProps } from "./types";
 
 export const Toggle: React.FC<ToggleProps> = ({ className }) => {
+  const { t } = useTranslation("component");
   const { language, toggleLanguage } = useLocales();
+
+  const target = language === "en" ? "Português" : "English";
+  const label = t("a11y.switchLanguage", { language: target });
 
   return (
     <div className={clsx("flex items-center gap-3", className)}>
@@ -21,12 +26,8 @@ export const Toggle: React.FC<ToggleProps> = ({ className }) => {
             "bg-gray-600 hover:bg-gray-500": language === "pt",
           }
         )}
-        aria-label={`Mudar idioma para ${
-          language === "en" ? "Português" : "English"
-        }`}
-        title={`Mudar idioma para ${
-          language === "en" ? "Português" : "English"
-        }`}
+        aria-label={label}
+        title={label}
       >
         {/* Background glow effect */}
         <div

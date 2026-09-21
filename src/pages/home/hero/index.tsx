@@ -20,6 +20,7 @@ const LCP_PRIORITY = { fetchpriority: "high" } as const;
 
 export const Hero: React.FC = () => {
   const { t, i18n } = useTranslation("home");
+  const { t: tc } = useTranslation("component");
   const sectionRef = useExperienceSection("hero");
   const { download } = usePDF();
 
@@ -89,12 +90,13 @@ export const Hero: React.FC = () => {
             {t("hero.download")}
           </Button>
           <div className="flex gap-4 xl:gap-5 items-center">
-            {SOCIALS.map((social, index) => (
+            {SOCIALS.map((social) => (
               <Button
                 onClick={() => openLink(social.href)}
                 variant="onDark"
                 icon={social.icon}
-                key={index}
+                aria-label={tc("a11y.openProfile", { network: social.name })}
+                key={social.name}
               />
             ))}
           </div>

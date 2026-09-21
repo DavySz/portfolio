@@ -1,22 +1,10 @@
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
 import { ProjectCard } from "../../../components/project-card";
-import { ProjectCardSkeleton } from "../../../components/project-card-skeleton";
 import { Text } from "../../../components/text";
 import { getProjects } from "./constants";
 
 export const Projects: React.FC = () => {
   const { t } = useTranslation("home");
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <section
       id="projects"
@@ -43,31 +31,17 @@ export const Projects: React.FC = () => {
       </Text>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 justify-center w-full max-w-7xl">
-        {isLoading
-          ? // Skeleton loading state
-            Array.from({ length: 4 }).map((_, index) => (
-              <div
-                key={`skeleton-${index}`}
-                className="h-full"
-                style={{
-                  animationDelay: `${index * 0.1}s`,
-                }}
-              >
-                <ProjectCardSkeleton />
-              </div>
-            ))
-          : // Real content
-            getProjects(t).map((project, index) => (
-              <div
-                key={index}
-                className="animate-fade-in-up h-full"
-                style={{
-                  animationDelay: `${index * 0.2}s`,
-                }}
-              >
-                <ProjectCard {...project} />
-              </div>
-            ))}
+        {getProjects(t).map((project, index) => (
+          <div
+            key={project.link}
+            className="animate-fade-in-up h-full"
+            style={{
+              animationDelay: `${index * 0.1}s`,
+            }}
+          >
+            <ProjectCard {...project} />
+          </div>
+        ))}
       </div>
     </section>
   );

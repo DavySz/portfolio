@@ -22,5 +22,15 @@
     "copy": "Copy",
     "copied": "Copied",
     "copyFailed": "Could not copy"
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content",
+    "mainNavigation": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuTitle": "Menu",
+    "hireOnLinkedIn": "Get in touch on LinkedIn",
+    "switchLanguage": "Switch language to {{language}}",
+    "openProfile": "Open {{network}} profile"
   }
 }

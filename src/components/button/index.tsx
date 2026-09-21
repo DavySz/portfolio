@@ -10,6 +10,7 @@ export const Button: React.FC<ButtonProps> = ({
   icon: Icon,
   disabled,
   children,
+  type,
   ...rest
 }) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -89,7 +90,10 @@ export const Button: React.FC<ButtonProps> = ({
         }
       )}
       disabled={disabled}
-      type="submit"
+      /* `button` por padrão: dentro de um <form>, o padrão do HTML é submit,
+         e um botão de rede social não deveria enviar formulário. Quem
+         precisar de submit passa type explicitamente. */
+      type={type ?? "button"}
     >
       {/* Ripple effect */}
       {!disabled && (
