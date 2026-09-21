@@ -13,7 +13,9 @@
     "assets:test-cube": "node scripts/assets/make-test-cube.js",
     "assets:optimize": "node scripts/assets/optimize.js",
     "images:optimize": "node scripts/images/optimize.js",
-    "postinstall": "node scripts/assets/copy-decoders.js"
+    "content:feeds": "node scripts/content/build-feeds.js",
+    "postinstall": "node scripts/assets/copy-decoders.js",
+    "prebuild": "node scripts/content/build-feeds.js"
   },
   "dependencies": {
     "@dimforge/rapier2d-compat": "^0.20.0",

@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaMedium } from "react-icons/fa";
 import { MdArrowBack } from "react-icons/md";
 import { Text } from "../../components/text";
 import { Button } from "../../components/button";
 import { Loading } from "../../components/loading";
+import { useSEO } from "../../hooks";
 import { articleHref } from "../../hooks/useHashRoute/use-hash-route";
 import { ArticleToc } from "../../components/article-toc";
 import { ReadingProgress } from "../../components/reading-progress";
@@ -14,6 +15,9 @@ import {
   loadArticleContent,
 } from "../../content/articles";
 import type { ArticlePageProps } from "./types";
+
+const SITE = "https://davysz.com";
+const AUTHOR = "Davy de Souza Assunção";
 
 interface Content {
   html: string;
@@ -105,14 +109,27 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
     return () => cleanups.forEach((cleanup) => cleanup());
   }, [content, t]);
 
-  useEffect(() => {
-    if (!meta) return;
-    const previous = document.title;
-    document.title = `${meta.title} | Davy de Souza Assunção`;
-    return () => {
-      document.title = previous;
-    };
-  }, [meta]);
+  /**
+   * SEO do artigo. Sem isto, todo link compartilhado mostrava o título e a
+   * imagem da home — oito artigos com o mesmo cartão.
+   */
+  useSEO(
+    useMemo(
+      () =>
+        meta
+          ? {
+              title: `${meta.title} | ${AUTHOR}`,
+              description: meta.excerpt,
+              keywords: meta.tag,
+              image: meta.thumb ?? "/images/user.jpeg",
+              url: `${SITE}/#/artigos/${meta.slug}`,
+              canonicalUrl: meta.mediumUrl ?? `${SITE}/#/artigos/${meta.slug}`,
+              type: "article",
+            }
+          : {},
+      [meta]
+    )
+  );
 
   const goBack = () => {
     window.location.hash = "";
