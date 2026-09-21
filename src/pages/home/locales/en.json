@@ -32,6 +32,15 @@
       }
     }
   },
+  "observability": {
+    "title": "Reading a trace",
+    "description": "A single checkout request, span by span. This is how I look at a system before changing it: where the time actually goes, what runs in parallel, and what is waiting on what.",
+    "summary": "Distributed trace of a checkout request, 20 spans across 9 services, 418 milliseconds end to end. The critical path runs through authentication, cart, catalog, pricing and risk in parallel, then ledger reservation and payment authorization in sequence.",
+    "note": "Invented trace, built only to illustrate the reading. No real service, route or metric.",
+    "labels": {
+      "duration": "Duration"
+    }
+  },
   "skills": {
     "title": "Stack & Tools",
     "description": "Technologies I master to build world-class frontend products, focused on performance, scalability, and developer experience."
