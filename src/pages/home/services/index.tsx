@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useExperienceSection } from "../../../hooks/useExperienceSection/use-experience-section";
-import { ServiceCards } from "../../../components/service-cards";
-import { ServiceTable } from "../../../components/service-table";
+import { ServiceList } from "../../../components/service-list";
 import { Text } from "../../../components/text";
 import { getServices } from "./constants";
 
@@ -41,12 +40,7 @@ export const Services: React.FC = () => {
       >
         {t("services.description")}
       </Text>
-      <div className="hidden md:flex">
-        <ServiceTable data={getServices(t)} />
-      </div>
-      <div className="md:hidden">
-        <ServiceCards data={getServices(t)} />
-      </div>
+      <ServiceList data={getServices(t)} />
     </section>
   );
 };

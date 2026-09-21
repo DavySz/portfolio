@@ -67,12 +67,6 @@
     white-space: normal;
   }
 
-  /* Table cells */
-  td,
-  th {
-    @apply px-[50px] py-[40px];
-  }
-
   /* Performance-optimized animations */
   .animate-float {
     animation: float 6s ease-in-out infinite;
