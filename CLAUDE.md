@@ -19,7 +19,8 @@ código: `assets:*` (modelos 3D), `images:optimize` (imagens do site) e
 
 1. Typecheck. O build do Vite **não** checa tipos, e o projeto usa project references (`tsconfig.app.json` + `tsconfig.node.json`), então o typecheck precisa rodar separado (`tsc -b` ou o script equivalente do `package.json`).
 2. Lint sem erros novos.
-3. Build de produção passando.
+3. Testes passando (`vitest`, pelo script `test`). A suíte é pequena e roda em segundos; é a única das quatro etapas que executa código de verdade.
+4. Build de produção passando.
 
 Se algum passo não puder ser executado no ambiente, dizer isso explicitamente no resumo em vez de omitir.
 
