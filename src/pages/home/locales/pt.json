@@ -57,21 +57,7 @@
   "articles": {
     "title": "Artigos",
     "description": "Compartilho insights sobre frontend, arquitetura e a realidade do desenvolvimento de software além do código.",
-    "seeMore": "Ver todos os artigos",
-    "items": {
-      "bff": {
-        "title": "BFF – Por que o Frontend deveria liderar essa revolução?"
-      },
-      "enem": {
-        "title": "O Efeito ENEM no Código: Como estudar apenas para 'passar' criou uma geração de devs inseguros"
-      },
-      "testing": {
-        "title": "Testes Unitários no Frontend: A Arte de Testar o que Importa"
-      },
-      "micro": {
-        "title": "Micro Frontends: Dividir para Conquistar"
-      }
-    }
+    "seeMore": "Ver todos os artigos"
   },
   "contact": {
     "title": "Contato",

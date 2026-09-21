@@ -72,8 +72,8 @@ export const Footer: React.FC = () => {
       <div className="w-full h-[0.5px] bg-white mb-12" />
       <div className="flex items-center justify-between flex-wrap gap-8">
         <div className="flex gap-8 flex-wrap">
-          {getLinks(t).map((link, index) => (
-            <Link href={link.href} key={index} variant="secondary">
+          {getLinks(t).map((link) => (
+            <Link href={link.href} key={link.href} variant="secondary">
               {link.label}
             </Link>
           ))}

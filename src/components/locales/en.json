@@ -15,7 +15,6 @@
   "article": {
     "read": "Read here",
     "onMedium": "Medium",
-    "back": "Back",
     "readOnMedium": "Also on Medium",
     "readingTime": "{{minutes}} min read",
     "notFound": "Article not found",
@@ -34,7 +33,6 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "menuTitle": "Menu",
-    "hireOnLinkedIn": "Get in touch on LinkedIn",
     "openProfile": "Open {{network}} profile",
     "opensInNewTab": "opens in new tab",
     "language": "Language"

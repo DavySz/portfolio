@@ -53,7 +53,6 @@ export const Self: React.FC = () => {
           variant="secondary"
           icon={MdOutlineFileDownload}
           onClick={handleDownLoadCV}
-          className="mr-7"
         >
           {t("self.download")}
         </Button>

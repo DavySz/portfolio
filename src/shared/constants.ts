@@ -18,23 +18,31 @@ export const EN_CV_PATH = "/pdfs/davy-de-souza-assuncao-curriculum-en.pdf";
 export const PT_CV_PATH = "/pdfs/davy-de-souza-assuncao-curriculum-pt.pdf";
 
 
-export const WELCOME_LOG_MESSAGE = `%c� Hey, dev curioso(a)!
-    
-    %c🔍 Inspecionando o código? Adoro isso!
-    
-    %cSou Davy, Frontend Engineer especializado em Fintech.
-Construo interfaces que pessoas confiam para movimentar dinheiro.
-    
-    💡 Stack: React + TypeScript + Next.js
-    🏢 Trabalho: Fretepago
-    
-    %c👉 Quer ver o código deste portfolio?
+/*
+ * Mensagem para quem abre o console.
+ *
+ * Estava só em português num site que abre em inglês, começava com um
+ * caractere corrompido (os bytes EF BF BD, o U+FFFD de substituição, onde
+ * deveria haver um emoji) e anunciava Next.js — que é a stack do trabalho,
+ * não a deste site, feito em Vite.
+ */
+export const WELCOME_LOG_MESSAGE = `%c👋 Hey there, curious dev!
+
+    %c🔍 Reading the source? Love that.
+
+    %cI'm Davy, a Frontend Engineer specialized in Fintech.
+I build interfaces people trust to move money.
+
+    💡 This site: React + TypeScript + Vite + three.js
+    🏢 Work: Fretepago
+
+    %c👉 Want the code behind this portfolio?
     🔗 github.com/davysz
-    
-    %c💬 Bora trocar uma ideia sobre frontend, fintech ou arquitetura?
-    💌 LinkedIn: linkedin.com/in/davy-de-souza-assunção-0b7483180
-    
-    %cValeu pela visita! ☕🚀`;
+
+    %c💬 Up for a chat about frontend, fintech or architecture?
+    💌 linkedin.com/in/davy-de-souza-assuncao-0b7483180
+
+    %cThanks for stopping by! ☕🚀`;
 
 export const WELCOME_LOG_MESSAGE_STYLES = [
   "color: #7947DF; font-size: 18px; font-weight: bold;",

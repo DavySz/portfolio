@@ -57,21 +57,7 @@
   "articles": {
     "title": "Articles",
     "description": "Sharing insights about frontend, architecture, and the reality of software development beyond the code.",
-    "seeMore": "See all articles",
-    "items": {
-      "bff": {
-        "title": "BFF – Why Should the Frontend Lead This Revolution?"
-      },
-      "enem": {
-        "title": "The ENEM Effect in Code: How Studying Just to 'Pass' Created a Generation of Insecure Devs"
-      },
-      "testing": {
-        "title": "Unit Testing in Frontend: The Art of Testing What Matters"
-      },
-      "micro": {
-        "title": "Micro Frontends: Divide and Conquer"
-      }
-    }
+    "seeMore": "See all articles"
   },
   "contact": {
     "title": "Contact",
