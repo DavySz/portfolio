@@ -12,7 +12,9 @@ export const BASE_CLASSES = [
   "flex gap-2 rounded-3xl items-center justify-center relative overflow-hidden group",
   "transition-all duration-300 ease-out",
   "transform hover:scale-105 active:scale-95",
-  "focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 focus:ring-offset-transparent",
+  // focus-visible, não focus: com `focus` o anel aparecia também no clique
+  // de mouse. Link, ArticleCard, ProjectCard e SkillCard já usavam assim.
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
 ].join(" ");
 
 export const surfaceClasses = (variant: ButtonVariant): string => {

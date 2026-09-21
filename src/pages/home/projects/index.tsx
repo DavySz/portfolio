@@ -30,6 +30,9 @@ export const Projects: React.FC = () => {
       </Text>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 justify-center w-full max-w-7xl">
+        {/* A animação e o atraso moram aqui, no wrapper; o card não anima
+            sozinho. Antes os dois declaravam `animate-fade-in-up` e ela
+            rodava duas vezes, em elementos aninhados. */}
         {getProjects(t).map((project, index) => (
           <div
             key={project.link}

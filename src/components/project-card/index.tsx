@@ -13,8 +13,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       className="group relative flex flex-col w-full h-full min-h-[400px] md:min-h-[500px] rounded-[20px] shadow-lg bg-white
                  transition-all duration-300 ease-out
                  hover:shadow-xl hover:shadow-primary-500/10 hover:-translate-y-2
-                 transform active:scale-95 animate-fade-in-up
-                 relative overflow-hidden"
+                 transform active:scale-95
+                 overflow-hidden"
     >
       <div
         className="absolute inset-0 bg-gradient-to-t from-primary-500/10 to-transparent 

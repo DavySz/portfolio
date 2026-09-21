@@ -9,7 +9,7 @@ export const SkillCard: React.FC<SkillCardProps> = ({ data }) => {
       target="_blank"
       rel="noreferrer noopener"
       className="group flex flex-col items-center justify-center transition-all duration-300 ease-out
-                 hover:scale-105 animate-fade-in-up
+                 hover:scale-105
                  focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-4 focus-visible:rounded-[30px]"
     >
       <div
