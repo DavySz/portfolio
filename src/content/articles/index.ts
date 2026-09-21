@@ -60,7 +60,7 @@ export const ARTICLES: ArticleMeta[] = [
   {
     slug: "o-basico-de-ia",
     date: "2026-06-02",
-    bodies: ["pt"],
+    bodies: ["pt", "en"],
     en: {
       title: "The basics that separate using AI from being used by it",
       excerpt:
