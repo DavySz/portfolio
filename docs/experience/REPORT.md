@@ -177,7 +177,7 @@ build sujava o `git status`, e na task 03 isso chegou a prender trabalho num
 
 Levantados aqui, **não corrigidos** por não serem pequenos.
 
-### 7.1 🔴 A imagem do hero tem 1,4 MB
+### 7.1 ✅ RESOLVIDO — a imagem do hero tinha 1,4 MB
 
 `src/assets/user.png`: 1024×1024, exibida em no máximo 500×500 CSS px. É quase
 certamente o elemento LCP. Os SVGs de projeto somam mais 6,2 MB.
@@ -186,8 +186,12 @@ Isso domina qualquer discussão de performance do site — os 2.302 B de JS que 
 série inteira acrescentou somem no ruído dessa imagem. **Otimizar imagens tem
 mais impacto do que tudo que foi feito nesta série.**
 
-Sugestão: WebP/AVIF com `srcset` por breakpoint. O `assets-src/` e o script de
-otimização da task 02 já existem como precedente.
+**Feito na sabatina** (`eaa4e83` e `b9e8aa9`): `scripts/images/optimize.js`
+converte tudo para WebP e rasteriza os SVGs que embutiam bitmap. Total de
+8.634 kB para 501 kB, −94%. A foto do hero caiu de 1.403 kB para 36 kB.
+
+Continua em aberto: `srcset` por breakpoint (hoje é uma largura só) e o
+`bff-thumb.svg`, que é vetor de verdade e precisa de SVGO, não de conversão.
 
 ### 7.2 O i18n carrega todos os locales no caminho inicial
 
@@ -195,7 +199,7 @@ otimização da task 02 já existem como precedente.
 pesa no bundle inicial de qualquer forma — a seção de traces removida custava
 614 B só de tradução. Carregar namespaces sob demanda resolveria.
 
-### 7.3 Tailwind emite utilitários fantasma a partir do código TS
+### 7.3 ⏹️ ENCERRADO — Tailwind emite utilitários fantasma
 
 `content` inclui `src/**/*.{js,ts,jsx,tsx}`, então palavras comuns viram
 classe: `.filter` veio do método de array, `.container` de nome de variável,

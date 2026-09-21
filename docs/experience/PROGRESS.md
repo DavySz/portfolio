@@ -50,7 +50,7 @@ continuam linkando para lá, como referência secundária.
 |---|---|---|---|
 | 1 | Rodar Lighthouse mobile 3× e preencher a tabela da seção 7.3 do `BASELINE.md` | Davy | Verificação do orçamento de LCP/TBT das tasks 01–08. O orçamento de **bundle** já está medido e vale. **Agora também bloqueia o aceite da task 01.** |
 | 2 | Responder onde o site é publicado e se há preview por branch | Davy | Validação de performance em ambiente real. |
-| 3 | Decidir se a otimização das imagens (hero = 1,4 MB) entra antes ou depois da série Experience | Davy | Se entrar no meio, o `BASELINE.md` precisa ser regerado. |
+| 3 | ~~Otimização das imagens~~ — feita na sabatina: 8.634 kB → 501 kB (−94%). | — | Resolvido. **O `BASELINE.md` ficou desatualizado por causa disso.** |
 | 4 | ~~`git rm --cached` nos `*.tsbuildinfo`~~ — feito na task 08. | — | Resolvido. |
 | 5 | Alinhar CLAUDE.md × repositório quanto ao Prettier (citado na stack, não instalado) | Davy | Não bloqueia. |
 | 6 | **Aval visual do hero escuro** (task 01) + checklist de browsers da spec 01 | Davy | Aceite da task 01. |
@@ -60,7 +60,7 @@ continuam linkando para lá, como referência secundária.
 | 10 | Abrir `/debug-assets.html` no Chrome e no Firefox para confirmar Draco + textura decodificando | Davy | Aceite da task 02. |
 | 11 | **Aval visual do posicionamento do objeto-assinatura** (halo em volta da foto, só em ≥1280px) | Davy | Aceite da task 03. Estimei sem browser. |
 | 12 | Conferir `renderer.info` antes/depois de desmontar (vazamento de geometria) | Davy | Aceite da task 03. |
-| 13 | Tailwind emite utilitários fantasma a partir de palavras no `src/**/*.ts` | — | Medido na task 08: corrigir economiza **88 B** mas cria falha silenciosa. Ver REPORT 7.3. |
+| 13 | ~~Tailwind fantasma~~ — medido: corrigir economiza 88 B e cria falha silenciosa. **Decidido não fazer.** | — | Encerrado, ver REPORT 7.3. |
 | 14 | **Comparar hero antes/depois da task 04** (desktop e mobile) — refactor exige visual idêntico | Davy | Aceite da task 04. Não consigo tirar screenshot aqui. |
 | 15 | Conferir no Performance do DevTools que não há frame renderizado com o hero fora da tela | Davy | Aceite da task 04. |
 | 16 | ~~Escolher seção e narrativa da task 05~~ — delegado a mim: `services` + narrativa A | — | Resolvido. |
