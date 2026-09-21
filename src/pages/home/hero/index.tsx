@@ -6,17 +6,10 @@ import { Button } from "../../../components/button";
 import { Text } from "../../../components/text";
 import { useExperienceSection } from "../../../hooks/useExperienceSection/use-experience-section";
 import UserPhoto from "../../../assets/user.webp";
+import UserPhotoHalf from "../../../assets/user@half.webp";
+import { ResponsiveImage } from "../../../components/responsive-image";
 import { useTranslation } from "react-i18next";
 
-/**
- * O React 18 não reconhece a prop camelCase `fetchPriority` — só a 19 passa a
- * reconhecer. Os tipos do @types/react 18 já a declaram, então o typecheck
- * aprova e o aviso aparece só em runtime.
- *
- * Em minúsculas o React repassa o atributo direto para o DOM, que é o que o
- * navegador lê. Via spread porque o nome minúsculo não está nos tipos de <img>.
- */
-const LCP_PRIORITY = { fetchpriority: "high" } as const;
 
 export const Hero: React.FC = () => {
   const { t, i18n } = useTranslation("home");
@@ -105,17 +98,15 @@ export const Hero: React.FC = () => {
       <div
         className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden animate-fade-in-right"
       >
-        {/* Elemento LCP da página. width/height reservam a caixa antes de a
-            imagem chegar (evita CLS) e a prioridade tira ela da fila atrás
-            dos outros recursos. O peso do arquivo continua sendo o gargalo —
-            ver "Próximos passos" no REPORT. */}
-        <img
+        {/* Elemento LCP da página: eager e com prioridade alta. O peso já
+            caiu de 1.403 kB para 36 kB na otimização de imagens. */}
+        <ResponsiveImage
           src={UserPhoto}
-          alt="Davy de Souza Assunção - Full Stack Developer"
+          half={UserPhotoHalf}
           width={1000}
-          height={1000}
-          decoding="async"
-          {...LCP_PRIORITY}
+          alt="Davy de Souza Assunção - Frontend Engineer"
+          sizes="(min-width: 1280px) 500px, 100vw"
+          priority
           className="h-full w-full animate-float object-cover"
         />
       </div>

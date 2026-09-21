@@ -1,5 +1,6 @@
 import type { ProjectCardProps } from "./types";
 import { Text } from "../text";
+import { ResponsiveImage } from "../responsive-image";
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   category,
@@ -22,13 +23,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       />
 
       <div className="flex flex-col justify-center relative">
-        <img
-          src={thumb}
+        <ResponsiveImage
+          src={thumb.src}
+          half={thumb.half}
+          width={thumb.width}
           alt=""
-          aria-hidden="true"
+          sizes="(min-width: 1280px) 600px, 100vw"
           className="h-[200px] md:h-[389px] w-full rounded-t-[20px] transition-transform duration-300 ease-out group-hover:scale-105 object-cover"
-          loading="lazy"
-          decoding="async"
         />
 
         <div

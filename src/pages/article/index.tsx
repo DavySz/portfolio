@@ -121,7 +121,8 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
               title: `${meta.title} | ${AUTHOR}`,
               description: meta.excerpt,
               keywords: meta.tag,
-              image: meta.thumb ?? "/images/user.jpeg",
+              // og:image precisa de URL, não do par src/half
+              image: meta.thumb?.src ?? "/images/user.jpeg",
               url: `${SITE}/#/artigos/${meta.slug}`,
               canonicalUrl: meta.mediumUrl ?? `${SITE}/#/artigos/${meta.slug}`,
               type: "article",

@@ -1,7 +1,11 @@
+import type { ImageSource } from "../../components/responsive-image/types";
 import BFFThumb from "../../assets/bff-thumb.svg";
 import ENEMThumb from "../../assets/enem-thumb.webp";
+import ENEMThumbHalf from "../../assets/enem-thumb@half.webp";
 import TestingThumb from "../../assets/testing-thumb.webp";
+import TestingThumbHalf from "../../assets/testing-thumb@half.webp";
 import MicroThumb from "../../assets/micro-thumb.webp";
+import MicroThumbHalf from "../../assets/micro-thumb@half.webp";
 
 /**
  * Catálogo dos artigos.
@@ -21,7 +25,7 @@ export interface ArticleMeta {
   /** ISO 8601; usado para ordenar e para o <time>. */
   date: string;
   tag: string;
-  thumb?: string;
+  thumb?: ImageSource;
   /** Presente só nos que também estão publicados no Medium. */
   mediumUrl?: string;
 }
@@ -66,7 +70,7 @@ export const ARTICLES: ArticleMeta[] = [
       "Como transformar seu frontend gigante em partes que times independentes conseguem evoluir.",
     date: "2026-01-02",
     tag: "Arquitetura",
-    thumb: MicroThumb,
+    thumb: { src: MicroThumb, half: MicroThumbHalf, width: 1200 },
     mediumUrl:
       "https://medium.com/@davysz/micro-frontends-divida-para-conquistar-77d59ff2bdcb",
   },
@@ -77,7 +81,7 @@ export const ARTICLES: ArticleMeta[] = [
       "Como Backend for Frontend pode transformar a forma que desenvolvemos aplicações modernas.",
     date: "2025-12-14",
     tag: "Arquitetura",
-    thumb: BFFThumb,
+    thumb: { src: BFFThumb },
     mediumUrl:
       "https://medium.com/@davysz/bff-por-que-o-frontend-deveria-liderar-essa-revolução-3b1f298be38a",
   },
@@ -88,7 +92,7 @@ export const ARTICLES: ArticleMeta[] = [
       "Como abandonar a ilusão de cobertura e testar o que realmente importa.",
     date: "2025-12-14",
     tag: "Qualidade",
-    thumb: TestingThumb,
+    thumb: { src: TestingThumb, half: TestingThumbHalf, width: 1200 },
     mediumUrl:
       "https://medium.com/@davysz/testes-unitários-no-frontend-arte-de-testar-o-que-importa-c4fdb27cebf1",
   },
@@ -99,7 +103,7 @@ export const ARTICLES: ArticleMeta[] = [
       "Como o vício em estudar para passar criou uma geração de devs inseguros.",
     date: "2025-12-14",
     tag: "Carreira",
-    thumb: ENEMThumb,
+    thumb: { src: ENEMThumb, half: ENEMThumbHalf, width: 1200 },
     mediumUrl:
       "https://medium.com/@davysz/o-efeito-enem-no-código-como-estudar-para-passar-criou-uma-geração-de-devs-inseguros-f3a95dde7e6c",
   },

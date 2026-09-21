@@ -1,5 +1,7 @@
 import { MdOutlineFileDownload } from "react-icons/md";
 import SelfTemp from "../../../assets/portfolio.webp";
+import SelfTempHalf from "../../../assets/portfolio@half.webp";
+import { ResponsiveImage } from "../../../components/responsive-image";
 import { usePDF } from "../../../hooks/usePdf/use-pdf";
 import { PT_CV_PATH, EN_CV_PATH } from "../../../shared/constants";
 import { useTranslation } from "react-i18next";
@@ -20,14 +22,12 @@ export const Self: React.FC = () => {
       id="self"
     >
       <div className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden">
-        <img
+        <ResponsiveImage
           src={SelfTemp}
-          alt=""
-          aria-hidden="true"
+          half={SelfTempHalf}
           width={1000}
-          height={582}
-          loading="lazy"
-          decoding="async"
+          alt=""
+          sizes="(min-width: 1280px) 500px, 100vw"
           className="h-full w-full object-cover"
         />
       </div>

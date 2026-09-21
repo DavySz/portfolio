@@ -1,6 +1,7 @@
 import { FaMedium } from "react-icons/fa";
 import { articleHref } from "../../hooks/useHashRoute/use-hash-route";
 import { Text } from "../text";
+import { ResponsiveImage } from "../responsive-image";
 import type { ArticleCardProps } from "./types";
 
 /**
@@ -22,12 +23,12 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
                  hover:-translate-y-2 hover:shadow-xl hover:shadow-primary-500/10"
     >
       {article.thumb ? (
-        <img
-          src={article.thumb}
+        <ResponsiveImage
+          src={article.thumb.src}
+          half={article.thumb.half}
+          width={article.thumb.width}
           alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
+          sizes="(min-width: 1280px) 400px, (min-width: 768px) 50vw, 100vw"
           className="h-[180px] w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
         />
       ) : (
