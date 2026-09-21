@@ -1,8 +1,8 @@
 # Auditoria de UI/UX e Acessibilidade — davysz.com
 
 > Auditoria estática, feita sobre o código em `724a75a` (branch `chore/experience-audit`).
-> **Etapa 1 implementada** em `b0e0742..7ddd07b` — os itens concluídos estão
-> marcados com ✅ e o hash na tabela. As etapas 2 a 5 seguem pendentes.
+> **Etapas 1 e 2 implementadas** em `b0e0742..34fb76a` — os itens concluídos
+> estão marcados com ✅ e o hash na tabela. As etapas 3 a 5 seguem pendentes.
 
 ## Premissas usadas
 
@@ -50,19 +50,19 @@ página para o topo e fechar não devolve a posição.
 | ID | Seção | Categoria | Problema | Impacto | Esforço | Arquivo(s) | Commit |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | ✅ A01 | Rodapé / `<head>` | UX / Conversão | E-mail e telefone não são links; `format-detection: telephone=no` mata o autolink do iOS | Alto | P | `pages/home/footer/index.tsx`, `index.html` | `b0e0742` |
-| A02 | Expertise | A11y (1.3.1) | `<table>` usada como layout, sem `<th>`/`<caption>`; leitor de tela entra em modo tabela | Alto | M | `components/service-table/index.tsx` |  |
+| ✅ A02 | Expertise | A11y (1.3.1) | `<table>` usada como layout, sem `<th>`/`<caption>`; leitor de tela entra em modo tabela | Alto | M | `components/service-table/index.tsx` | `f69135e` |
 | ✅ A03 | Navegação mobile | UX / Bug | Abrir o menu aplica `position:fixed` no `body` sem salvar o scroll → página pula para o topo | Alto | P | `components/navigation-bar/mobile.tsx` | `bf1487a` |
 | ✅ A04 | Rodapé | A11y (1.4.3) | `#5F5F5F` sobre `secondary-900` = **2,48:1** (mínimo 4,5:1) — copyright e link da gravidade | Alto | P | `pages/home/footer/index.tsx` | `caeee05` |
-| A05 | Navegação mobile | A11y (2.4.3) | `role="dialog" aria-modal="true"` sem mover, prender nem devolver o foco | Alto | M | `components/navigation-bar/mobile.tsx` |  |
+| ✅ A05 | Navegação mobile | A11y (2.4.3) | `role="dialog" aria-modal="true"` sem mover, prender nem devolver o foco | Alto | M | `components/navigation-bar/mobile.tsx` | `a84290d` |
 | ✅ A06 | Expertise | A11y (1.3.1) | Mobile usa `<h2>` para cada serviço sob o `<h2>` da seção; desktop não usa título nenhum | Alto | P | `components/service-cards/index.tsx`, `service-table/index.tsx` | `2a3c119` |
 | ✅ A07 | Expertise | UX | `cursor-pointer` + hover elaborado em linhas/cards que não são clicáveis | Médio | P | `service-table/index.tsx`, `service-cards/index.tsx` | `81f2481` |
-| A08 | Global | A11y / UX | Navegação feita com `<button onClick={window.open}>` em vez de `<a>`: sem clique do meio, sem copiar link, anunciado como botão | Médio | M | `hero/`, `footer/`, `articles/`, `navigation-bar/` |  |
-| A09 | Global | Segurança | `window.open(href, "_blank")` sem `noopener` → a aba aberta recebe `window.opener` | Médio | P | mesmos acima |  |
+| ✅ A08 | Global | A11y / UX | Navegação feita com `<button onClick={window.open}>` em vez de `<a>`: sem clique do meio, sem copiar link, anunciado como botão | Médio | M | `hero/`, `footer/`, `articles/`, `navigation-bar/` | `34fb76a` |
+| ✅ A09 | Global | Segurança | `window.open(href, "_blank")` sem `noopener` → a aba aberta recebe `window.opener` | Médio | P | mesmos acima | `34fb76a` |
 | ✅ A10 | Nav / Rodapé | Copy / Wayfinding | Três nomes para a mesma seção: nav "Expertise", título "My Expertise", rodapé "SERVICES"; nav "Projects" vs título "Case Studies" | Médio | P | `components/locales/*.json`, `pages/home/locales/*.json` | `dc27a78` |
 | ✅ A11 | Navegação mobile | UX | Estado ativo nunca acompanha o scroll (o desktop acompanha) e inicia em `"/"`, que nenhum link casa | Médio | P | `navigation-bar/mobile.tsx` | `7ddd07b` |
-| A12 | Expertise | Consistência | `text-4xl`, `text-[40px]`, `text-[32px]`, `text-xl` ignoram a escala `display-*`/`heading-*`/`body-*` do tema | Médio | P | `service-table/index.tsx`, `service-cards/index.tsx` |  |
+| ✅ A12 | Expertise | Consistência | `text-4xl`, `text-[40px]`, `text-[32px]`, `text-xl` ignoram a escala `display-*`/`heading-*`/`body-*` do tema | Médio | P | `service-table/index.tsx`, `service-cards/index.tsx` | `f69135e` |
 | ✅ A13 | Expertise | Bug | Títulos e descrições usam `hover:` onde precisam de `group-hover:` — não reagem ao hover do card | Médio | P | `components/service-cards/index.tsx` | `1b92c41` |
-| A14 | Global (CSS) | Consistência | `td, th { px-[50px] py-[40px] }` — seletor de tipo global dentro de `@layer utilities` | Médio | M | `src/index.css` |  |
+| ✅ A14 | Global (CSS) | Consistência | `td, th { px-[50px] py-[40px] }` — seletor de tipo global dentro de `@layer utilities` | Médio | M | `src/index.css` | `f69135e` |
 | A15 | `<head>` | SEO | Metas estáticas em português + `og:locale pt_BR` num site que abre em inglês; `useSEO` **acrescenta** metas sem remover as estáticas → `description` duplicada | Médio | M | `index.html`, `hooks/useSEO/use-seo.ts` |  |
 | A16 | Artigos | SEO | `canonical` aponta para o Medium nos 4 publicados lá — o site entrega a autoridade do próprio conteúdo | Médio | P | `pages/article/index.tsx` |  |
 | A17 | Artigos (home) | UX | O card não mostra data nem tempo de leitura, embora os dois existam no dado | Médio | P | `components/article-card/index.tsx` |  |
@@ -532,7 +532,7 @@ para medir antes e depois com o build que já existe.
 **Etapa 1 — alto impacto, baixo esforço (resolve o essencial)** — ✅ concluída
 
 1. **A01** — e-mail e telefone como links; remover `format-detection`
-2. **A04** — trocar `#5F5F5F` por `gray-400` (5,79:1)
+2. **A04** — trocar `#5F5F5F` por `gray-400` (6,24:1)
 3. **A03** — preservar o scroll ao travar o body no menu mobile
 4. **A06** — `<h3>` nos títulos de serviço
 5. **A07** — remover `cursor-pointer` das linhas/cards não clicáveis
@@ -540,7 +540,7 @@ para medir antes e depois com o build que já existe.
 7. **A10** — um nome por seção nos três lugares
 8. **A11** — `useActiveSection` no menu mobile
 
-**Etapa 2 — alto impacto, esforço médio**
+**Etapa 2 — alto impacto, esforço médio** — ✅ concluída
 
 9. **A02 + A12 + A14** — `ServiceTable` vira lista semântica; junto saem os
    tokens de tipografia e o seletor global `td, th` (um PR só: mexem no mesmo
@@ -675,3 +675,40 @@ wayfinding — mas a home perde um pouco de voz no caminho.
 Se quiser os dois, o caminho é manter o rótulo curto como nome do destino em
 nav e rodapé e devolver um subtítulo com voz logo abaixo do `h2`, em vez de
 carregar a voz no próprio nome da seção.
+
+### I07 — `a11y.hireOnLinkedIn` ficou órfã
+
+A08 trocou o `aria-label` do "Vamos conversar" por texto `sr-only`, e a chave
+`a11y.hireOnLinkedIn` deixou de ter consumidor nos dois locales. Encaixa em
+A27, que já junta as chaves mortas de `articles.items.*`.
+
+### I08 — O nome acessível do CTA perdeu o destino
+
+O `aria-label` antigo dizia "Get in touch on LinkedIn" / "Falar comigo no
+LinkedIn". Agora o nome acessível do link é "Let's talk — opens in new tab":
+avisa que sai do site, mas não diz mais para onde.
+
+Não corrigi porque a decisão de A08 define o `sr-only` como o aviso de nova aba
+e nada além disso; incluir o destino exigiria mudar o contrato do
+`ExternalLink` para aceitar contexto extra em links que já têm texto visível.
+Vale decidir se "Vamos conversar" deve anunciar o LinkedIn — os links só de
+ícone continuam nomeando a rede ("Open GitHub profile — opens in new tab").
+
+### I09 — Deltas visuais da reescrita da seção de Expertise
+
+Três mudanças perceptíveis, todas dentro do que A02/A12 pediam, listadas para
+a conferência visual:
+
+1. **Título no desktop: 32px → 30px** (`display-sm`). A escala do tema não tem
+   um degrau de 32px, e A12 proíbe `text-[Npx]`. O degrau acima é 36px
+   (`display-md`), que ficaria maior que o original.
+2. **Colunas proporcionais no lugar de uma fixa de 525px.** Entre 768px e
+   1279px a largura fixa deixava o título espremido; agora as duas colunas
+   dividem o espaço em 0,9fr / 1,1fr, o que a 1440px dá uma descrição de
+   largura próxima à original.
+3. **Padding de 50px/40px → 48px/40px** (`px-12 py-10`). O seletor global
+   `td, th` usava valores arbitrários; a escala padrão do Tailwind não tem
+   50px, e 2px de diferença não se lê.
+
+O layout continua sendo faixas horizontais de duas colunas no desktop e cards
+empilhados no mobile, sem numeração e sem setas.
