@@ -7,5 +7,9 @@
     "projects": "Projetos",
     "articles": "Artigos",
     "hire-me": "Vamos conversar"
+  },
+  "gravity": {
+    "enable": "Desligar a gravidade",
+    "restore": "Arrumar a página"
   }
 }

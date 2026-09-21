@@ -15,6 +15,7 @@
     "postinstall": "node scripts/assets/copy-decoders.js"
   },
   "dependencies": {
+    "@dimforge/rapier2d-compat": "^0.20.0",
     "clsx": "^2.1.1",
     "i18next": "^25.6.0",
     "react": "^18.3.1",

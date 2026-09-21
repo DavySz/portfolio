@@ -43,7 +43,7 @@ export const Hero: React.FC = () => {
           {t("hero.me")}
         </Text>
 
-        <div className="xl:w-[610px] mb-9">
+        <div className="xl:w-[610px] mb-9" data-physics>
           <Text
             as="h1"
             variant="heroTitle"
@@ -55,7 +55,7 @@ export const Hero: React.FC = () => {
           </Text>
         </div>
 
-        <div className="xl:w-[518px] mb-10">
+        <div className="xl:w-[518px] mb-10" data-physics>
           <Text
             as="p"
             variant="heroSubtitle"
@@ -67,7 +67,10 @@ export const Hero: React.FC = () => {
           </Text>
         </div>
 
-        <div className="flex flex-col items-center gap-4 xl:flex-row xl:gap-7 animate-fade-in-up">
+        <div
+          className="flex flex-col items-center gap-4 xl:flex-row xl:gap-7 animate-fade-in-up"
+          data-physics
+        >
           <Button
             icon={MdOutlineFileDownload}
             onClick={handleDownLoadCV}
@@ -87,7 +90,10 @@ export const Hero: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden animate-fade-in-right">
+      <div
+        className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden animate-fade-in-right"
+        data-physics
+      >
         <img
           src={UserPhoto}
           alt="Davy de Souza Assunção - Full Stack Developer"

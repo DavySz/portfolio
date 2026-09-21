@@ -7,5 +7,9 @@
     "projects": "Projects",
     "articles": "Articles",
     "hire-me": "Let's talk"
+  },
+  "gravity": {
+    "enable": "Turn off gravity",
+    "restore": "Put the page back"
   }
 }

@@ -67,6 +67,7 @@ export const Skills: React.FC = () => {
                 style={{
                   animationDelay: `${index * 0.1}s`,
                 }}
+                data-physics
               >
                 <SkillCard onClick={() => openLink(skill.link)} data={skill} />
               </div>

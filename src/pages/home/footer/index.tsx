@@ -6,9 +6,12 @@ import { Text } from "../../../components/text";
 import { CONTACTS } from "../../../shared/constants";
 import { Button } from "../../../components/button";
 import { useTranslation } from "react-i18next";
+import { useGravityMode } from "../../../hooks/useGravityMode/use-gravity-mode";
 
 export const Footer: React.FC = () => {
   const { t } = useTranslation("home");
+  const { t: tc } = useTranslation("component");
+  const gravity = useGravityMode();
 
   const openLink = (link: string): void => {
     window.open(link, "_blank");
@@ -71,9 +74,24 @@ export const Footer: React.FC = () => {
             </Link>
           ))}
         </div>
-        <span className="text-base font-normal font-poppins text-[#5F5F5F]">
-          {t("footer.copyright")}
-        </span>
+        <div className="flex items-center gap-6">
+          {/* Discreto, não escondido: é um botão de verdade, alcançável por
+              teclado e anunciado por leitor de tela. Some com reduced motion. */}
+          {gravity.available && (
+            <button
+              type="button"
+              onClick={gravity.toggle}
+              className="font-poppins text-base font-normal text-[#5F5F5F] underline decoration-dotted underline-offset-4
+                         transition-colors duration-300 hover:text-primary-300
+                         focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2 focus:ring-offset-secondary-900"
+            >
+              {tc("gravity.enable")}
+            </button>
+          )}
+          <span className="text-base font-normal font-poppins text-[#5F5F5F]">
+            {t("footer.copyright")}
+          </span>
+        </div>
       </div>
     </footer>
   );

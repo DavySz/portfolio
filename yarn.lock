@@ -192,6 +192,11 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
+"@dimforge/rapier2d-compat@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@dimforge/rapier2d-compat/-/rapier2d-compat-0.20.0.tgz#bc60d94574861d426571e9c52045408e5882f755"
+  integrity sha512-FFYwGrfJov7d5kn4fxblG/ip5C+sYQL+Jl/hqLvDvu4BcMD/Mhrz7cTvnZTtuIRDXY8CLuraObqB/prip4wdWQ==
+
 "@dimforge/rapier3d-compat@~0.12.0":
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/@dimforge/rapier3d-compat/-/rapier3d-compat-0.12.0.tgz#7b3365e1dfdc5cd957b45afe920b4ac06c7cd389"

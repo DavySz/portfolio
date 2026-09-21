@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { NavigationBar } from "../navigation-bar";
 import { ExperienceRoot } from "../experience-root";
+import { GravityMode } from "../gravity-mode";
 import type { PageTemplateProps } from "./types";
 
 export const PageTemplate: React.FC<PageTemplateProps> = memo(
@@ -21,6 +22,7 @@ export const PageTemplate: React.FC<PageTemplateProps> = memo(
         <main id="main-content" role="main">
           {children}
         </main>
+        <GravityMode />
       </div>
     );
   },
