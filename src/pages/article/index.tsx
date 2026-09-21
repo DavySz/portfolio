@@ -194,8 +194,8 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
         </Button>
       </div>
 
-      <header className="mb-10 border-b border-gray-200 pb-8">
-        <p className="mb-4 font-poppins text-body-sm uppercase tracking-wider text-primary-600">
+      <header className="mb-10 border-b border-line pb-8">
+        <p className="mb-4 font-poppins text-body-sm uppercase tracking-wider text-accent">
           {text.tag}
         </p>
 
@@ -217,7 +217,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
           {text.excerpt}
         </Text>
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-poppins text-body-sm text-gray-600">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-poppins text-body-sm text-ink-muted">
           <time dateTime={meta.date}>{published}</time>
           {content && (
             <>
@@ -234,9 +234,9 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
                 href={meta.mediumUrl}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center gap-2 text-primary-600 underline underline-offset-4
-                           transition-colors duration-300 hover:text-primary-800
-                           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                className="inline-flex items-center gap-2 text-accent underline underline-offset-4
+                           transition-colors duration-300 hover:text-accent-strong
+                           focus:outline-none focus:ring-2 focus:ring-focus focus:ring-offset-2"
               >
                 <FaMedium aria-hidden="true" />
                 {t("article.readOnMedium")}
@@ -249,7 +249,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
       {content && content.language !== language && (
         /* Honesto em vez de esconder: o artigo existe e é legível, só não
            está traduzido ainda. */
-        <p className="mb-8 rounded-xl border border-primary-200 bg-primary-50 px-4 py-3 font-poppins text-body-sm text-primary-800">
+        <p className="mb-8 rounded-xl border border-primary-200 bg-accent/10 px-4 py-3 font-poppins text-body-sm text-accent-strong">
           {t("article.onlyInPortuguese")}
         </p>
       )}
@@ -273,18 +273,18 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
           "Voltar" lá no topo. */}
       <nav
         aria-label={t("article.allArticles")}
-        className="mt-16 grid gap-4 border-t border-gray-200 pt-8 sm:grid-cols-2"
+        className="mt-16 grid gap-4 border-t border-line pt-8 sm:grid-cols-2"
       >
         {previous ? (
           <ArticleLink
             href={articleHref(previous.slug)}
-            className="group rounded-xl border border-gray-200 p-4 transition-colors duration-300 hover:border-primary-300 hover:bg-primary-50
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+            className="group rounded-xl border border-line p-4 transition-colors duration-300 hover:border-primary-300 hover:bg-accent/10
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
-            <span className="font-poppins text-body-xs uppercase tracking-wider text-gray-500">
+            <span className="font-poppins text-body-xs uppercase tracking-wider text-ink-muted">
               {t("article.previous")}
             </span>
-            <span className="mt-1 block font-poppins text-body-md font-semibold text-gray-900 group-hover:text-primary-700">
+            <span className="mt-1 block font-poppins text-body-md font-semibold text-ink group-hover:text-accent-strong">
               {previous[language].title}
             </span>
           </ArticleLink>
@@ -295,13 +295,13 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
         {next && (
           <ArticleLink
             href={articleHref(next.slug)}
-            className="group rounded-xl border border-gray-200 p-4 text-right transition-colors duration-300 hover:border-primary-300 hover:bg-primary-50
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+            className="group rounded-xl border border-line p-4 text-right transition-colors duration-300 hover:border-primary-300 hover:bg-accent/10
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
-            <span className="font-poppins text-body-xs uppercase tracking-wider text-gray-500">
+            <span className="font-poppins text-body-xs uppercase tracking-wider text-ink-muted">
               {t("article.next")}
             </span>
-            <span className="mt-1 block font-poppins text-body-md font-semibold text-gray-900 group-hover:text-primary-700">
+            <span className="mt-1 block font-poppins text-body-md font-semibold text-ink group-hover:text-accent-strong">
               {next[language].title}
             </span>
           </ArticleLink>

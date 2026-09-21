@@ -171,7 +171,7 @@ export const MobileNavigationBar: React.FC = () => {
   return (
     <>
       {/* Header Bar */}
-      <div className="relative z-50 flex items-center justify-between w-full py-4 px-6 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+      <div className="relative z-50 flex items-center justify-between w-full py-4 px-6 bg-page/95 backdrop-blur-sm border-b border-line">
         <Toggle />
         <Button
           id={TRIGGER_ID}
@@ -205,7 +205,7 @@ export const MobileNavigationBar: React.FC = () => {
         {...inertWhenClosed(!isVisible)}
         className={clsx(
           "fixed top-0 right-0 h-full w-80 max-w-[90vw] z-50",
-          "bg-white shadow-2xl shadow-black/20",
+          "bg-surface-raised shadow-2xl shadow-black/20",
           "transform transition-all duration-300 ease-out",
           {
             "translate-x-0": isVisible,
@@ -214,8 +214,8 @@ export const MobileNavigationBar: React.FC = () => {
         )}
       >
         {/* Menu Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-100">
-          <h3 className="text-lg font-semibold text-secondary-900">
+        <div className="flex items-center justify-between p-6 border-b border-line">
+          <h3 className="text-lg font-semibold text-ink">
             {t("a11y.menuTitle")}
           </h3>
           <Button
@@ -241,12 +241,12 @@ export const MobileNavigationBar: React.FC = () => {
                     onClick={handleSelectOption}
                     className={clsx(
                       "flex items-center px-6 py-4 text-base font-medium transition-all duration-200",
-                      "hover:bg-primary-50 hover:text-primary-700",
+                      "hover:bg-accent/10 hover:text-accent-strong",
                       "border-l-4 transition-all duration-200",
                       {
-                        "border-primary-500 bg-primary-50 text-primary-700":
+                        "border-primary-500 bg-accent/10 text-accent-strong":
                           link.href === `#${active}`,
-                        "border-transparent text-gray-700 hover:border-primary-200":
+                        "border-transparent text-ink-secondary hover:border-primary-200":
                           link.href !== `#${active}`,
                       }
                     )}
@@ -261,7 +261,7 @@ export const MobileNavigationBar: React.FC = () => {
           </nav>
 
           {/* Footer Action */}
-          <div className="p-6 border-t border-gray-100 bg-gray-50">
+          <div className="p-6 border-t border-line bg-surface">
             <ContactCta full onNavigate={handleSelectOption} />
           </div>
         </div>

@@ -28,7 +28,7 @@ export const ServiceList: React.FC<ServiceListProps> = ({ data }) => {
             "md:gap-10 md:rounded-none md:px-12 md:py-10 xl:gap-12",
             isHighlighted
               ? "bg-gradient-to-r from-primary-500 to-primary-900 hover:from-primary-400 hover:to-primary-800"
-              : "bg-white hover:bg-primary-50 md:border-b md:border-gray-300 md:bg-transparent"
+              : "bg-surface-raised hover:bg-accent/10 md:border-b md:border-line md:bg-transparent"
           )}
         >
           {/* `h3` porque o `h2` é o título da seção. Antes o desktop não
@@ -37,7 +37,7 @@ export const ServiceList: React.FC<ServiceListProps> = ({ data }) => {
           <h3
             className={clsx(
               "font-poppins font-bold text-heading-lg md:text-heading-xl xl:text-display-sm",
-              isHighlighted ? "text-white" : "text-primary-700"
+              isHighlighted ? "text-white" : "text-accent-strong"
             )}
           >
             {title}
@@ -45,7 +45,7 @@ export const ServiceList: React.FC<ServiceListProps> = ({ data }) => {
           <p
             className={clsx(
               "mt-6 font-poppins text-body-md md:mt-0 md:text-body-lg xl:text-body-xl",
-              isHighlighted ? "text-white" : "text-gray-700"
+              isHighlighted ? "text-white" : "text-ink-secondary"
             )}
           >
             {description}

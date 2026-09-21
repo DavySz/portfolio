@@ -18,7 +18,7 @@ export const Services: React.FC = () => {
           Este elemento é o fallback: mantém a seção idêntica sem WebGL e se
           apaga quando o experience assume. */}
       <div
-        className="absolute inset-0 -z-10 bg-secondary-50 experience-fallback"
+        className="absolute inset-0 -z-10 bg-surface experience-fallback"
         data-no-physics
         aria-hidden="true"
       />

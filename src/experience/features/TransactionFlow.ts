@@ -34,7 +34,7 @@ import type { Feature, FrameContext } from "../types";
  * Sem compute shader, para o fallback WebGL2 ficar idêntico.
  */
 
-/** Fundo da seção — é o mesmo `bg-secondary-50` que o CSS pinta hoje. */
+/** Fundo da seção — é o mesmo `bg-surface` que o CSS pinta hoje. */
 const SURFACE = 0xf6f3fc;
 
 /**

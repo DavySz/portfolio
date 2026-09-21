@@ -14,15 +14,15 @@ export const Text: React.FC<TextProps> = ({
   const getColorClasses = () => {
     switch (color) {
       case "primary":
-        return "text-gray-900";
+        return "text-ink";
       case "secondary":
-        return "text-gray-700";
+        return "text-ink-secondary";
       case "muted":
-        return "text-gray-600";
+        return "text-ink-muted";
       case "subtle":
-        return "text-gray-500";
+        return "text-ink-muted";
       case "accent":
-        return "text-primary-600";
+        return "text-accent";
       // Variantes para superfície escura (fundo do experience). Contraste sobre
       // o ponto mais claro do shader (#653bbe): primary-200 = 4.60:1 (AA).
       case "accentLight":
@@ -34,7 +34,7 @@ export const Text: React.FC<TextProps> = ({
       case "white":
         return "text-white";
       default:
-        return "text-gray-900";
+        return "text-ink";
     }
   };
 

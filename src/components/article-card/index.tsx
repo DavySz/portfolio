@@ -32,7 +32,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
 
   return (
     <div
-      className="group relative flex h-full flex-col overflow-hidden rounded-[20px] bg-white shadow-lg
+      className="group relative flex h-full flex-col overflow-hidden rounded-[20px] bg-surface-raised shadow-lg
                  transition-all duration-300 ease-out
                  hover:-translate-y-2 hover:shadow-xl hover:shadow-primary-500/10"
     >
@@ -62,10 +62,10 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
         {/* Com thumb, a tag precisa aparecer aqui. Sem thumb, a capa
             tipográfica acima já é a tag — repetir empilhava a mesma palavra
             duas vezes. */}
-        <p className="flex flex-wrap items-center gap-x-2 font-poppins text-body-sm uppercase tracking-wider text-primary-600">
+        <p className="flex flex-wrap items-center gap-x-2 font-poppins text-body-sm uppercase tracking-wider text-accent">
           {article.thumb && <span>{text.tag}</span>}
           {article.thumb && <span aria-hidden="true">·</span>}
-          <time dateTime={article.date} className="normal-case tracking-normal text-gray-600">
+          <time dateTime={article.date} className="normal-case tracking-normal text-ink-muted">
             {published}
           </time>
         </p>
@@ -74,13 +74,13 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           as="h3"
           variant="cardTitle"
           color="primary"
-          className="text-heading-md transition-colors duration-300 group-hover:text-primary-700"
+          className="text-heading-md transition-colors duration-300 group-hover:text-accent-strong"
         >
           {/* O link cobre o card inteiro, mas o nome acessível é só o título */}
           <ArticleLink
             href={articleHref(article.slug)}
             className="after:absolute after:inset-0 after:content-['']
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
           >
             {text.title}
           </ArticleLink>
@@ -96,7 +96,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
         </Text>
 
         <div className="flex items-center justify-between gap-4 pt-1">
-          <span className="font-poppins text-body-sm font-semibold text-primary-600">
+          <span className="font-poppins text-body-sm font-semibold text-accent">
             {labels.read}
           </span>
 
@@ -106,9 +106,9 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
               href={article.mediumUrl}
               target="_blank"
               rel="noreferrer noopener"
-              className="relative z-10 inline-flex items-center gap-1.5 font-poppins text-body-sm text-gray-600
-                         transition-colors duration-300 hover:text-primary-700
-                         focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+              className="relative z-10 inline-flex items-center gap-1.5 font-poppins text-body-sm text-ink-muted
+                         transition-colors duration-300 hover:text-accent-strong
+                         focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
             >
               <FaMedium aria-hidden="true" />
               {labels.onMedium}

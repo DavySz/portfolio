@@ -14,7 +14,7 @@ export const BASE_CLASSES = [
   "transform hover:scale-105 active:scale-95",
   // focus-visible, não focus: com `focus` o anel aparecia também no clique
   // de mouse. Link, ArticleCard, ProjectCard e SkillCard já usavam assim.
-  "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-focus/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
 ].join(" ");
 
 export const surfaceClasses = (variant: ButtonVariant): string => {
@@ -37,7 +37,7 @@ export const labelClasses = (variant: ButtonVariant): string => {
   const variants: Record<ButtonVariant, string> = {
     primary: "text-white",
     tertiary: "text-white hover:text-primary-300",
-    secondary: "text-primary-700 hover:text-primary-600",
+    secondary: "text-accent-strong hover:text-accent",
     // primary-100 = 5.79:1 sobre o ponto mais claro do shader (AA).
     onDark: "text-primary-100 hover:text-white",
   };

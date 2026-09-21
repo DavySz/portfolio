@@ -139,6 +139,9 @@
   }
 
   body {
+    /* O fundo e a cor base da página seguem o tema. Antes o branco vinha do
+       padrão do navegador, e no escuro sobraria branco atrás de tudo. */
+    @apply bg-page text-ink;
     font-family: "Poppins", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -281,7 +284,7 @@
    caso em que o CLAUDE.md abre exceção. Tudo fica escopado em
    `.article-content` para não vazar para o resto do site. */
 .article-content {
-  @apply font-poppins text-body-md leading-relaxed text-gray-700;
+  @apply font-poppins text-body-md leading-relaxed text-ink-secondary;
 }
 
 .article-content > * + * {
@@ -306,23 +309,23 @@
 }
 
 .article-content h2 {
-  @apply mt-12 text-heading-xl font-bold leading-snug text-gray-900 md:text-display-sm;
+  @apply mt-12 text-heading-xl font-bold leading-snug text-ink md:text-display-sm;
 }
 
 .article-content h3 {
-  @apply mt-9 text-heading-lg font-semibold leading-snug text-gray-900;
+  @apply mt-9 text-heading-lg font-semibold leading-snug text-ink;
 }
 
 .article-content h4 {
-  @apply mt-7 text-heading-md font-semibold text-gray-900;
+  @apply mt-7 text-heading-md font-semibold text-ink;
 }
 
 .article-content strong {
-  @apply font-semibold text-gray-900;
+  @apply font-semibold text-ink;
 }
 
 .article-content a {
-  @apply text-primary-600 underline underline-offset-4 transition-colors duration-300 hover:text-primary-800;
+  @apply text-primary-600 underline underline-offset-4 transition-colors duration-300 hover:text-accent-strong;
 }
 
 .article-content ul {
@@ -334,16 +337,16 @@
 }
 
 .article-content blockquote {
-  @apply border-l-4 border-primary-300 bg-primary-50 py-3 pl-5 pr-4 italic text-gray-700;
+  @apply border-l-4 border-accent bg-accent/10 py-3 pl-5 pr-4 italic text-ink-secondary;
 }
 
 .article-content hr {
-  @apply my-10 border-gray-200;
+  @apply my-10 border-line;
 }
 
 /* Código inline (fora de <pre>) */
 .article-content :not(pre) > code {
-  @apply rounded bg-secondary-50 px-1.5 py-0.5 text-body-sm text-primary-800;
+  @apply rounded bg-surface px-1.5 py-0.5 text-body-sm text-accent-strong;
   font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
 

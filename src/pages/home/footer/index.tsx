@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
   const gravity = useGravityMode();
 
   return (
-    <footer className="py-16 md:py-24 px-6 xl:px-[100px] flex flex-col justify-center bg-secondary-900">
+    <footer className="py-16 md:py-24 px-6 xl:px-[100px] flex flex-col justify-center bg-footer">
       <div className="flex flex-col md:flex-row justify-between pb-16 gap-6 md:gap-0">
         <div className="max-w-[500px]">
           <Text
@@ -35,7 +35,7 @@ export const Footer: React.FC = () => {
             href={`mailto:${CONTACTS.GMAIL}`}
             className="flex gap-5 items-center rounded-sm text-white transition-colors duration-300
                        hover:text-primary-300
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-900"
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-footer"
           >
             <MdOutlineMailOutline
               size={20}
@@ -48,7 +48,7 @@ export const Footer: React.FC = () => {
             href={`tel:${CONTACTS.PHONE}`}
             className="flex gap-5 items-center rounded-sm text-white transition-colors duration-300
                        hover:text-primary-300
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-900"
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-footer"
           >
             <LuPhone size={20} color="currentColor" aria-hidden="true" />
             {/* O `tel:` leva o E.164; quem lê e quem ouve recebe o formatado. */}
@@ -69,7 +69,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="w-full h-[0.5px] bg-white mb-12" />
+      <div className="w-full h-[0.5px] bg-surface-raised mb-12" />
       <div className="flex items-center justify-between flex-wrap gap-8">
         <div className="flex gap-8 flex-wrap">
           {getLinks(t).map((link) => (
@@ -94,10 +94,10 @@ export const Footer: React.FC = () => {
               data-no-physics
               className={clsx(
                 "font-poppins transition-all duration-300",
-                "focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2",
+                "focus:outline-none focus:ring-2 focus:ring-focus focus:ring-offset-2",
                 gravity.active
                   ? "fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-3xl bg-gradient-to-r from-primary-500 to-primary-900 px-8 py-3 text-base font-semibold text-white shadow-primary hover:scale-105 focus:ring-offset-transparent"
-                  : "text-base font-normal text-gray-400 underline decoration-dotted underline-offset-4 hover:text-primary-300 focus:ring-offset-secondary-900"
+                  : "text-base font-normal text-footer-muted underline decoration-dotted underline-offset-4 hover:text-primary-300 focus:ring-offset-footer"
               )}
             >
               {tc(gravity.active ? "gravity.disable" : "gravity.enable")}
@@ -105,7 +105,7 @@ export const Footer: React.FC = () => {
           )}
           {/* gray-400 sobre secondary-900 = 6,24:1. O #5F5F5F que estava aqui
               dava 2,48:1, quase metade do mínimo AA de 4,5:1. */}
-          <span className="text-base font-normal font-poppins text-gray-400">
+          <span className="text-base font-normal font-poppins text-footer-muted">
             {t("footer.copyright")}
           </span>
         </div>

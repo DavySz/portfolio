@@ -26,10 +26,10 @@ export const ArticleToc: React.FC<ArticleTocProps> = ({ headings, label }) => {
       aria-label={label}
       className="hidden xl:block sticky top-32 max-h-[70vh] overflow-y-auto"
     >
-      <p className="mb-4 font-poppins text-body-xs font-semibold uppercase tracking-wider text-gray-500">
+      <p className="mb-4 font-poppins text-body-xs font-semibold uppercase tracking-wider text-ink-muted">
         {label}
       </p>
-      <ul className="flex flex-col gap-2 border-l border-gray-200">
+      <ul className="flex flex-col gap-2 border-l border-line">
         {headings.map((heading) => (
           <li key={heading.id}>
             <a
@@ -38,10 +38,10 @@ export const ArticleToc: React.FC<ArticleTocProps> = ({ headings, label }) => {
               className={clsx(
                 "-ml-px block border-l-2 py-1 font-poppins text-body-sm transition-colors duration-200",
                 heading.level === 3 ? "pl-6" : "pl-4",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-focus",
                 heading.id === active
-                  ? "border-primary-500 font-medium text-primary-700"
-                  : "border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-900"
+                  ? "border-primary-500 font-medium text-accent-strong"
+                  : "border-transparent text-ink-muted hover:border-line hover:text-ink"
               )}
             >
               {heading.text}

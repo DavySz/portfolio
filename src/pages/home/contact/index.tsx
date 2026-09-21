@@ -12,7 +12,7 @@ const FEEDBACK_DURATION = 2000;
 type CopyState = "idle" | "copied" | "failed";
 
 const ROW_CLASSES =
-  "flex items-center gap-4 rounded-xl border border-gray-200 px-5 py-4 font-poppins text-body-md text-gray-900 transition-colors duration-300 hover:border-primary-300 hover:bg-primary-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2";
+  "flex items-center gap-4 rounded-xl border border-line px-5 py-4 font-poppins text-body-md text-ink transition-colors duration-300 hover:border-primary-300 hover:bg-accent/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2";
 
 /**
  * Bloco de contato, no fim da home.
@@ -75,7 +75,7 @@ export const Contact: React.FC = () => {
           <a href={`mailto:${CONTACTS.GMAIL}`} className={`${ROW_CLASSES} flex-1`}>
             <MdOutlineMailOutline
               size={20}
-              className="shrink-0 text-primary-600"
+              className="shrink-0 text-accent"
               aria-hidden="true"
             />
             <span className="break-all">{CONTACTS.GMAIL}</span>
@@ -85,7 +85,7 @@ export const Contact: React.FC = () => {
           <button
             type="button"
             onClick={copyEmail}
-            className="flex shrink-0 items-center justify-center gap-2 rounded-xl border border-primary-500 px-5 py-4 font-poppins text-body-md font-semibold text-primary-700 transition-colors duration-300 hover:bg-primary-500/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+            className="flex shrink-0 items-center justify-center gap-2 rounded-xl border border-primary-500 px-5 py-4 font-poppins text-body-md font-semibold text-accent-strong transition-colors duration-300 hover:bg-primary-500/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
           >
             <MdContentCopy size={18} aria-hidden="true" />
             {t(`contact.${copyState === "idle" ? "copy" : copyState}`)}
@@ -101,7 +101,7 @@ export const Contact: React.FC = () => {
           >
             <FaLinkedin
               size={20}
-              className="shrink-0 text-primary-600"
+              className="shrink-0 text-accent"
               aria-hidden="true"
             />
             <span>LinkedIn</span>
@@ -113,7 +113,7 @@ export const Contact: React.FC = () => {
           <a href={`tel:${CONTACTS.PHONE}`} className={ROW_CLASSES}>
             <LuPhone
               size={20}
-              className="shrink-0 text-primary-600"
+              className="shrink-0 text-accent"
               aria-hidden="true"
             />
             <span>{CONTACTS.PHONE_DISPLAY}</span>

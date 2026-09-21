@@ -51,14 +51,14 @@ export const Toggle: React.FC<ToggleProps> = ({ className }) => {
             /* O alvo de toque tem 44px mesmo com o realce menor: o switch
                antigo tinha 28px de altura. */
             className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+                       focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
           >
             <span
               className={clsx(
                 "rounded-md px-2 py-1 font-poppins text-body-sm font-semibold transition-colors duration-300",
                 active
                   ? "bg-primary-500 text-white"
-                  : "text-gray-600 hover:text-primary-700"
+                  : "text-ink-muted hover:text-accent-strong"
               )}
             >
               {code2}

@@ -12,7 +12,7 @@ export const WebNavigationBar: React.FC = () => {
   return (
     <nav
       className="flex gap-8 w-full items-center xl:justify-end lg:justify-center py-6 md:px-[24px] xl:px-[100px]
-                 bg-white/85 backdrop-blur-md border-b border-gray-100"
+                 bg-page/85 backdrop-blur-md border-b border-line"
       role="navigation"
       aria-label={t("a11y.mainNavigation")}
     >

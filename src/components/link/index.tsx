@@ -12,16 +12,16 @@ export const Link: React.FC<LinkProps> = ({
       <a
         href={href}
         aria-current={active ? "true" : undefined}
-        className="rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-4"
+        className="rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4"
       >
         <p
           className={clsx(
             "font-poppins font-normal text-base lg:text-xl transition-all duration-300 ease-out",
             "relative z-10",
             {
-              "text-secondary-900 hover:text-primary-600":
+              "text-ink hover:text-accent":
                 variant === "primary" && !active,
-              "text-primary-700 font-medium": variant === "primary" && active,
+              "text-accent-strong font-medium": variant === "primary" && active,
               "text-white hover:text-primary-300": variant === "secondary",
             }
           )}
@@ -48,7 +48,7 @@ export const Link: React.FC<LinkProps> = ({
           "group-hover:opacity-100 group-focus-within:opacity-100",
           "transition-opacity duration-300 ease-out -m-2 p-2",
           {
-            "bg-primary-50": variant === "primary",
+            "bg-accent/10": variant === "primary",
             "bg-white/10": variant === "secondary",
           }
         )}
