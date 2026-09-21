@@ -193,7 +193,7 @@ converte tudo para WebP e rasteriza os SVGs que embutiam bitmap. Total de
 Continua em aberto: `srcset` por breakpoint (hoje é uma largura só) e o
 `bff-thumb.svg`, que é vetor de verdade e precisa de SVGO, não de conversão.
 
-### 7.2 O i18n carrega todos os locales no caminho inicial
+### 7.2 ✅ RESOLVIDO — o i18n carregava todos os locales
 
 `src/i18n/index.ts` importa os quatro JSON estaticamente. Texto de seção lazy
 pesa no bundle inicial de qualquer forma — a seção de traces removida custava
@@ -211,14 +211,14 @@ com classe falhar **em silêncio** — exatamente o que aconteceu com
 `text-label-*` e `font-regular`. Se for corrigir, o certo é junto com um lint
 de classes desconhecidas.
 
-### 7.4 A escala `label-*` não existe no tema
+### 7.4 ⏹️ ENCERRADO — a escala `label-*` não existe no tema
 
 `text-label-md/lg` não gera CSS. A escala só vivia no objeto `typography`, que
 era código morto e foi removido; o `tailwind.config.js` nunca a teve. Em
 `@apply` isso quebra o build, mas em `className` **falha calado**. Decidir se
 entra no tema ou se sai do vocabulário.
 
-### 7.5 `prefers-reduced-motion` é lido só na montagem
+### 7.5 ✅ RESOLVIDO — `prefers-reduced-motion` era lido só na montagem
 
 Alternar a preferência com a página aberta não muda nada até recarregar.
 Reagir em runtime mexe no ciclo de vida do loop e das features.

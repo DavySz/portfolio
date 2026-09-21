@@ -42,7 +42,7 @@ continuam linkando para lá, como referência secundária.
 | 25 | Revisar título, resumo, tag e **data** de cada artigo em `src/content/articles/index.ts` — as datas eu inferi do arquivo | Davy |
 | 26 | 4 artigos não têm thumb; hoje recebem uma capa tipográfica na paleta da marca | Davy |
 | 27 | Decidir se os artigos devem ter versão em inglês (hoje são pt-BR, com `lang` marcado) | Davy |
-| 28 | O tema não tem a escala `label-*` (`text-label-md/lg` não existe e falha em silêncio no JSX). Ela só vivia no objeto `typography`, que era código morto. Decidir se entra no `tailwind.config.js` | Davy |
+| 28 | ~~Escala `label-*`~~ — **saiu do vocabulário**: nenhum uso restou, e acrescentar token sem uso seria config morta. | — | Encerrado. |
 
 ## Pendências manuais abertas
 
@@ -52,9 +52,9 @@ continuam linkando para lá, como referência secundária.
 | 2 | Responder onde o site é publicado e se há preview por branch | Davy | Validação de performance em ambiente real. |
 | 3 | ~~Otimização das imagens~~ — feita na sabatina: 8.634 kB → 501 kB (−94%). | — | Resolvido. **O `BASELINE.md` ficou desatualizado por causa disso.** |
 | 4 | ~~`git rm --cached` nos `*.tsbuildinfo`~~ — feito na task 08. | — | Resolvido. |
-| 5 | Alinhar CLAUDE.md × repositório quanto ao Prettier (citado na stack, não instalado) | Davy | Não bloqueia. |
+| 5 | ~~Prettier no CLAUDE.md~~ — a regra agora descreve o que existe: não há Prettier. | — | Resolvido. |
 | 6 | **Aval visual do hero escuro** (task 01) + checklist de browsers da spec 01 | Davy | Aceite da task 01. |
-| 7 | Decidir se `prefers-reduced-motion` deve reagir em runtime (hoje é lido só na montagem) | Davy | Candidata à task 08. |
+| 7 | ~~`prefers-reduced-motion` em runtime~~ — feito: o Experience liga/desliga ao vivo e o easter egg some e volta. | — | Resolvido. |
 | 8 | **Os `.blend` ficam versionados (Git LFS) ou fora do repo?** (pergunta da task 02) | Davy | Não bloqueia; documentar no `ASSETS.md`. |
 | 9 | Instalar o binário `ktx` (KTX-Software) e rodar `yarn assets:optimize` de novo | Davy | Sem ele as texturas saem em WebP em vez de KTX2 (perde economia de VRAM). Instruções no `ASSETS.md`. |
 | 10 | Abrir `/debug-assets.html` no Chrome e no Firefox para confirmar Draco + textura decodificando | Davy | Aceite da task 02. |
@@ -67,7 +67,7 @@ continuam linkando para lá, como referência secundária.
 | 17 | **Medir fps por tier e o tempo de CPU do `update` no Performance** (task 05) | Davy | Aceite da task 05. |
 | 18 | Conferir que a cena fica igual em WebGPU e em WebGL2 (`forceWebGL: true`) | Davy | Aceite da task 05. |
 | 19 | ~~Task 06~~ — feita em DOM e depois removida a pedido do Davy. | — | Encerrada. |
-| 22 | O i18n importa **todos** os locales estaticamente: cada texto novo entra no bundle inicial, mesmo em seção lazy | — | Candidata à task 08. |
+| 22 | ~~i18n carregando todos os locales~~ — feito: só o idioma ativo entra no bundle (−969 B). | — | Resolvido. |
 | 23 | **Testar o easter egg no toque** (Galaxy A13 e iPhone): arrastar, arremessar e sair | Davy | Aceite da task 07. |
 | 24 | Conferir na aba Network que o chunk do Rapier só baixa ao ativar | Davy | Aceite da task 07. |
 | 20 | ~~Site abre em inglês vs CLAUDE.md pedindo pt-BR~~ — Davy confirmou: **inglês é intencional**. CLAUDE.md corrigido. | — | Resolvido. |
