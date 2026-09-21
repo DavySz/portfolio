@@ -53,6 +53,67 @@
   src: url("/fonts/poppins-700.woff2") format("woff2");
 }
 
+/*
+ * Tokens semânticos de cor.
+ *
+ * Os componentes deixam de nomear a cor ("roxo 600") e passam a nomear o
+ * papel ("acento"): a mesma classe funciona nos dois temas, e trocar de tema
+ * é trocar o valor da variável, não varrer 45 usos de classe.
+ *
+ * A paleta escura não foi inventada. O site já tinha um vocabulário escuro em
+ * três lugares — o fundo do hero, os blocos de código dos artigos e o rodapé.
+ * `--surface`, `--surface-raised` e `--line` são exatamente as cores que o
+ * bloco de código já usava; `--page` é o fundo do hero. Daí o escuro ser roxo
+ * e não cinza, e ser reconhecidamente deste site.
+ *
+ * Canais RGB separados por espaço, e não hex, para o Tailwind conseguir
+ * aplicar opacidade por cima (`bg-surface/80`).
+ *
+ * `color-scheme` é o que faz barra de rolagem, `<select>` e o foco nativo
+ * seguirem o tema. Sem ele a scrollbar fica branca no escuro.
+ */
+:root {
+  color-scheme: light;
+
+  --page: 255 255 255;
+  --surface: 246 243 252;
+  --surface-raised: 255 255 255;
+  --line: 229 231 235;
+
+  --ink: 17 24 39;
+  --ink-secondary: 55 65 81;
+  --ink-muted: 75 85 99;
+
+  --accent: 107 58 204;
+  --accent-strong: 90 45 184;
+  --focus: 121 71 223;
+
+  /* O rodapé é a âncora escura no claro e a superfície mais clara no escuro:
+     a cor não muda, o papel sim. */
+  --footer: 42 20 84;
+  --footer-muted: 156 163 175;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --page: 14 10 26;
+  --surface: 21 16 43;
+  --surface-raised: 29 22 64;
+  --line: 44 33 80;
+
+  --ink: 233 227 255;
+  --ink-secondary: 212 199 255;
+  --ink-muted: 177 151 232;
+
+  --accent: 177 151 232;
+  --accent-strong: 212 199 255;
+  --focus: 177 151 232;
+
+  --footer: 42 20 84;
+  --footer-muted: 177 151 232;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

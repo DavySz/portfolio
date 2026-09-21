@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  // O tema é carimbado como classe no <html> pelo script anti-flash
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
@@ -53,6 +55,29 @@ export default {
         widest: "0.1em",
       },
       colors: {
+        /* Tokens semânticos: o componente nomeia o papel, não a cor. Os
+           valores vivem em src/index.css e trocam com o tema. */
+        page: "rgb(var(--page) / <alpha-value>)",
+        surface: {
+          DEFAULT: "rgb(var(--surface) / <alpha-value>)",
+          raised: "rgb(var(--surface-raised) / <alpha-value>)",
+        },
+        line: "rgb(var(--line) / <alpha-value>)",
+        ink: {
+          DEFAULT: "rgb(var(--ink) / <alpha-value>)",
+          secondary: "rgb(var(--ink-secondary) / <alpha-value>)",
+          muted: "rgb(var(--ink-muted) / <alpha-value>)",
+        },
+        accent: {
+          DEFAULT: "rgb(var(--accent) / <alpha-value>)",
+          strong: "rgb(var(--accent-strong) / <alpha-value>)",
+        },
+        focus: "rgb(var(--focus) / <alpha-value>)",
+        footer: {
+          DEFAULT: "rgb(var(--footer) / <alpha-value>)",
+          muted: "rgb(var(--footer-muted) / <alpha-value>)",
+        },
+
         primary: {
           50: "#F3F0FF",
           100: "#E9E3FF",
