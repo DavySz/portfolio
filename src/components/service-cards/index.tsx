@@ -24,24 +24,18 @@ export const ServiceCards: React.FC<ServiceCardsProps> = ({ data }) => {
               hierarquia mudava conforme a largura da tela — o desktop, que
               usa a tabela, não declarava título nenhum. */}
           <h3
-            className={clsx(
-              "font-poppins font-bold text-xl transition-colors duration-300",
-              {
-                "text-white": isHighlighted,
-                "text-primary-700 hover:text-primary-800": !isHighlighted,
-              }
-            )}
+            className={clsx("font-poppins font-bold text-xl", {
+              "text-white": isHighlighted,
+              "text-primary-700": !isHighlighted,
+            })}
           >
             {title}
           </h3>
           <p
-            className={clsx(
-              "font-poppins font-normal text-base transition-colors duration-300",
-              {
-                "text-white": isHighlighted,
-                "text-gray-700 hover:text-gray-800": !isHighlighted,
-              }
-            )}
+            className={clsx("font-poppins font-normal text-base", {
+              "text-white": isHighlighted,
+              "text-gray-700": !isHighlighted,
+            })}
           >
             {description}
           </p>
