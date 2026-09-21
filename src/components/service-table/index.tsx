@@ -62,7 +62,12 @@ export const ServiceTable: React.FC<ServiceTableProps> = ({ data }) => {
                 }
               )}
             >
-              {title}
+              {/* Título de verdade: a célula sozinha não entrava na lista de
+                  títulos do leitor de tela, então os quatro serviços não
+                  existiam para quem navega por eles. `h3` porque o `h2` é o
+                  título da seção. O preflight do Tailwind faz o heading herdar
+                  tamanho e peso, então o desenho não muda. */}
+              <h3>{title}</h3>
             </td>
             <td
               className={clsx(

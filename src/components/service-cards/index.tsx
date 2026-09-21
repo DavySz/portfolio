@@ -18,7 +18,11 @@ export const ServiceCards: React.FC<ServiceCardsProps> = ({ data }) => {
             }
           )}
         >
-          <h2
+          {/* `h3`, não `h2`: o `h2` é o título da seção que contém estes
+              cards. Como `h2` eles viravam irmãos da própria seção, e a
+              hierarquia mudava conforme a largura da tela — o desktop, que
+              usa a tabela, não declarava título nenhum. */}
+          <h3
             className={clsx(
               "font-poppins font-bold text-xl transition-colors duration-300",
               {
@@ -28,7 +32,7 @@ export const ServiceCards: React.FC<ServiceCardsProps> = ({ data }) => {
             )}
           >
             {title}
-          </h2>
+          </h3>
           <p
             className={clsx(
               "font-poppins font-normal text-base transition-colors duration-300",
