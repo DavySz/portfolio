@@ -47,6 +47,7 @@ export class Experience {
   /** há pixels de um frame anterior no canvas? */
   private painted = false;
   /** usado no tier animate:false para só repintar quando o scroll muda */
+  private theme: "light" | "dark" = "light";
   private lastScrollY = Number.NaN;
   /** definido só enquanto o ponteiro está sendo observado */
   private pointerCleanup?: () => void;
@@ -119,6 +120,10 @@ export class Experience {
 
   add(feature: Feature) {
     this.features.push(feature);
+    /* As features são registradas DEPOIS do construtor, então o tema precisa
+       ser carimbado aqui também: senão quem chega depois nasce com a cor do
+       tema claro e só corrige na primeira troca. */
+    feature.setTheme?.(this.theme);
     this.resizeFeature(feature);
   }
 
@@ -326,13 +331,13 @@ export class Experience {
     const read = (): "light" | "dark" =>
       document.documentElement.classList.contains("dark") ? "dark" : "light";
 
-    let current = read();
-    for (const feature of this.features) feature.setTheme?.(current);
+    this.theme = read();
+    for (const feature of this.features) feature.setTheme?.(this.theme);
 
     const observer = new MutationObserver(() => {
       const next = read();
-      if (next === current) return;
-      current = next;
+      if (next === this.theme) return;
+      this.theme = next;
       for (const feature of this.features) feature.setTheme?.(next);
       this.renderFrame(0);
     });

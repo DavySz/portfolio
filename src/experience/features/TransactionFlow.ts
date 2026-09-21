@@ -34,8 +34,15 @@ import type { Feature, FrameContext } from "../types";
  * Sem compute shader, para o fallback WebGL2 ficar idêntico.
  */
 
-/** Fundo da seção — é o mesmo `bg-surface` que o CSS pinta hoje. */
+/**
+ * Fundo da seção — é o mesmo `--surface` que o CSS pinta, nos dois temas.
+ *
+ * Precisa seguir o tema porque o canvas PINTA o fundo desta seção: sem isto,
+ * a seção continuava clara no modo escuro enquanto o resto da página virava,
+ * e o texto ficava roxo-claro sobre lavanda.
+ */
 const SURFACE = 0xf6f3fc;
+const SURFACE_DARK = 0x15102b;
 
 /**
  * Teto de escurecimento das partículas: mix(SURFACE, primary-500, 0.30).
@@ -50,6 +57,14 @@ const SURFACE = 0xf6f3fc;
  * faixa onde ele vive.
  */
 const PARTICLE = 0xd1bff3;
+
+/**
+ * O mesmo teto, no escuro: `mix(SURFACE_DARK, primary-500, 0.30)`.
+ *
+ * Sobre ele o texto da seção sobra folga — descrição 8,76:1, corpo 5,53:1 — e
+ * o título também passa (8,76:1), o que no claro não acontecia.
+ */
+const PARTICLE_DARK = 0x332161;
 
 /** Faixa do topo sem partículas, em fração da altura da seção. */
 const CLEAR_BAND_START = 0.3;
@@ -86,6 +101,8 @@ export class TransactionFlow implements Feature {
   private readonly uOrganize = uniform(0);
   private readonly uVisibility = uniform(0);
   private readonly uAspect = uniform(1);
+  private readonly uSurface = uniform(color(SURFACE));
+  private readonly uParticle = uniform(color(PARTICLE));
 
   private readonly geometry: THREE.PlaneGeometry;
   private readonly material: THREE.MeshBasicNodeMaterial;
@@ -110,7 +127,7 @@ export class TransactionFlow implements Feature {
     // visibilidade, o branco da página apareceria através da seção enquanto
     // ela entra. O fade por visibility vale para as partículas, não pro fundo.
     this.surfaceMaterial = new THREE.MeshBasicNodeMaterial();
-    this.surfaceMaterial.colorNode = vec4(color(SURFACE), 1);
+    this.surfaceMaterial.colorNode = vec4(this.uSurface, 1);
     this.surfaceMaterial.transparent = true;
     this.surfaceMaterial.depthWrite = false;
     this.surfaceMaterial.depthTest = false;
@@ -155,7 +172,7 @@ export class TransactionFlow implements Feature {
    * fragment. Recalculá-la lá custaria um noise por fragmento.
    */
   private buildNodes() {
-    const { uTime, uOrganize, uAspect, uVisibility } = this;
+    const { uTime, uOrganize, uAspect, uVisibility, uParticle } = this;
     // varyingProperty é a API de varying que se ATRIBUI no vertex e se lê
     // no fragment — mesmo padrão que o three usa em Instance.js/Batch.js.
     const mask = varyingProperty("float", "vMask");
@@ -205,10 +222,16 @@ export class TransactionFlow implements Feature {
       const radius = length(uv().sub(vec2(0.5))).mul(2);
       const soft = smoothstep(float(1), float(0.25), radius);
 
-      return vec4(color(PARTICLE), soft.mul(mask).mul(uVisibility));
+      return vec4(uParticle, soft.mul(mask).mul(uVisibility));
     })();
 
     return { positionNode, colorNode };
+  }
+
+  setTheme(theme: "light" | "dark") {
+    const dark = theme === "dark";
+    this.uSurface.value = new THREE.Color(dark ? SURFACE_DARK : SURFACE);
+    this.uParticle.value = new THREE.Color(dark ? PARTICLE_DARK : PARTICLE);
   }
 
   resize({ width, height }: FrameContext) {

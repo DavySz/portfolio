@@ -406,6 +406,29 @@ Alternativa descartada: passar o tema pelo `FrameContext`, que obrigaria as 4
 features a conhecer um dado que 3 delas ignoram. O opcional mantém a camada 3D
 sem saber que o React existe, que é como ela foi construída.
 
+### D5 — A seção Expertise ficou clara no escuro (dois bugs meus)
+
+Reportado com screenshot depois da Fase 2. O §4.4 do plano listou as features
+que mudam com o tema e **esqueceu a `TransactionFlow`** — que é justamente a que
+**pinta o fundo** da seção Expertise, com `SURFACE = 0xf6f3fc` fixo. Resultado:
+a seção continuava clara enquanto o resto da página virava, e o texto ficava
+roxo-claro sobre lavanda.
+
+O plano tinha a informação para prever isso: o §1.3 registra que o canvas pinta
+o fundo dessa seção. Eu li a linha e não liguei os pontos.
+
+Ao corrigir, apareceu um **segundo bug, no próprio commit 4**: `observeTheme()`
+roda no construtor do `Experience`, mas as features entram depois, por `add()`.
+O `setTheme` inicial percorria uma lista vazia — então abrir a página já no
+escuro deixava as cenas com cor de tema claro, e só a primeira troca corrigia.
+O tema virou estado da instância e `add()` carimba quem chega depois.
+
+A cor escura das partículas saiu da mesma fórmula documentada no código para a
+clara, `mix(surface, primary-500, 0.30)` — verifiquei que ela reproduz exatamente
+o `#d1bff3` que já estava lá antes de derivar o `#332161`. Sobre ele o texto
+passa AA com folga, **inclusive o título**, que no claro era a exceção que
+obrigava a faixa sem partículas.
+
 ### D4 — A transição de tema não precisou de guarda própria
 
 O briefing pedia "transição desativada sob `prefers-reduced-motion`". O bloco
