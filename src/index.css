@@ -17,7 +17,8 @@
   /* O header é sticky: sem isto, pular para uma âncora deixa o título da
      seção escondido atrás dele. */
   section[id],
-  [id="main-content"] {
+  [id="main-content"],
+  .article-heading {
     scroll-margin-top: 6rem;
   }
 

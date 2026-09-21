@@ -21,7 +21,7 @@ import type { ArticlePageProps } from "./types";
 const SITE = "https://davysz.com";
 const AUTHOR = "Davy de Souza Assunção";
 
-export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
+export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
   const { t, i18n } = useTranslation("component");
   const language: Language = i18n.language === "pt" ? "pt" : "en";
   const meta = findArticle(slug);
@@ -31,9 +31,24 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    // Trocar de artigo mantém a página montada: o scroll precisa voltar ao topo.
-    window.scrollTo({ top: 0 });
+    // Trocar de artigo mantém a página montada: o scroll precisa voltar ao
+    // topo. Pular para uma seção do mesmo artigo é tratado logo abaixo.
+    if (!heading) window.scrollTo({ top: 0 });
+    // heading de propósito fora das dependências: só o artigo dispara isto
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
+
+  /**
+   * Leva até a seção quando a rota traz uma.
+   *
+   * Depende do conteúdo porque o HTML do artigo chega por import dinâmico: o
+   * heading só existe no DOM depois que ele monta.
+   */
+  useEffect(() => {
+    if (!heading || !content) return;
+    const target = document.getElementById(heading);
+    target?.scrollIntoView({ behavior: "smooth" });
+  }, [heading, content]);
 
   useEffect(() => {
     let cancelled = false;
@@ -106,6 +121,25 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
 
     return () => cleanups.forEach((cleanup) => cleanup());
   }, [content, t]);
+
+  /**
+   * Reescreve as âncoras dos títulos para a rota do artigo.
+   *
+   * O plugin gera `href="#<id>"`, que é o certo para um markdown solto — mas
+   * neste site um hash sem o prefixo da rota derruba o artigo e monta a home.
+   * A correção fica aqui para o gerador de conteúdo não precisar saber de
+   * roteamento.
+   */
+  useEffect(() => {
+    if (!content) return;
+
+    for (const anchor of document.querySelectorAll<HTMLAnchorElement>(
+      ".article-anchor"
+    )) {
+      const id = anchor.getAttribute("href")?.replace(/^#/, "");
+      if (id) anchor.setAttribute("href", articleHref(slug, id));
+    }
+  }, [content, slug]);
 
   /**
    * SEO do artigo. Sem isto, todo link compartilhado mostrava o título e a
@@ -282,7 +316,11 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug }) => {
 
         {content && (
           <aside className="hidden xl:block">
-            <ArticleToc headings={content.headings} label={t("article.toc")} />
+            <ArticleToc
+              slug={slug}
+              headings={content.headings}
+              label={t("article.toc")}
+            />
           </aside>
         )}
       </div>

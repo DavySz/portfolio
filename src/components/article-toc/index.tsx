@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { useActiveSection } from "../../hooks/useActiveSection/use-active-section";
 import { useMemo } from "react";
+import { articleHref } from "../../hooks/useHashRoute/use-hash-route";
 import type { ArticleTocProps } from "./types";
 
 /**
@@ -10,7 +11,11 @@ import type { ArticleTocProps } from "./types";
  * para baixo da dobra em troca de pouco. Os títulos continuam alcançáveis
  * pelas âncoras do próprio texto.
  */
-export const ArticleToc: React.FC<ArticleTocProps> = ({ headings, label }) => {
+export const ArticleToc: React.FC<ArticleTocProps> = ({
+  slug,
+  headings,
+  label,
+}) => {
   const ids = useMemo(() => headings.map((heading) => heading.id), [headings]);
   const active = useActiveSection(ids);
 
@@ -28,7 +33,7 @@ export const ArticleToc: React.FC<ArticleTocProps> = ({ headings, label }) => {
         {headings.map((heading) => (
           <li key={heading.id}>
             <a
-              href={`#${heading.id}`}
+              href={articleHref(slug, heading.id)}
               aria-current={heading.id === active ? "true" : undefined}
               className={clsx(
                 "-ml-px block border-l-2 py-1 font-poppins text-body-sm transition-colors duration-200",

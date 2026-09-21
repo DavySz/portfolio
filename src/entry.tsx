@@ -18,7 +18,7 @@ const ArticlePage = lazy(() =>
 );
 
 function Entry() {
-  const slug = useArticleRoute();
+  const { slug, heading } = useArticleRoute();
 
   // Só na home: é lá que as âncoras do menu existem, e elas chegam tarde
   // porque as seções são lazy.
@@ -39,7 +39,7 @@ function Entry() {
             </div>
           }
         >
-          <ArticlePage slug={slug} />
+          <ArticlePage slug={slug} heading={heading} />
         </Suspense>
       ) : (
         <Home />

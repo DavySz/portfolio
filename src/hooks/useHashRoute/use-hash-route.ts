@@ -9,14 +9,36 @@ const ANCHOR_TIMEOUT = 4000;
 /** Silêncio do layout que conta como "parou de crescer", em ms. */
 const SETTLE_DELAY = 150;
 
-export const articleHref = (slug: string): string => `${ARTICLE_ROUTE}${slug}`;
+/**
+ * A âncora de uma seção do artigo vive DENTRO da rota dele:
+ * `#/artigos/<slug>/<heading>`.
+ *
+ * Com `#<heading>` puro — que é o que o sumário usava — o hash deixava de
+ * começar com o prefixo da rota, a rota virava nula e a home montava no lugar
+ * do artigo. Aninhar mantém o link real, copiável e compartilhável.
+ */
+export const articleHref = (slug: string, heading?: string): string =>
+  heading ? `${ARTICLE_ROUTE}${slug}/${heading}` : `${ARTICLE_ROUTE}${slug}`;
 
-const readSlug = (): string | null => {
-  if (typeof window === "undefined") return null;
+export interface ArticleRoute {
+  slug: string | null;
+  heading: string | null;
+}
+
+const readRoute = (): ArticleRoute => {
+  if (typeof window === "undefined") return { slug: null, heading: null };
+
   const { hash } = window.location;
-  if (!hash.startsWith(ARTICLE_ROUTE)) return null;
-  const slug = decodeURIComponent(hash.slice(ARTICLE_ROUTE.length));
-  return slug || null;
+  if (!hash.startsWith(ARTICLE_ROUTE)) return { slug: null, heading: null };
+
+  const rest = decodeURIComponent(hash.slice(ARTICLE_ROUTE.length));
+  const separator = rest.indexOf("/");
+
+  if (separator < 0) return { slug: rest || null, heading: null };
+  return {
+    slug: rest.slice(0, separator) || null,
+    heading: rest.slice(separator + 1) || null,
+  };
 };
 
 type DocumentWithTransition = Document & {
@@ -30,29 +52,34 @@ type DocumentWithTransition = Document & {
  * com hash, um link direto para um artigo funciona em qualquer hospedagem,
  * sem precisar de rewrite para o index.html.
  */
-export const useArticleRoute = (): string | null => {
-  const [slug, setSlug] = useState<string | null>(readSlug);
+export const useArticleRoute = (): ArticleRoute => {
+  const [route, setRoute] = useState<ArticleRoute>(readRoute);
 
   useEffect(() => {
     const onHashChange = () => {
-      const next = readSlug();
+      const next = readRoute();
 
-      // Sair de um artigo devolve a página inteira: começar do topo é o único
-      // ponto de partida previsível. Sem isto a home aparecia na altura em que
-      // o artigo estava, e qualquer rolagem seguinte parecia aleatória.
-      if (!next) window.scrollTo({ top: 0, behavior: "instant" });
+      setRoute((current) => {
+        // Pular entre seções do MESMO artigo não é troca de página: nada de
+        // voltar ao topo nem de animar a transição. Só o destino muda.
+        if (current.slug && current.slug === next.slug) return next;
 
-      // View Transitions onde existe; onde não existe, troca direta. O
-      // navegador tira o retrato da tela antes do callback e cruza para o
-      // depois — daí a troca de estado precisa acontecer dentro dele.
-      const doc = document as DocumentWithTransition;
-      if (typeof doc.startViewTransition !== "function") {
-        setSlug(next);
-        return;
-      }
+        // Sair de um artigo devolve a página inteira: começar do topo é o
+        // único ponto de partida previsível para o que vem depois.
+        if (!next.slug) window.scrollTo({ top: 0, behavior: "instant" });
 
-      doc.startViewTransition(() => {
-        flushSync(() => setSlug(next));
+        // View Transitions onde existe; onde não existe, troca direta. O
+        // navegador tira o retrato da tela antes do callback e cruza para o
+        // depois — daí a troca de estado precisa acontecer dentro dele.
+        const doc = document as DocumentWithTransition;
+        if (typeof doc.startViewTransition === "function") {
+          doc.startViewTransition(() => {
+            flushSync(() => setRoute(next));
+          });
+          return current;
+        }
+
+        return next;
       });
     };
 
@@ -60,7 +87,7 @@ export const useArticleRoute = (): string | null => {
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
 
-  return slug;
+  return route;
 };
 
 /**
