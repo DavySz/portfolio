@@ -6,10 +6,14 @@ Site pessoal e portfólio do Davy de Souza Assunção, Frontend Engineer especia
 
 - React + TypeScript + Vite (SPA renderizada no cliente)
 - Tailwind CSS v3 via PostCSS (`tailwind.config.js`, `postcss.config.js`)
-- ESLint com flat config (`eslint.config.js`) + Prettier
+- ESLint com flat config (`eslint.config.js`). **Não há Prettier** no projeto: casar com o estilo dos arquivos vizinhos e passar no lint é o suficiente.
 - **Yarn** é o único gerenciador de pacotes. Nunca usar npm ou pnpm, nem gerar outro lockfile.
 
 Os nomes dos scripts estão no `package.json`; consultar em vez de supor.
+
+Há três pipelines de conteúdo, todos com script próprio e documentados no
+código: `assets:*` (modelos 3D), `images:optimize` (imagens do site) e
+`content:feeds` (sitemap e RSS, roda no `prebuild`).
 
 ## Verificação antes de concluir qualquer tarefa
 
