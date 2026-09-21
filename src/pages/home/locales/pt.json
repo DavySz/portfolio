@@ -6,12 +6,12 @@
     "download": "Download CV"
   },
   "self": {
-    "title": "Quem sou eu",
+    "title": "Sobre mim",
     "description": "Sou Frontend Engineer especializado em Fintech, com experiência real construindo produtos financeiros na Fretepago. Domino o ecossistema frontend moderno e tenho expertise em criar interfaces que lidam com transações críticas, dados sensíveis e alta performance. Se você busca alguém que une código limpo, design systems robustos e compreensão profunda de fluxos financeiros, vamos conversar.",
     "download": "Download CV"
   },
   "services": {
-    "title": "Minha Expertise",
+    "title": "Expertise",
     "description": "Especializado em frontend moderno com foco em aplicações financeiras de alta criticidade.",
     "items": {
       "mobile": {
@@ -33,11 +33,11 @@
     }
   },
   "skills": {
-    "title": "Stack & Ferramentas",
+    "title": "Stack",
     "description": "Tecnologias que domino para criar produtos frontend de classe mundial, com foco em performance, escalabilidade e developer experience."
   },
   "projects": {
-    "title": "Cases de Estudo",
+    "title": "Cases de estudo",
     "description": "Projetos pessoais onde exploro novas tecnologias, padrões arquiteturais e best practices do ecossistema frontend.",
     "items": {
       "quezzy": {
@@ -55,7 +55,7 @@
     }
   },
   "articles": {
-    "title": "Artigos & Reflexões",
+    "title": "Artigos",
     "description": "Compartilho insights sobre frontend, arquitetura e a realidade do desenvolvimento de software além do código.",
     "seeMore": "Ver todos os artigos",
     "items": {
@@ -77,12 +77,12 @@
     "description": "Frontend Engineer especializado em Fintech. Atualmente construindo o futuro dos pagamentos na Fretepago. Aberto para oportunidades desafiadoras e conversas sobre tecnologia, arquitetura frontend e inovação financeira.",
     "copyright": "© Desenvolvido com React, TypeScript e ☕",
     "links": {
-      "home": "INÍCIO",
-      "about": "SOBRE MIM",
-      "services": "SERVIÇOS",
-      "skills": "HABILIDADES",
-      "projects": "PROJETOS",
-      "articles": "ARTIGOS"
+      "home": "Início",
+      "about": "Sobre mim",
+      "services": "Expertise",
+      "skills": "Stack",
+      "projects": "Cases de estudo",
+      "articles": "Artigos"
     }
   },
   "seo": {

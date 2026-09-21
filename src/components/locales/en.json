@@ -1,10 +1,10 @@
 {
   "navigation-bar": {
     "home": "Home",
-    "about": "About",
+    "about": "About me",
     "services": "Expertise",
     "skills": "Stack",
-    "projects": "Projects",
+    "projects": "Case studies",
     "articles": "Articles",
     "hire-me": "Let's talk"
   },
