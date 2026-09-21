@@ -91,19 +91,71 @@ export const useArticleRoute = (): ArticleRoute => {
 };
 
 /**
+ * Rola até uma seção assim que ela existir e o layout parar de crescer.
+ *
+ * As seções da home são `lazy`: logo depois de uma troca de rota o alvo ainda
+ * não está no DOM, e o navegador desiste de rolar. Aqui a gente espera a
+ * altura do documento ficar quieta e rola uma vez. Os dois temporizadores se
+ * encerram sozinhos, então isto não depende de ciclo de vida de componente.
+ *
+ * Devolve um cancelador para quem quiser desistir antes.
+ */
+const landWhenSettled = (id: string): (() => void) => {
+  let settleTimer = 0;
+  let observer: ResizeObserver | null = null;
+
+  const stop = () => {
+    window.clearTimeout(settleTimer);
+    window.clearTimeout(deadline);
+    observer?.disconnect();
+    observer = null;
+  };
+
+  const land = () => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "instant" });
+    stop();
+  };
+
+  const waitForQuiet = () => {
+    window.clearTimeout(settleTimer);
+    settleTimer = window.setTimeout(land, SETTLE_DELAY);
+  };
+
+  const deadline = window.setTimeout(stop, ANCHOR_TIMEOUT);
+
+  observer = new ResizeObserver(waitForQuiet);
+  observer.observe(document.body);
+  waitForQuiet();
+
+  return stop;
+};
+
+/**
+ * Sai do artigo e cai numa seção da home.
+ *
+ * Diferente de clicar no menu, que de um artigo vai para o topo e pronto:
+ * quem clica em "Todos os artigos" quer a lista, então aqui a seção é
+ * perseguida de propósito.
+ */
+export const goToSection = (id: string): void => {
+  window.location.hash = id;
+  landWhenSettled(id);
+};
+
+/**
  * Leva até a âncora do hash **só quando a página abre nela**.
  *
  * Existe para um caso só: alguém colar `davysz.com/#skills` numa aba nova. As
  * seções da home são `lazy`, então o alvo não está no DOM quando o navegador
- * tenta rolar, e ele desiste. Aqui a gente espera a altura do documento ficar
- * quieta e rola uma vez.
+ * tenta rolar, e ele desiste.
  *
  * Navegação dentro do site NÃO passa por aqui:
  *
  * - dentro da home, a seção já existe e quem rola é o navegador, com o
  *   `scroll-behavior: smooth` do CSS;
- * - vindo de um artigo, o destino é o topo da home e ponto. Perseguir a seção
- *   enquanto a página se monta era justamente o que dava errado.
+ * - vindo de um artigo pelo menu, o destino é o topo da home e ponto.
+ *   Perseguir a seção enquanto a página se monta era justamente o que dava
+ *   errado. Quem quer perseguir pede por `goToSection`.
  */
 export const useAnchorScroll = (enabled: boolean): void => {
   // Congela o hash de abertura: o que vier depois é navegação, não entrada.
@@ -123,33 +175,6 @@ export const useAnchorScroll = (enabled: boolean): void => {
     const id = decodeURIComponent(entryHash.slice(1));
     if (!id || document.getElementById(id)) return;
 
-    let settleTimer = 0;
-    let observer: ResizeObserver | null = null;
-
-    const stop = () => {
-      window.clearTimeout(settleTimer);
-      window.clearTimeout(deadline);
-      observer?.disconnect();
-      observer = null;
-    };
-
-    /** Rola uma vez, quando o alvo existe e a página parou de crescer. */
-    const land = () => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "instant" });
-      stop();
-    };
-
-    const waitForQuiet = () => {
-      window.clearTimeout(settleTimer);
-      settleTimer = window.setTimeout(land, SETTLE_DELAY);
-    };
-
-    const deadline = window.setTimeout(stop, ANCHOR_TIMEOUT);
-
-    observer = new ResizeObserver(waitForQuiet);
-    observer.observe(document.body);
-    waitForQuiet();
-
-    return stop;
+    return landWhenSettled(id);
   }, [enabled, entryHash]);
 };

@@ -7,7 +7,8 @@ import { Button } from "../../components/button";
 import { Loading } from "../../components/loading";
 import { useSEO } from "../../hooks";
 import type { Language } from "../../i18n";
-import { articleHref } from "../../hooks/useHashRoute/use-hash-route";
+import { articleHref, goToSection } from "../../hooks/useHashRoute/use-hash-route";
+import { useReducedMotion } from "../../hooks/useReducedMotion/use-reduced-motion";
 import { formatCatalogDate } from "../../shared/date";
 import { ArticleToc } from "../../components/article-toc";
 import { ReadingProgress } from "../../components/reading-progress";
@@ -30,6 +31,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
   const { previous, next } = findNeighbours(slug);
   const [content, setContent] = useState<ArticleContent | null>(null);
   const [failed, setFailed] = useState(false);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     // Trocar de artigo mantém a página montada: o scroll precisa voltar ao
@@ -48,8 +50,11 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
   useEffect(() => {
     if (!heading || !content) return;
     const target = document.getElementById(heading);
-    target?.scrollIntoView({ behavior: "smooth" });
-  }, [heading, content]);
+    /* A opção passada em JS vence o `scroll-behavior` do CSS, então o bloco de
+       `prefers-reduced-motion` do index.css não alcança esta chamada: quem
+       pediu menos movimento continuava vendo a página deslizar. */
+    target?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
+  }, [heading, content, reducedMotion]);
 
   useEffect(() => {
     let cancelled = false;
@@ -165,8 +170,10 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
     )
   );
 
-  const goBack = () => {
-    window.location.hash = "";
+  /* "Voltar" dizia história, mas ia para a home. Agora o rótulo e o destino
+     concordam: a lista de artigos. */
+  const goToArticles = () => {
+    goToSection("articles");
   };
 
   if (!meta || !text || failed) {
@@ -175,8 +182,8 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
         <Text as="h1" variant="sectionTitle" color="primary" align="center">
           {t("article.notFound")}
         </Text>
-        <Button variant="secondary" icon={MdArrowBack} onClick={goBack}>
-          {t("article.back")}
+        <Button variant="secondary" icon={MdArrowBack} onClick={goToArticles}>
+          {t("article.allArticles")}
         </Button>
       </div>
     );
@@ -195,8 +202,8 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
       <div className="xl:grid xl:grid-cols-[1fr_16rem] xl:gap-12">
         <article className="mx-auto w-full max-w-3xl">
       <div className="mb-10">
-        <Button variant="tertiary" icon={MdArrowBack} onClick={goBack}>
-          {t("article.back")}
+        <Button variant="tertiary" icon={MdArrowBack} onClick={goToArticles}>
+          {t("article.allArticles")}
         </Button>
       </div>
 

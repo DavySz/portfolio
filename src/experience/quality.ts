@@ -26,6 +26,10 @@ const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
  * página aberta continuava vendo tudo animar até recarregar — e recarregar
  * não é uma instrução razoável para quem acabou de pedir menos movimento.
  */
+/** Leitura pontual da preferência. A media query mora só aqui. */
+export const prefersReducedMotion = (): boolean =>
+  typeof window !== "undefined" && window.matchMedia(REDUCED_MOTION).matches;
+
 export const watchReducedMotion = (
   onChange: (animate: boolean) => void
 ): (() => void) => {
