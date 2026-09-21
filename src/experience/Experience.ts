@@ -4,6 +4,7 @@ import type { Feature, FrameContext } from "./types";
 import { getSections, subscribeSections } from "./sections";
 import { HeroBackground } from "./features/HeroBackground";
 import { SignatureObject } from "./features/SignatureObject";
+import { TransactionFlow } from "./features/TransactionFlow";
 
 /**
  * Núcleo imperativo: UM canvas fixo atrás da página inteira, um loop, N features.
@@ -98,6 +99,7 @@ export class Experience {
 
     this.add(new HeroBackground());
     this.add(new SignatureObject(ctx.quality));
+    this.add(new TransactionFlow(ctx.quality));
 
     this.observeViewport();
     this.observeLayout();

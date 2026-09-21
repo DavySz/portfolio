@@ -12,7 +12,7 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 02 | Pipeline de assets 3D (glTF + Draco + KTX2) | infra | não | **aguardando revisão** | `feat/experience-assets` (ramificada de `feat/experience-core`, **não** do master) | Pipeline 4 passos + loaders + página de debug + `ASSETS.md`. Cubo de teste: 3,1 kB → 2,4 kB (−22,7%). **`ktx` não instalado → saída em WebP.** Bundle inalterado. |
 | 03 | Objeto-assinatura no hero | feature | **sim, antes de codar** | **aguardando revisão** | `feat/experience-signature-object` (de `feat/experience-assets`) | Conceito **C — Alinhamento (giroscópio)**, escolha delegada a mim. 7.760 tris `high` / 3.092 `low` (39,8%). JS inicial **−6 B**. **Posicionamento precisa de aval visual.** |
 | 04 | Canvas global + cenas por seção | refactor | não | **aguardando revisão** | `refactor/experience-global-canvas` | Canvas único fixo no `PageTemplate`, recortado por seção via scissor. JS inicial +159 B. Bug de eixo Y invertido encontrado pelo Davy e corrigido (`97811fa`); **visual conferido por ele depois da correção.** |
-| 05 | Cena de domínio: fluxo de transações | feature | **sim, antes de codar** | **aguardando decisão** | — (não criada, por spec) | Proposta: seção **Minha Expertise** (`services`) + 2 narrativas (**A** caos→fluxo, **B** convergência→redistribuição) + fundo opaco vira fallback que se apaga. |
+| 05 | Cena de domínio: fluxo de transações | feature | **sim, antes de codar** | **aguardando revisão** | `feat/experience-transactions-scene` | Seção `services`, narrativa A (caos→fluxo), fundo claro preservado — escolha delegada a mim. 7.000 instâncias `high` / 1.500 `low`. JS inicial +8 B. **fps e CPU precisam ser medidos no browser.** |
 | 06 | Cena de domínio: waterfall de traces | feature | **sim, antes de codar** | pendente | — | Checkpoint de seção e narrativa. |
 | 07 | Easter egg com física | feature | não | pendente | — | Independente: pode rodar a qualquer momento depois da 01. |
 | 08 | Auditoria final de performance e acessibilidade | qualidade | não | pendente | — | |
@@ -38,7 +38,9 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 13 | Tailwind emite utilitários fantasma a partir de palavras no `src/**/*.ts` (ex.: `.ring` veio de `RingConfig`) | — | Candidata à task 08: hoje custa 14 B, mas cresce junto com `src/experience/`. |
 | 14 | **Comparar hero antes/depois da task 04** (desktop e mobile) — refactor exige visual idêntico | Davy | Aceite da task 04. Não consigo tirar screenshot aqui. |
 | 15 | Conferir no Performance do DevTools que não há frame renderizado com o hero fora da tela | Davy | Aceite da task 04. |
-| 16 | **Escolher seção e narrativa da task 05** | Davy | Bloqueia a task 05. |
+| 16 | ~~Escolher seção e narrativa da task 05~~ — delegado a mim: `services` + narrativa A | — | Resolvido. |
+| 17 | **Medir fps por tier e o tempo de CPU do `update` no Performance** (task 05) | Davy | Aceite da task 05. |
+| 18 | Conferir que a cena fica igual em WebGPU e em WebGL2 (`forceWebGL: true`) | Davy | Aceite da task 05. |
 
 ## Números de referência
 
@@ -67,6 +69,31 @@ Depois da task 04 (branch `refactor/experience-global-canvas`):
 - **JS inicial:** 77.882 B gzip (+159 B vs task 03; +754 B / +0,98% vs baseline)
 - **CSS inicial:** 5.978 B gzip (+24 B vs task 03)
 - **Chunk `Experience` (dinâmico):** 244.073 B gzip (+1.335 B vs task 03)
+
+Depois da task 05 (branch `feat/experience-transactions-scene`):
+
+- **JS inicial:** 77.889 B gzip (+7 B vs task 04; +761 B / +0,99% vs baseline)
+- **CSS inicial:** 5.983 B gzip (+5 B vs task 04)
+- **Chunk `Experience` (dinâmico):** 245.765 B gzip (+1.692 B vs task 04)
+- **Instâncias:** 7.000 `high` · 1.500 `low` · congelado em `progress`=1 com `animate:false`
+
+#### Contraste da cena sobre o texto de `services` (medido)
+
+A cor das partículas é o **teto** do escurecimento (`#D1BFF3`), não um alpha:
+com blend normal N partículas sobrepostas saturam na cor, então fixá-la garante
+o limite independentemente da densidade.
+
+| Texto | Contraste com a cena saturada |
+|---|---:|
+| título `primary-900` | 8,65 ✓ |
+| descrição `gray-700` | 6,13 ✓ |
+| tabela `gray-700` | 6,13 ✓ |
+| tabela `primary-700` | 4,99 ✓ |
+| **título `primary-500`** | **3,30 ✗** → resolvido pela máscara vertical |
+
+O gradiente do título termina em `primary-500`, que sobre o fundo atual já está
+em 5,06:1 — só 0,56 de folga. Por isso as partículas são apagadas na faixa do
+topo (30%–55% da altura da seção), onde título e descrição vivem.
 
 ### Seções com fundo opaco (levantadas na task 04, **não alteradas**)
 
@@ -101,3 +128,4 @@ através de `self`, `skills`, `projects` e `articles`. Decidir o que fazer com
 | 2026-09-21 | Task 04 executada em `refactor/experience-global-canvas`, ramificada de `feat/experience-signature-object`. |
 | 2026-09-21 | Bug da task 04: viewport/scissor usavam origem bottom-left, mas a API do three usa top-left. Erro crescia com o scroll. Achado pelo Davy via screenshot, corrigido em `97811fa` e confirmado por ele. |
 | 2026-09-21 | Task 05 parada no checkpoint de seção e narrativa, conforme a spec. |
+| 2026-09-21 | Escolha delegada a mim pelo Davy: seção `services`, narrativa A, fundo claro preservado. Task 05 executada em `feat/experience-transactions-scene`. |

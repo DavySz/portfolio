@@ -29,7 +29,7 @@ export const Hero: React.FC = () => {
       {/* Fallback do canvas: é o que aparece sem WebGL, no tier "off" e até o
           experience assumir. O canvas em si é global (ExperienceRoot). */}
       <div
-        className="absolute inset-0 -z-10 overflow-hidden experience-fallback"
+        className="absolute inset-0 -z-10 overflow-hidden experience-fallback experience-fallback-hero"
         aria-hidden="true"
       />
       <div className="flex flex-col items-center xl:items-start animate-fade-in-left">
