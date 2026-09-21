@@ -842,12 +842,18 @@ O `useSEO` atualiza `og:url` por página, mas `twitter:url` ficou só no
 com rota de hash todas as URLs são a home (A29) — passa a importar quando A29
 for resolvido.
 
-### I12 — `theme-color` duplicado sem motivo · ✅ `c1fe06e`
+### I12 — `theme-color` duplicado sem motivo · ✅ `c1fe06e`, ⏪ revertido em `34a9215`
 
 O `index.html` declara `theme-color` duas vezes, uma para
 `prefers-color-scheme: light` e outra para `dark`, **com o mesmo `#7947DF`**.
 Duas declarações que fazem a mesma coisa; uma sem `media` basta. É a única meta
 duplicada que sobrou depois de A15, e é inofensiva.
+
+**Revertido de propósito no dark mode** (`34a9215`, branch `feat/dark-mode`).
+As duas declarações voltaram — agora com cores **diferentes**: `#7947DF` no
+claro e `#0E0A1A` no escuro. O achado continua válido para o estado em que foi
+escrito: duas metas com a mesma cor eram ruído. Com cores distintas, a media
+query passa a fazer o que existe para fazer.
 
 ---
 
@@ -863,6 +869,7 @@ duplicada que sobrou depois de A15, e é inofensiva.
 | A29 | **Canonical dos 8 no próprio site** | Criar URLs reais e continuar apontando metade para o Medium desperdiçaria a migração |
 | A29 | **Pré-render C1, não SSG** | Resolve identidade de URL, canonical e cartão de compartilhamento pelo menor custo. C2/C3 só se passar a importar indexação do corpo do texto |
 | A29 | **`feat/path-routing` a partir de `chore/experience-audit`** | A master está 79 commits atrás; sair dela deixaria a auditoria inteira de fora |
+| dark mode | **I12 revertido** | `theme-color` volta a ter duas declarações, agora com cores diferentes por media query. O achado valia para o estado anterior, em que as duas traziam a mesma cor |
 | Etapa 5 | **vitest adotado** (`^2`, não `^5`) | A linha 5 exige Vite 6 (`vite/module-runner`) e o projeto está no Vite 5.4. A entrada em `resolutions` mantém uma instância só de Vite, senão `vitest/config` e os plugins apontam para tipos diferentes |
 
 ### I13 — O projeto não tem runner de testes · ✅ `4a7b43f`

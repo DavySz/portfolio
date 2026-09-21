@@ -1,7 +1,11 @@
 # Dark mode — plano
 
-> **Fase 1: plano, sem código.** Nada foi implementado. Branch `feat/dark-mode`,
-> a partir de `feat/path-routing` (`3f8a91c`).
+> **Fase 2 concluída.** Branch `feat/dark-mode`, a partir de `feat/path-routing`.
+> Plano em `7a33615`, implementação em `ed90599..d920ccb`.
+>
+> As três decisões em aberto ao fim da Fase 1 foram aprovadas com "pode seguir
+> como achar que fica melhor": densidade da nav, paleta derivada do bloco de
+> código e três estados.
 
 ## Notas de escopo
 
@@ -356,3 +360,92 @@ algo que existe hoje** — vale sua confirmação antes da Fase 2.
    não a única possível. A alternativa seria uma família nova, mais neutra.
 3. **Confirmar o comportamento de três estados**, já que o briefing veio com as
    opções em branco.
+
+---
+
+## Desvios do plano, registrados durante a Fase 2
+
+### D1 — A nav já virava em `xl`; metade do §6 era desnecessária
+
+O §6 propunha "subir o ponto de virada da nav completa de `lg` (1024px) para
+`xl` (1280px)". Ao implementar, `useMobile` já usava `(min-width: 1280px)` — a
+mudança tinha sido feita antes, num ajuste do hero, e está documentada no
+próprio hook.
+
+Efeito prático: **o caso de 1024px nunca existiu para a nav de desktop**, porque
+abaixo de 1280 o que aparece é o menu de painel. A tabela do §6 media um estado
+que não é alcançável. O problema real era só a partir de 1280, e é lá que ele
+foi resolvido.
+
+Sobraram os ajustes de densidade, que continuam necessários. Medição depois:
+
+| viewport | EN | PT |
+| --- | --- | --- |
+| 1280 | +236px | **+107px** |
+| 1440 | +396px | +267px |
+
+Pior caso (português a 1280px) saiu de −95px para +107px.
+
+### D2 — O teste do pré-render de A29 quebrou, e estava certo
+
+Ao pôr `theme-color` de volta com duas declarações, o teste de "cada meta uma
+vez por página" falhou nas 9 páginas. Ele não estava errado — a regra é que
+estava grossa demais.
+
+A regra fina: **uma meta pode repetir quando cada ocorrência responde a uma
+media query diferente.** O `media` entrou na chave de identidade do teste, então
+duplicata de verdade continua sendo pega. Verificado.
+
+### D3 — `Feature.setTheme` é opcional de propósito
+
+O plano dizia que o `LayeredStack` "lê o tema". A forma escolhida foi um gancho
+opcional na interface `Feature`, com o `Experience` observando a classe do
+`<html>` por `MutationObserver`.
+
+Alternativa descartada: passar o tema pelo `FrameContext`, que obrigaria as 4
+features a conhecer um dado que 3 delas ignoram. O opcional mantém a camada 3D
+sem saber que o React existe, que é como ela foi construída.
+
+### D4 — A transição de tema não precisou de guarda própria
+
+O briefing pedia "transição desativada sob `prefers-reduced-motion`". O bloco
+global do `index.css` já zera `transition-duration` de tudo com `!important`,
+então a transição do `body` é coberta sem regra nova. Não há código de guarda
+porque ele seria redundante.
+
+---
+
+## Tabela de contraste final
+
+Lida do **CSS construído**, não da proposta — os valores abaixo saem de
+`dist/assets/*.css`.
+
+### Modo claro
+
+| par | frente / fundo | razão | mín |
+| --- | --- | --- | --- |
+| Corpo | `#111827` / `#ffffff` | 17,74 | 4,5 |
+| Corpo (seção alternada) | `#111827` / `#f6f3fc` | 16,17 | 4,5 |
+| Secundário | `#374151` / `#ffffff` | 10,31 | 4,5 |
+| Atenuado | `#4b5563` / `#ffffff` | 7,56 | 4,5 |
+| Acento | `#6b3acc` / `#ffffff` | 6,77 | 4,5 |
+| Acento forte | `#5a2db8` / `#ffffff` | 8,39 | 4,5 |
+| Anel de foco | `#7947df` / `#ffffff` | 5,56 | 3 |
+| Rodapé: atenuado | `#9ca3af` / `#2a1454` | 6,24 | 4,5 |
+
+### Modo escuro
+
+| par | frente / fundo | razão | mín |
+| --- | --- | --- | --- |
+| Corpo | `#e9e3ff` / `#0e0a1a` | 15,69 | 4,5 |
+| Corpo (seção alternada) | `#e9e3ff` / `#15102b` | 14,81 | 4,5 |
+| Corpo em card | `#e9e3ff` / `#1d1640` | 13,61 | 4,5 |
+| Secundário | `#d4c7ff` / `#0e0a1a` | 12,45 | 4,5 |
+| Atenuado | `#b197e8` / `#0e0a1a` | 7,86 | 4,5 |
+| Atenuado em card | `#b197e8` / `#1d1640` | 6,82 | 4,5 |
+| Acento | `#b197e8` / `#0e0a1a` | 7,86 | 4,5 |
+| Acento forte | `#d4c7ff` / `#0e0a1a` | 12,45 | 4,5 |
+| Anel de foco | `#b197e8` / `#0e0a1a` | 7,86 | 3 |
+| Rodapé: atenuado | `#b197e8` / `#2a1454` | 6,38 | 4,5 |
+
+**26 pares, nenhuma reprovação nos dois modos.**
