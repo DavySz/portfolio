@@ -765,7 +765,7 @@ enquanto `navigation-bar/mobile.tsx` usa `key={link.href}` na mesma lista. Sem
 efeito hoje (a lista é estática), mas é a mesma lista com duas convenções.
 Encaixa em A27.
 
-### I06 — Consequência de A10 sobre o tom da página
+### I06 — Consequência de A10 sobre o tom da página · ⏸️ adiado (Etapa 3)
 
 Unificar os nomes trocou títulos de seção com alguma personalidade ("Who I am",
 "Stack & Tools", "Articles & Insights") por rótulos neutros ("About me",
@@ -843,3 +843,13 @@ O `index.html` declara `theme-color` duas vezes, uma para
 `prefers-color-scheme: light` e outra para `dark`, **com o mesmo `#7947DF`**.
 Duas declarações que fazem a mesma coisa; uma sem `media` basta. É a única meta
 duplicada que sobrou depois de A15, e é inofensiva.
+
+---
+
+## Decisões registradas
+
+| Quando | Decisão | Motivo |
+| --- | --- | --- |
+| Etapa 3 | **Não** adicionar "Contact"/"Contato" à nav nem ao rodapé | O CTA já leva a `#contact`; um link a mais seriam dois destinos iguais na mesma nav, e a estimativa é que a nav desktop já passe de 1024px hoje |
+| Etapa 3 | **I06 adiado** — sem subtítulos abaixo dos `h2` | Fica registrado para depois; as seções seguem com o rótulo puro definido em A10 |
+| Etapa 3 | **A16 suspenso** até A29 | Com rota de hash, canonical para o próprio site equivale a canonical para a home |
