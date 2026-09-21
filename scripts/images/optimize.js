@@ -7,9 +7,11 @@
  *   Pior dos dois mundos: base64 infla 33% e o conteúdo continua bitmap.
  *   `quezzy` sozinho tinha 2,7 MB.
  *
- * Aqui o bitmap é extraído do SVG quando existe, e tudo sai em WebP na
- * largura que a interface realmente usa. SVG de vetor de verdade é copiado
- * sem tocar — converter vetor para bitmap seria perder qualidade à toa.
+ * SVG que embute bitmap é **rasterizado inteiro**, não "desembrulhado": alguns
+ * compõem várias imagens com transform e clip (o rentx tem cinco), então
+ * extrair o primeiro base64 perderia o resto da composição. SVG de vetor de
+ * verdade é copiado sem tocar — converter vetor em bitmap seria perder
+ * qualidade à toa.
  *
  * Uso: yarn images:optimize
  */
@@ -35,12 +37,11 @@ const DEFAULT_WIDTH = 1200; // cards de projeto: ~600px numa grade de 2 colunas
 
 const QUALITY = 80;
 
-/** Extrai o bitmap embutido de um SVG que é só um invólucro. */
-const extractEmbeddedBitmap = (svg) => {
-  const match = svg.match(/data:image\/(png|jpe?g|webp);base64,([^"')\s]+)/);
-  if (!match) return null;
-  return Buffer.from(match[2], "base64");
-};
+/** Um SVG que embute bitmap é foto disfarçada de vetor. */
+const hasEmbeddedBitmap = (svg) => /data:image\/[a-z]+;base64,/.test(svg);
+
+/** DPI usado ao rasterizar SVG; 150 dá nitidez sem estourar o tamanho. */
+const SVG_DENSITY = 150;
 
 const format = (bytes) => `${(bytes / 1024).toFixed(0)} kB`;
 
@@ -64,29 +65,27 @@ for (const file of files) {
   const before = (await stat(input)).size;
   totalBefore += before;
 
-  let source = await readFile(input);
+  const source = await readFile(input);
+  const isSvg = extname(file).toLowerCase() === ".svg";
   let note = "";
 
-  if (extname(file).toLowerCase() === ".svg") {
-    const embedded = extractEmbeddedBitmap(source.toString("utf8"));
-    if (!embedded) {
-      // vetor de verdade: copiar sem mexer
-      const output = join(OUTPUT_DIR, file);
-      await writeFile(output, source);
-      totalAfter += before;
-      console.log(
-        `  ${file.padEnd(28)} ${format(before).padStart(9)} → ${format(before).padStart(9)}  (vetor, copiado)`
-      );
-      continue;
-    }
-    source = embedded;
-    note = " (bitmap extraído do SVG)";
+  if (isSvg && !hasEmbeddedBitmap(source.toString("utf8"))) {
+    // vetor de verdade: copiar sem mexer
+    const output = join(OUTPUT_DIR, file);
+    await writeFile(output, source);
+    totalAfter += before;
+    console.log(
+      `  ${file.padEnd(28)} ${format(before).padStart(9)} → ${format(before).padStart(9)}  (vetor, copiado)`
+    );
+    continue;
   }
+
+  if (isSvg) note = " (SVG com bitmap, rasterizado)";
 
   const width = WIDTHS[name] ?? DEFAULT_WIDTH;
   const output = join(OUTPUT_DIR, `${name}.webp`);
 
-  await sharp(source)
+  await sharp(source, isSvg ? { density: SVG_DENSITY } : {})
     .resize({ width, withoutEnlargement: true })
     .webp({ quality: QUALITY, effort: 6 })
     .toFile(output);
