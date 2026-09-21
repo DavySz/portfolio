@@ -14,7 +14,9 @@ interface TextProps {
     | "muted"
     | "subtle"
     | "accent"
+    | "accentLight"
     | "gradient"
+    | "gradientLight"
     | "white";
   align?: "left" | "center" | "right" | "justify";
   className?: string;
@@ -43,8 +45,14 @@ export const Text: React.FC<TextProps> = ({
         return "text-gray-500";
       case "accent":
         return "text-primary-600";
+      // Variantes para superfície escura (fundo do experience). Contraste sobre
+      // o ponto mais claro do shader (#653bbe): primary-200 = 4.60:1 (AA).
+      case "accentLight":
+        return "text-primary-200";
       case "gradient":
         return "bg-gradient-to-tr from-primary-500 to-primary-900 bg-clip-text text-transparent";
+      case "gradientLight":
+        return "bg-gradient-to-tr from-white to-primary-200 bg-clip-text text-transparent";
       case "white":
         return "text-white";
       default:

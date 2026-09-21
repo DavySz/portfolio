@@ -100,6 +100,18 @@
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
   }
+
+  /* Fallback do canvas do experience. CSS próprio (e não Tailwind) porque são
+     três camadas de radial-gradient com stops próprios: como valor arbitrário
+     do Tailwind viraria uma string ilegível. É o que aparece antes do fade-in
+     do shader, no tier "off" e quando não há WebGPU/WebGL2.
+     As cores espelham DEEP/MID/BRAND de src/experience/features/HeroBackground.ts. */
+  .experience-fallback {
+    background:
+      radial-gradient(120% 90% at 70% 30%, #7947df55 0%, transparent 55%),
+      radial-gradient(90% 80% at 20% 80%, #2a176099 0%, transparent 60%),
+      #0e0a1a;
+  }
 }
 
 /* Keyframes */

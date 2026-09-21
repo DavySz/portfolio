@@ -1,4 +1,8 @@
-export type ButtonVariant = "primary" | "secondary" | "tertiary";
+export type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "onDark";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

@@ -4,6 +4,7 @@ import { usePDF } from "../../../hooks/usePdf/use-pdf";
 import { EN_CV_PATH, PT_CV_PATH } from "../../../shared/constants";
 import { Button } from "../../../components/button";
 import { Text } from "../../../components/text";
+import { ExperienceCanvas } from "../../../components/experience-canvas";
 import UserPhoto from "../../../assets/user.png";
 import { useTranslation } from "react-i18next";
 
@@ -20,12 +21,13 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col-reverse xl:flex-row w-full gap-16 items-center justify-center py-12 md:py-16 px-6 xl:px-[100px]">
+    <section className="relative isolate flex flex-col-reverse xl:flex-row w-full gap-16 items-center justify-center py-12 md:py-16 px-6 xl:px-[100px]">
+      <ExperienceCanvas />
       <div className="flex flex-col items-center xl:items-start animate-fade-in-left">
         <Text
           as="p"
           variant="cardDescription"
-          color="accent"
+          color="accentLight"
           align="center"
           className="xl:text-left text-display-sm md:text-heading-xl mb-6 animate-fade-in-up font-semibold tracking-wide uppercase"
         >
@@ -36,7 +38,7 @@ export const Hero: React.FC = () => {
           <Text
             as="h1"
             variant="heroTitle"
-            color="gradient"
+            color="gradientLight"
             align="center"
             className="xl:text-left text-display-md md:text-display-xl animate-gradient animate-fade-in-up"
           >
@@ -48,7 +50,7 @@ export const Hero: React.FC = () => {
           <Text
             as="p"
             variant="heroSubtitle"
-            color="secondary"
+            color="white"
             align="center"
             className="xl:text-left text-body-lg md:text-body-xl animate-fade-in-up"
           >
@@ -60,7 +62,7 @@ export const Hero: React.FC = () => {
           <Button
             icon={MdOutlineFileDownload}
             onClick={handleDownLoadCV}
-            variant="secondary"
+            variant="onDark"
           >
             {t("hero.download")}
           </Button>
@@ -68,7 +70,7 @@ export const Hero: React.FC = () => {
             {SOCIALS.map((social, index) => (
               <Button
                 onClick={() => openLink(social.href)}
-                variant="secondary"
+                variant="onDark"
                 icon={social.icon}
                 key={index}
               />

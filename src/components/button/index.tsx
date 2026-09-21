@@ -22,6 +22,10 @@ export const Button: React.FC<ButtonProps> = ({
       secondary:
         "bg-transparent border border-primary-500 hover:bg-primary-500/10 hover:border-primary-400 hover:shadow-primary",
       tertiary: "bg-transparent hover:bg-white/5",
+      // Superfície escura (fundo do experience): borda primary-200 = 4.60:1
+      // sobre o ponto mais claro do shader, acima dos 3:1 exigidos para UI.
+      onDark:
+        "bg-transparent border border-primary-200 hover:bg-white/10 hover:border-white hover:shadow-primary",
     };
 
     return variants[variant];
@@ -34,6 +38,8 @@ export const Button: React.FC<ButtonProps> = ({
       primary: "text-white",
       tertiary: "text-white hover:text-primary-300",
       secondary: "text-primary-700 hover:text-primary-600",
+      // primary-100 = 5.79:1 sobre o ponto mais claro do shader (AA).
+      onDark: "text-primary-100 hover:text-white",
     };
 
     return variants[variant];
@@ -47,6 +53,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   const getIconColor = (): string => {
     if (variant === "tertiary") return "#FFFFFF";
+    if (variant === "onDark") return "#E9E3FF"; // primary-100
     return "#7041CF";
   };
 
