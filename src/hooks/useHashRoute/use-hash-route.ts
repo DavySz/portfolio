@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 
 /** Prefixo da rota de leitura: `#/artigos/<slug>`. */
 export const ARTICLE_ROUTE = "#/artigos/";
@@ -27,11 +28,31 @@ const readSlug = (): string | null => {
  * com hash, um link direto para um artigo funciona em qualquer hospedagem,
  * sem precisar de rewrite para o index.html.
  */
+type DocumentWithTransition = Document & {
+  startViewTransition?: (callback: () => void) => unknown;
+};
+
 export const useArticleRoute = (): string | null => {
   const [slug, setSlug] = useState<string | null>(readSlug);
 
   useEffect(() => {
-    const onHashChange = () => setSlug(readSlug());
+    const onHashChange = () => {
+      const next = readSlug();
+
+      // View Transitions onde existe; onde não existe, troca direta. O
+      // navegador tira o retrato da tela antes do callback e cruza para o
+      // depois — daí a troca de estado precisa acontecer dentro dele.
+      const doc = document as DocumentWithTransition;
+      if (typeof doc.startViewTransition !== "function") {
+        setSlug(next);
+        return;
+      }
+
+      doc.startViewTransition(() => {
+        flushSync(() => setSlug(next));
+      });
+    };
+
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);

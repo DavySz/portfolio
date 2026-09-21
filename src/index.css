@@ -127,6 +127,35 @@
   }
 }
 
+/* Transição entre a home e o artigo.
+   View Transitions é progressivo: onde não existe, a troca só acontece seca,
+   sem nada quebrar. O bloco de prefers-reduced-motion abaixo desliga a
+   animação — uma página inteira cruzando a tela é exatamente o movimento que
+   a preferência pede para evitar. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: view-fade-out 180ms ease both;
+  }
+
+  ::view-transition-new(root) {
+    animation: view-fade-in 260ms ease both;
+  }
+}
+
+@keyframes view-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes view-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
 /* ---------------------------------------------------------------------------
    Artigos — FORA de @layer de propósito.
    O Tailwind poda o que está dentro de @layer e não encontra no `content`.
