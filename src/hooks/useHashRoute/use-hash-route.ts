@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 
 /** Prefixo da rota de leitura: `#/artigos/<slug>`. */
@@ -91,75 +91,65 @@ export const useArticleRoute = (): ArticleRoute => {
 };
 
 /**
- * Leva até a âncora do hash **uma vez**, quando a página parar de crescer.
+ * Leva até a âncora do hash **só quando a página abre nela**.
  *
- * As seções da home são `lazy`, e as que ficam ACIMA do alvo empurram ele para
- * baixo conforme chegam. A primeira versão disto realinhava a cada mudança de
- * altura, o que virava uma sequência de saltos — especialmente ao voltar de um
- * artigo, com a animação de transição rodando junto.
+ * Existe para um caso só: alguém colar `davysz.com/#skills` numa aba nova. As
+ * seções da home são `lazy`, então o alvo não está no DOM quando o navegador
+ * tenta rolar, e ele desiste. Aqui a gente espera a altura do documento ficar
+ * quieta e rola uma vez.
  *
- * Agora é uma coisa só: espera o alvo existir E a altura do documento ficar
- * quieta, e então rola uma vez. Se a seção já estava pronta, não fazemos nada —
- * quem rola é o navegador, com o `scroll-behavior: smooth` do CSS.
+ * Navegação dentro do site NÃO passa por aqui:
+ *
+ * - dentro da home, a seção já existe e quem rola é o navegador, com o
+ *   `scroll-behavior: smooth` do CSS;
+ * - vindo de um artigo, o destino é o topo da home e ponto. Perseguir a seção
+ *   enquanto a página se monta era justamente o que dava errado.
  */
 export const useAnchorScroll = (enabled: boolean): void => {
-  useEffect(() => {
-    if (!enabled) return;
+  // Congela o hash de abertura: o que vier depois é navegação, não entrada.
+  const [entryHash] = useState(() =>
+    typeof window === "undefined" ? "" : window.location.hash
+  );
+  const handled = useRef(false);
 
-    let stopped = false;
+  useEffect(() => {
+    if (!enabled || handled.current) return;
+    handled.current = true;
+
+    // Abriu num artigo: nada a fazer aqui, nem agora nem quando a pessoa
+    // voltar para a home pelo menu.
+    if (!entryHash || entryHash.startsWith(ARTICLE_ROUTE)) return;
+
+    const id = decodeURIComponent(entryHash.slice(1));
+    if (!id || document.getElementById(id)) return;
+
     let settleTimer = 0;
-    let deadline = 0;
     let observer: ResizeObserver | null = null;
 
     const stop = () => {
-      stopped = true;
       window.clearTimeout(settleTimer);
       window.clearTimeout(deadline);
       observer?.disconnect();
       observer = null;
     };
 
-    const scrollToHash = () => {
+    /** Rola uma vez, quando o alvo existe e a página parou de crescer. */
+    const land = () => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "instant" });
       stop();
-      stopped = false;
-
-      const { hash } = window.location;
-      if (!hash || hash.startsWith(ARTICLE_ROUTE)) return;
-
-      const id = decodeURIComponent(hash.slice(1));
-      if (!id) return;
-
-      // A seção já está pronta: o navegador resolve a âncora sozinho, com o
-      // smooth do CSS. Assumir aqui trocaria isso por um salto seco.
-      if (document.getElementById(id)) return;
-
-      deadline = window.setTimeout(stop, ANCHOR_TIMEOUT);
-
-      /** Rola uma vez, quando o alvo existe e a página parou de crescer. */
-      const land = () => {
-        if (stopped) return;
-        const target = document.getElementById(id);
-        if (target) target.scrollIntoView({ behavior: "instant" });
-        stop();
-      };
-
-      const waitForQuiet = () => {
-        window.clearTimeout(settleTimer);
-        settleTimer = window.setTimeout(land, SETTLE_DELAY);
-      };
-
-      observer = new ResizeObserver(waitForQuiet);
-      observer.observe(document.body);
-      waitForQuiet();
     };
 
-    // Ao chegar de um artigo, o hash já é o da seção quando isto roda.
-    scrollToHash();
-    window.addEventListener("hashchange", scrollToHash);
-
-    return () => {
-      stop();
-      window.removeEventListener("hashchange", scrollToHash);
+    const waitForQuiet = () => {
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(land, SETTLE_DELAY);
     };
-  }, [enabled]);
+
+    const deadline = window.setTimeout(stop, ANCHOR_TIMEOUT);
+
+    observer = new ResizeObserver(waitForQuiet);
+    observer.observe(document.body);
+    waitForQuiet();
+
+    return stop;
+  }, [enabled, entryHash]);
 };
