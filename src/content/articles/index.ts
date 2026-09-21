@@ -111,7 +111,7 @@ export const ARTICLES: ArticleMeta[] = [
   {
     slug: "micro-frontends",
     date: "2026-01-02",
-    bodies: ["pt"],
+    bodies: ["pt", "en"],
     thumb: { src: MicroThumb, half: MicroThumbHalf, width: 1200 },
     mediumUrl:
       "https://medium.com/@davysz/micro-frontends-divida-para-conquistar-77d59ff2bdcb",
