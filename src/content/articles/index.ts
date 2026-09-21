@@ -94,7 +94,7 @@ export const ARTICLES: ArticleMeta[] = [
   {
     slug: "observabilidade-no-frontend",
     date: "2026-01-11",
-    bodies: ["pt"],
+    bodies: ["pt", "en"],
     en: {
       title: "Frontend observability",
       excerpt:
