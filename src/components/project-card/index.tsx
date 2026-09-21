@@ -7,18 +7,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   title,
   link,
 }) => {
-  const openLink = (): void => {
-    window.open(link, "_blank");
-  };
-
   return (
     <div
-      className="group flex flex-col w-full h-full min-h-[400px] md:min-h-[500px] rounded-[20px] shadow-lg bg-white hover:cursor-pointer
+      className="group relative flex flex-col w-full h-full min-h-[400px] md:min-h-[500px] rounded-[20px] shadow-lg bg-white
                  transition-all duration-300 ease-out
                  hover:shadow-xl hover:shadow-primary-500/10 hover:-translate-y-2
                  transform active:scale-95 animate-fade-in-up
                  relative overflow-hidden"
-      onClick={openLink}
     >
       <div
         className="absolute inset-0 bg-gradient-to-t from-primary-500/10 to-transparent 
@@ -29,7 +24,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       <div className="flex flex-col justify-center relative">
         <img
           src={thumb}
-          alt={`${title} - ${category}`}
+          alt=""
+          aria-hidden="true"
           className="h-[200px] md:h-[389px] w-full rounded-t-[20px] transition-transform duration-300 ease-out group-hover:scale-105 object-cover"
           loading="lazy"
         />
@@ -63,12 +59,23 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       <div className="flex-1 py-4 md:py-8 px-4 md:px-14 flex flex-col justify-between gap-2 relative z-20">
         <div className="flex flex-col gap-2">
           <Text
-            as="p"
+            as="h3"
             variant="cardTitle"
             color="primary"
             className="text-heading-md md:text-heading-xl group-hover:text-primary-700 transition-colors duration-300 leading-snug"
           >
-            {title}
+            {/* Link de verdade, não div com onClick: o ::after cobre o card
+                inteiro para a área de clique continuar a mesma, mas agora dá
+                para chegar por teclado e abrir em nova aba. */}
+            <a
+              href={link}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="after:absolute after:inset-0 after:content-['']
+                         focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+            >
+              {title}
+            </a>
           </Text>
           <Text
             as="p"

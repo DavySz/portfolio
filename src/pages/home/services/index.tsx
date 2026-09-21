@@ -23,7 +23,7 @@ export const Services: React.FC = () => {
         aria-hidden="true"
       />
       <Text
-        as="h1"
+        as="h2"
         variant="sectionTitle"
         color="gradient"
         align="center"

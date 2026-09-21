@@ -1,11 +1,16 @@
 import type { SkillCardProps } from "./types";
 
-export const SkillCard: React.FC<SkillCardProps> = ({ data, onClick }) => {
+export const SkillCard: React.FC<SkillCardProps> = ({ data }) => {
   return (
-    <div
-      className="group cursor-pointer flex flex-col items-center justify-center transition-all duration-300 ease-out
-                 hover:scale-105 animate-fade-in-up"
-      onClick={onClick}
+    /* Link de verdade em vez de div com onClick: alcançável por teclado,
+       anunciado como link e com "abrir em nova aba" funcionando. */
+    <a
+      href={data.link}
+      target="_blank"
+      rel="noreferrer noopener"
+      className="group flex flex-col items-center justify-center transition-all duration-300 ease-out
+                 hover:scale-105 animate-fade-in-up
+                 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-4 focus-visible:rounded-[30px]"
       style={{
         animationDelay: `${Math.random() * 0.5}s`,
       }}
@@ -33,6 +38,6 @@ export const SkillCard: React.FC<SkillCardProps> = ({ data, onClick }) => {
       >
         {data.title}
       </p>
-    </div>
+    </a>
   );
 };

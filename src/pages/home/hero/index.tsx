@@ -94,9 +94,17 @@ export const Hero: React.FC = () => {
         className="h-[300px] xl:h-[500px] w-screen xl:w-[500px] xl:rounded-3xl overflow-hidden animate-fade-in-right"
         data-physics
       >
+        {/* Elemento LCP da página. width/height reservam a caixa antes de a
+            imagem chegar (evita CLS) e fetchPriority tira ela da fila atrás
+            dos outros recursos. O peso do arquivo continua sendo o gargalo —
+            ver "Próximos passos" no REPORT. */}
         <img
           src={UserPhoto}
           alt="Davy de Souza Assunção - Full Stack Developer"
+          width={1024}
+          height={1024}
+          fetchPriority="high"
+          decoding="async"
           className="h-full w-full animate-float object-cover"
         />
       </div>

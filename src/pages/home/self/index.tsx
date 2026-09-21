@@ -28,7 +28,7 @@ export const Self: React.FC = () => {
       </div>
       <div className="flex flex-col items-center justify-center lg:items-start max-w-[579px]">
         <Text
-          as="h1"
+          as="h2"
           variant="sectionTitle"
           color="gradient"
           align="center"

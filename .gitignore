@@ -31,3 +31,6 @@ public/decoders
 # Derivado, e não deve ir para produção junto com os modelos reais.
 assets-src/models/_test-cube.glb
 public/models/_test-cube.glb
+
+# Cache incremental do tsc: derivado, e sujava o diff a cada build
+*.tsbuildinfo

@@ -9,10 +9,6 @@ export const Skills: React.FC = () => {
   const { t } = useTranslation("home");
   const [isLoading, setIsLoading] = useState(true);
 
-  const openLink = (link: string): void => {
-    window.open(link, "_blank");
-  };
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -27,7 +23,7 @@ export const Skills: React.FC = () => {
       id="skills"
     >
       <Text
-        as="h1"
+        as="h2"
         variant="sectionTitle"
         color="gradient"
         align="center"
@@ -69,7 +65,7 @@ export const Skills: React.FC = () => {
                 }}
                 data-physics
               >
-                <SkillCard onClick={() => openLink(skill.link)} data={skill} />
+                <SkillCard data={skill} />
               </div>
             ))}
       </div>

@@ -21,7 +21,7 @@ export const Articles: React.FC = () => {
       className="flex flex-col items-center justify-center py-16 md:py-24 px-6 xl:px-[100px]"
     >
       <Text
-        as="h1"
+        as="h2"
         variant="sectionTitle"
         color="gradient"
         align="center"

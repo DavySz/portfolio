@@ -15,7 +15,7 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 05 | Cena de domínio: fluxo de transações | feature | **sim, antes de codar** | **aguardando revisão** | `feat/experience-transactions-scene` | Seção `services`, narrativa A (caos→fluxo). 7.000 instâncias `high` / 1.500 `low`. Primeira versão cobria 103% da área e lia como textura; corrigida em `b875f49` para ~10% de cobertura. **fps e CPU ainda precisam ser medidos.** |
 | 06 | Waterfall de traces | feature | **sim, antes de codar** | **revertida** | `feat/experience-trace-scene` (código removido em `feat/physics-easter-egg`) | Feita em DOM (opção A) e depois **removida a pedido do Davy**: a seção `observability` não entrou no site. O commit `d0c524b` tem o código inteiro, caso volte a fazer sentido. |
 | 07 | Easter egg com física | feature | não | **aguardando revisão** | `feat/physics-easter-egg` | Rapier 0.20 em chunk próprio de **796 KB gzip**, baixado só na ativação. Konami + botão no rodapé. 12 elementos com `data-physics`. JS inicial +673 B. |
-| 08 | Auditoria final de performance e acessibilidade | qualidade | não | pendente | — | |
+| 08 | Auditoria final de performance e acessibilidade | qualidade | não | **aguardando revisão** | `chore/experience-audit` | `REPORT.md` criado. 6 correções pequenas (hierarquia de headings, 2 cards sem teclado, `font-regular`, LCP do hero, `tsbuildinfo`). **Lighthouse, heap, axe e matriz de ambientes não puderam rodar aqui.** |
 
 ---
 
@@ -51,7 +51,7 @@ continuam linkando para lá, como referência secundária.
 | 1 | Rodar Lighthouse mobile 3× e preencher a tabela da seção 7.3 do `BASELINE.md` | Davy | Verificação do orçamento de LCP/TBT das tasks 01–08. O orçamento de **bundle** já está medido e vale. **Agora também bloqueia o aceite da task 01.** |
 | 2 | Responder onde o site é publicado e se há preview por branch | Davy | Validação de performance em ambiente real. |
 | 3 | Decidir se a otimização das imagens (hero = 1,4 MB) entra antes ou depois da série Experience | Davy | Se entrar no meio, o `BASELINE.md` precisa ser regerado. |
-| 4 | `git rm --cached` nos `*.tsbuildinfo` + entrada no `.gitignore` | Davy | Não bloqueia, mas suja o diff de toda task. |
+| 4 | ~~`git rm --cached` nos `*.tsbuildinfo`~~ — feito na task 08. | — | Resolvido. |
 | 5 | Alinhar CLAUDE.md × repositório quanto ao Prettier (citado na stack, não instalado) | Davy | Não bloqueia. |
 | 6 | **Aval visual do hero escuro** (task 01) + checklist de browsers da spec 01 | Davy | Aceite da task 01. |
 | 7 | Decidir se `prefers-reduced-motion` deve reagir em runtime (hoje é lido só na montagem) | Davy | Candidata à task 08. |
@@ -60,7 +60,7 @@ continuam linkando para lá, como referência secundária.
 | 10 | Abrir `/debug-assets.html` no Chrome e no Firefox para confirmar Draco + textura decodificando | Davy | Aceite da task 02. |
 | 11 | **Aval visual do posicionamento do objeto-assinatura** (halo em volta da foto, só em ≥1280px) | Davy | Aceite da task 03. Estimei sem browser. |
 | 12 | Conferir `renderer.info` antes/depois de desmontar (vazamento de geometria) | Davy | Aceite da task 03. |
-| 13 | Tailwind emite utilitários fantasma a partir de palavras no `src/**/*.ts` (ex.: `.ring` veio de `RingConfig`) | — | Candidata à task 08: hoje custa 14 B, mas cresce junto com `src/experience/`. |
+| 13 | Tailwind emite utilitários fantasma a partir de palavras no `src/**/*.ts` | — | Medido na task 08: corrigir economiza **88 B** mas cria falha silenciosa. Ver REPORT 7.3. |
 | 14 | **Comparar hero antes/depois da task 04** (desktop e mobile) — refactor exige visual idêntico | Davy | Aceite da task 04. Não consigo tirar screenshot aqui. |
 | 15 | Conferir no Performance do DevTools que não há frame renderizado com o hero fora da tela | Davy | Aceite da task 04. |
 | 16 | ~~Escolher seção e narrativa da task 05~~ — delegado a mim: `services` + narrativa A | — | Resolvido. |
@@ -174,3 +174,4 @@ através de `self`, `skills`, `projects` e `articles`. Decidir o que fazer com
 | 2026-09-21 | Task 07 executada em `feat/physics-easter-egg`. Rapier isolado em chunk próprio, carregado só na ativação. |
 | 2026-09-21 | Davy pediu para remover a seção "Lendo um trace". Task 06 revertida em cima da 07; o código fica preservado no commit `d0c524b`. |
 | 2026-09-21 | Fora da série: leitor de artigos no próprio site, com os 8 textos de `Documents/artigos`. Branch `feat/articles-reader`. |
+| 2026-09-21 | Task 08 executada em `chore/experience-audit`. `REPORT.md` com números finais, correções aplicadas e checklist de aparelhos. Série encerrada. |
