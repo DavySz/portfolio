@@ -11,7 +11,7 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 01 | Núcleo do Experience + fundo em shader no hero | feature | não | **aguardando revisão** | `feat/experience-core` | three@0.186 em chunk dinâmico (**240.672 B gzip**). JS inicial +601 B (+0,78%). **Hero virou escuro** e as cores do texto mudaram para passar AA — precisa de aval visual. |
 | 02 | Pipeline de assets 3D (glTF + Draco + KTX2) | infra | não | **aguardando revisão** | `feat/experience-assets` (ramificada de `feat/experience-core`, **não** do master) | Pipeline 4 passos + loaders + página de debug + `ASSETS.md`. Cubo de teste: 3,1 kB → 2,4 kB (−22,7%). **`ktx` não instalado → saída em WebP.** Bundle inalterado. |
 | 03 | Objeto-assinatura no hero | feature | **sim, antes de codar** | **aguardando revisão** | `feat/experience-signature-object` (de `feat/experience-assets`) | Conceito **C — Alinhamento (giroscópio)**, escolha delegada a mim. 7.760 tris `high` / 3.092 `low` (39,8%). JS inicial **−6 B**. **Posicionamento precisa de aval visual.** |
-| 04 | Canvas global + cenas por seção | refactor | não | pendente | — | Ponto de montagem provável: `PageTemplate`. |
+| 04 | Canvas global + cenas por seção | refactor | não | **aguardando revisão** | `refactor/experience-global-canvas` | Canvas único fixo no `PageTemplate`, recortado por seção via scissor. JS inicial +159 B. **Comparação visual antes/depois não pôde ser feita aqui (sem browser).** |
 | 05 | Cena de domínio: fluxo de transações | feature | **sim, antes de codar** | pendente | — | Checkpoint de seção e narrativa. |
 | 06 | Cena de domínio: waterfall de traces | feature | **sim, antes de codar** | pendente | — | Checkpoint de seção e narrativa. |
 | 07 | Easter egg com física | feature | não | pendente | — | Independente: pode rodar a qualquer momento depois da 01. |
@@ -36,6 +36,8 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 11 | **Aval visual do posicionamento do objeto-assinatura** (halo em volta da foto, só em ≥1280px) | Davy | Aceite da task 03. Estimei sem browser. |
 | 12 | Conferir `renderer.info` antes/depois de desmontar (vazamento de geometria) | Davy | Aceite da task 03. |
 | 13 | Tailwind emite utilitários fantasma a partir de palavras no `src/**/*.ts` (ex.: `.ring` veio de `RingConfig`) | — | Candidata à task 08: hoje custa 14 B, mas cresce junto com `src/experience/`. |
+| 14 | **Comparar hero antes/depois da task 04** (desktop e mobile) — refactor exige visual idêntico | Davy | Aceite da task 04. Não consigo tirar screenshot aqui. |
+| 15 | Conferir no Performance do DevTools que não há frame renderizado com o hero fora da tela | Davy | Aceite da task 04. |
 
 ## Números de referência
 
@@ -59,6 +61,29 @@ Depois da task 03 (branch `feat/experience-signature-object`):
 - **Chunk `Experience` (dinâmico):** 242.738 B gzip / 891.096 B raw (+2.066 B vs task 01)
 - **Triângulos:** 7.760 `high` · 3.092 `low` (39,8% — spec exige ≤50%)
 
+Depois da task 04 (branch `refactor/experience-global-canvas`):
+
+- **JS inicial:** 77.882 B gzip (+159 B vs task 03; +754 B / +0,98% vs baseline)
+- **CSS inicial:** 5.978 B gzip (+24 B vs task 03)
+- **Chunk `Experience` (dinâmico):** 244.073 B gzip (+1.335 B vs task 03)
+
+### Seções com fundo opaco (levantadas na task 04, **não alteradas**)
+
+| Seção | Fundo | Esconde o canvas? |
+|---|---|---|
+| `hero` | transparente (+ fallback CSS que se apaga) | não |
+| `self` | transparente | não |
+| `services` | `bg-secondary-50` | **sim** |
+| `skills` | transparente | não |
+| `projects` | transparente | não |
+| `articles` | transparente | não |
+| `footer` | `bg-secondary-900` | **sim** |
+
+`body` **não** tem background: o branco vem do padrão do navegador. Por isso o
+canvas global precisa ser transparente e recortado por seção — senão apareceria
+através de `self`, `skills`, `projects` e `articles`. Decidir o que fazer com
+`services` e `footer` é assunto das tasks 05 e 06.
+
 ## Histórico
 
 | Data | Evento |
@@ -71,3 +96,5 @@ Depois da task 03 (branch `feat/experience-signature-object`):
 | 2026-09-20 | Task 02 commitada em `feat/experience-assets` (`5721848`), sem push. |
 | 2026-09-20 | Task 03 parada no checkpoint de conceito, conforme a spec. 3 conceitos propostos; nenhuma branch ou arquivo criado. |
 | 2026-09-21 | Escolha do conceito delegada a mim pelo Davy: **C — Alinhamento (giroscópio)**. Task 03 executada em `feat/experience-signature-object`. |
+| 2026-09-21 | Dois ajustes de espaçamento reportados pelo Davy e corrigidos na mesma branch: margem assimétrica do nav (`263f536`) e padding superior do hero no empilhado (`94cd396`). |
+| 2026-09-21 | Task 04 executada em `refactor/experience-global-canvas`, ramificada de `feat/experience-signature-object`. |

@@ -32,6 +32,7 @@ const BRAND = 0x7947df;
  * TSL compila para WGSL (WebGPU) ou GLSL (fallback WebGL2) automaticamente.
  */
 export class HeroBackground implements Feature {
+  readonly section = "hero";
   readonly scene = new THREE.Scene();
   readonly camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 

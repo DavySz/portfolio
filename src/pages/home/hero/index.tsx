@@ -4,12 +4,13 @@ import { usePDF } from "../../../hooks/usePdf/use-pdf";
 import { EN_CV_PATH, PT_CV_PATH } from "../../../shared/constants";
 import { Button } from "../../../components/button";
 import { Text } from "../../../components/text";
-import { ExperienceCanvas } from "../../../components/experience-canvas";
+import { useExperienceSection } from "../../../hooks/useExperienceSection/use-experience-section";
 import UserPhoto from "../../../assets/user.png";
 import { useTranslation } from "react-i18next";
 
 export const Hero: React.FC = () => {
   const { t, i18n } = useTranslation("home");
+  const sectionRef = useExperienceSection("hero");
   const { download } = usePDF();
 
   const openLink = (href: string): void => {
@@ -21,8 +22,16 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative isolate flex flex-col-reverse xl:flex-row w-full gap-16 items-center justify-center pb-12 md:pb-16 xl:py-16 px-6 xl:px-[100px]">
-      <ExperienceCanvas />
+    <section
+      ref={sectionRef}
+      className="relative isolate flex flex-col-reverse xl:flex-row w-full gap-16 items-center justify-center pb-12 md:pb-16 xl:py-16 px-6 xl:px-[100px]"
+    >
+      {/* Fallback do canvas: é o que aparece sem WebGL, no tier "off" e até o
+          experience assumir. O canvas em si é global (ExperienceRoot). */}
+      <div
+        className="absolute inset-0 -z-10 overflow-hidden experience-fallback"
+        aria-hidden="true"
+      />
       <div className="flex flex-col items-center xl:items-start animate-fade-in-left">
         <Text
           as="p"

@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { NavigationBar } from "../navigation-bar";
+import { ExperienceRoot } from "../experience-root";
 import type { PageTemplateProps } from "./types";
 
 export const PageTemplate: React.FC<PageTemplateProps> = memo(
@@ -13,6 +14,9 @@ export const PageTemplate: React.FC<PageTemplateProps> = memo(
         >
           Pular para o conteúdo principal
         </a>
+        {/* Canvas único atrás da página inteira. Depois do skip link, que
+            precisa continuar sendo o primeiro elemento focável. */}
+        <ExperienceRoot />
         <NavigationBar />
         <main id="main-content" role="main">
           {children}

@@ -2,19 +2,25 @@ import type * as THREE from "three/webgpu";
 import type { Quality } from "./quality";
 
 export interface FrameContext {
-  /** ponteiro normalizado no container: (0,0) canto inferior esquerdo, (1,1) superior direito */
+  /** ponteiro normalizado na SEÇÃO da feature: (0,0) canto inferior esquerdo */
   pointer: THREE.Vector2;
+  /** dimensões da seção da feature, não da viewport */
   width: number;
   height: number;
+  /** 0 quando a seção entra por baixo, 1 quando sai por cima */
+  progress: number;
+  /** 0–1, fração da seção visível na viewport */
+  visibility: number;
   quality: Quality;
 }
 
 /**
  * Cada efeito (fundo do hero, objeto-assinatura, cena de domínio…) é uma Feature.
- * O Experience renderiza as features em ordem, sem limpar entre elas,
- * então dá pra empilhar camadas (ex.: fundo + objeto 3D) num único canvas.
+ * `section` diz a qual seção registrada ela pertence: o Experience recorta o
+ * render ao retângulo dessa seção e só a atualiza enquanto ela estiver visível.
  */
 export interface Feature {
+  readonly section: string;
   readonly scene: THREE.Scene;
   readonly camera: THREE.Camera;
   resize(ctx: FrameContext): void;

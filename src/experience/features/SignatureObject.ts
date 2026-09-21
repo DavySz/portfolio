@@ -62,6 +62,7 @@ const RINGS: RingConfig[] = [
 ];
 
 export class SignatureObject implements Feature {
+  readonly section = "hero";
   readonly scene = new THREE.Scene();
   readonly camera = new THREE.PerspectiveCamera(
     CAMERA_FOV,
