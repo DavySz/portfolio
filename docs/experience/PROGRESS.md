@@ -12,8 +12,8 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 02 | Pipeline de assets 3D (glTF + Draco + KTX2) | infra | não | **aguardando revisão** | `feat/experience-assets` (ramificada de `feat/experience-core`, **não** do master) | Pipeline 4 passos + loaders + página de debug + `ASSETS.md`. Cubo de teste: 3,1 kB → 2,4 kB (−22,7%). **`ktx` não instalado → saída em WebP.** Bundle inalterado. |
 | 03 | Objeto-assinatura no hero | feature | **sim, antes de codar** | **aguardando revisão** | `feat/experience-signature-object` (de `feat/experience-assets`) | Conceito **C — Alinhamento (giroscópio)**, escolha delegada a mim. 7.760 tris `high` / 3.092 `low` (39,8%). JS inicial **−6 B**. **Posicionamento precisa de aval visual.** |
 | 04 | Canvas global + cenas por seção | refactor | não | **aguardando revisão** | `refactor/experience-global-canvas` | Canvas único fixo no `PageTemplate`, recortado por seção via scissor. JS inicial +159 B. Bug de eixo Y invertido encontrado pelo Davy e corrigido (`97811fa`); **visual conferido por ele depois da correção.** |
-| 05 | Cena de domínio: fluxo de transações | feature | **sim, antes de codar** | **aguardando revisão** | `feat/experience-transactions-scene` | Seção `services`, narrativa A (caos→fluxo), fundo claro preservado — escolha delegada a mim. 7.000 instâncias `high` / 1.500 `low`. JS inicial +8 B. **fps e CPU precisam ser medidos no browser.** |
-| 06 | Cena de domínio: waterfall de traces | feature | **sim, antes de codar** | pendente | — | Checkpoint de seção e narrativa. |
+| 05 | Cena de domínio: fluxo de transações | feature | **sim, antes de codar** | **aguardando revisão** | `feat/experience-transactions-scene` | Seção `services`, narrativa A (caos→fluxo). 7.000 instâncias `high` / 1.500 `low`. Primeira versão cobria 103% da área e lia como textura; corrigida em `b875f49` para ~10% de cobertura. **fps e CPU ainda precisam ser medidos.** |
+| 06 | Cena de domínio: waterfall de traces | feature | **sim, antes de codar** | **aguardando decisão** | — (não criada, por spec) | **Recomendo SVG/DOM em vez de WebGL.** O site não tem seção de observabilidade e nenhuma seção existente tem espaço. Decisão de conteúdo do Davy. |
 | 07 | Easter egg com física | feature | não | pendente | — | Independente: pode rodar a qualquer momento depois da 01. |
 | 08 | Auditoria final de performance e acessibilidade | qualidade | não | pendente | — | |
 
@@ -41,6 +41,9 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 16 | ~~Escolher seção e narrativa da task 05~~ — delegado a mim: `services` + narrativa A | — | Resolvido. |
 | 17 | **Medir fps por tier e o tempo de CPU do `update` no Performance** (task 05) | Davy | Aceite da task 05. |
 | 18 | Conferir que a cena fica igual em WebGPU e em WebGL2 (`forceWebGL: true`) | Davy | Aceite da task 05. |
+| 19 | **Task 06: aceitar SVG ou criar uma seção nova de observabilidade** | Davy | Bloqueia a task 06. |
+| 20 | Site abre em inglês (`lng: "en"` no i18n) mas o CLAUDE.md pede pt-BR | Davy | Fora da série Experience; confirmar se é intencional. |
+| 21 | Hero e Self citam o empregador pelo nome, o que o CLAUDE.md proíbe | Davy | Conteúdo pré-existente; não alterei. |
 
 ## Números de referência
 
@@ -129,3 +132,5 @@ através de `self`, `skills`, `projects` e `articles`. Decidir o que fazer com
 | 2026-09-21 | Bug da task 04: viewport/scissor usavam origem bottom-left, mas a API do three usa top-left. Erro crescia com o scroll. Achado pelo Davy via screenshot, corrigido em `97811fa` e confirmado por ele. |
 | 2026-09-21 | Task 05 parada no checkpoint de seção e narrativa, conforme a spec. |
 | 2026-09-21 | Escolha delegada a mim pelo Davy: seção `services`, narrativa A, fundo claro preservado. Task 05 executada em `feat/experience-transactions-scene`. |
+| 2026-09-21 | Davy reportou que a cena da 05 ficou ruim. Causa medida: 103% de cobertura — as partículas saturavam na própria cor. Tamanho passou a sair de conta de cobertura (`b875f49`). |
+| 2026-09-21 | Task 06 parada no checkpoint, com recomendação de fazer em SVG/DOM em vez de WebGL. |
