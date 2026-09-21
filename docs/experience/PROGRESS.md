@@ -10,7 +10,7 @@ Uma task por vez, na ordem do README. Nada é commitado automaticamente.
 | 00 | Discovery e baseline de performance | só leitura | não | **concluída** | — (sem branch, por spec) | `BASELINE.md` criado e commitado direto no master. Bundle medido; **Lighthouse pendente de execução manual** (pendência 1). 15 ajustes levantados para as próximas tasks. |
 | 01 | Núcleo do Experience + fundo em shader no hero | feature | não | **aguardando revisão** | `feat/experience-core` | three@0.186 em chunk dinâmico (**240.672 B gzip**). JS inicial +601 B (+0,78%). **Hero virou escuro** e as cores do texto mudaram para passar AA — precisa de aval visual. |
 | 02 | Pipeline de assets 3D (glTF + Draco + KTX2) | infra | não | **aguardando revisão** | `feat/experience-assets` (ramificada de `feat/experience-core`, **não** do master) | Pipeline 4 passos + loaders + página de debug + `ASSETS.md`. Cubo de teste: 3,1 kB → 2,4 kB (−22,7%). **`ktx` não instalado → saída em WebP.** Bundle inalterado. |
-| 03 | Objeto-assinatura no hero | feature | **sim, antes de codar** | pendente | — | Checkpoint de conceito. |
+| 03 | Objeto-assinatura no hero | feature | **sim, antes de codar** | **aguardando decisão** | — (não criada, por spec) | 3 conceitos propostos: **A** gyroid, **B** células/shell, **C** giroscópio. Aguardando a escolha do Davy antes de qualquer código. |
 | 04 | Canvas global + cenas por seção | refactor | não | pendente | — | Ponto de montagem provável: `PageTemplate`. |
 | 05 | Cena de domínio: fluxo de transações | feature | **sim, antes de codar** | pendente | — | Checkpoint de seção e narrativa. |
 | 06 | Cena de domínio: waterfall de traces | feature | **sim, antes de codar** | pendente | — | Checkpoint de seção e narrativa. |
@@ -58,3 +58,5 @@ Depois da task 01 (branch `feat/experience-core`, ainda não mergeada):
 | 2026-09-20 | Task 01 executada na branch `feat/experience-core`. three@0.186 + @types/three instalados; núcleo, HeroBackground e ExperienceCanvas portados. Hero convertido para superfície escura por exigência de contraste AA. Typecheck, lint e build passando. |
 | 2026-09-20 | Task 01 commitada em `feat/experience-core` (`ede6ee1`), sem push. |
 | 2026-09-20 | Task 02 executada na branch `feat/experience-assets`, ramificada de `feat/experience-core` porque a 01 ainda não está no master. Pipeline glTF, loaders, cubo de teste, página de debug e `ASSETS.md`. |
+| 2026-09-20 | Task 02 commitada em `feat/experience-assets` (`5721848`), sem push. |
+| 2026-09-20 | Task 03 parada no checkpoint de conceito, conforme a spec. 3 conceitos propostos; nenhuma branch ou arquivo criado. |
