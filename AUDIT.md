@@ -1,8 +1,9 @@
 # Auditoria de UI/UX e Acessibilidade — davysz.com
 
 > Auditoria estática, feita sobre o código em `724a75a` (branch `chore/experience-audit`).
-> **Etapas 1 e 2 implementadas** em `b0e0742..34fb76a` — os itens concluídos
-> estão marcados com ✅ e o hash na tabela. As etapas 3 a 5 seguem pendentes.
+> **Etapas 1 a 3 implementadas** em `b0e0742..9f0c3d2` — os itens concluídos
+> estão marcados com ✅ e o hash na tabela. A16 está suspenso por A29; as
+> etapas 4 e 5 seguem pendentes.
 
 ## Premissas usadas
 
@@ -63,20 +64,21 @@ página para o topo e fechar não devolve a posição.
 | ✅ A12 | Expertise | Consistência | `text-4xl`, `text-[40px]`, `text-[32px]`, `text-xl` ignoram a escala `display-*`/`heading-*`/`body-*` do tema | Médio | P | `service-table/index.tsx`, `service-cards/index.tsx` | `f69135e` |
 | ✅ A13 | Expertise | Bug | Títulos e descrições usam `hover:` onde precisam de `group-hover:` — não reagem ao hover do card | Médio | P | `components/service-cards/index.tsx` | `1b92c41` |
 | ✅ A14 | Global (CSS) | Consistência | `td, th { px-[50px] py-[40px] }` — seletor de tipo global dentro de `@layer utilities` | Médio | M | `src/index.css` | `f69135e` |
-| A15 | `<head>` | SEO | Metas estáticas em português + `og:locale pt_BR` num site que abre em inglês; `useSEO` **acrescenta** metas sem remover as estáticas → `description` duplicada | Médio | M | `index.html`, `hooks/useSEO/use-seo.ts` |  |
-| A16 | Artigos | SEO | `canonical` aponta para o Medium nos 4 publicados lá — o site entrega a autoridade do próprio conteúdo | Médio | P | `pages/article/index.tsx` |  |
-| A17 | Artigos (home) | UX | O card não mostra data nem tempo de leitura, embora os dois existam no dado | Médio | P | `components/article-card/index.tsx` |  |
-| A18 | Hero | UX / Conversão | Nenhum CTA de contato no hero; o único CTA de conversão está na nav e leva para fora do site | Médio | M | `pages/home/hero/index.tsx` |  |
+| ✅ A15 | `<head>` | SEO | Metas estáticas em português + `og:locale pt_BR` num site que abre em inglês; `useSEO` **acrescenta** metas sem remover as estáticas → `description` duplicada | Médio | M | `index.html`, `hooks/useSEO/use-seo.ts` | `9067d32` |
+| A16 | Artigos | SEO | `canonical` aponta para o Medium nos 4 publicados lá — **suspenso: depende de A29**, porque com rota de hash o canonical do próprio site equivale à home | Médio | P | `pages/article/index.tsx` |  |
+| ✅ A17 | Artigos (home) | UX | O card não mostra data nem tempo de leitura, embora os dois existam no dado | Médio | P | `components/article-card/index.tsx` | `1e326d4` |
+| ✅ A18 | Hero | UX / Conversão | Nenhum CTA de contato no hero; o único CTA de conversão está na nav e leva para fora do site | Médio | M | `pages/home/hero/index.tsx` | `9f0c3d2` |
 | A19 | Hero | Responsivo | `w-screen` dentro de um pai com `px-6` e sem `overflow-x` global → provável rolagem horizontal de 48px no mobile **[VISUAL]** | Médio | P | `pages/home/hero/index.tsx` |  |
 | A20 | Nav | UX / i18n | Bandeira 🇺🇸/🇧🇷 como única pista visível do seletor de idioma; alvo de 56×28px | Médio | P | `components/toggle/index.tsx` |  |
 | A21 | Artigos | A11y (motion) | `scrollIntoView({behavior:"smooth"})` — a opção JS vence o `scroll-behavior:auto` do `prefers-reduced-motion` | Baixo | P | `pages/article/index.tsx` |  |
 | A22 | Artigos | Copy | Botão "Back"/"Voltar" não volta no histórico: vai para a home | Baixo | P | `pages/article/index.tsx` |  |
-| A23 | Artigos (home) | UI | Sem thumb, a tag aparece duas vezes empilhada (capa + linha de tag) | Baixo | P | `components/article-card/index.tsx` |  |
+| ✅ A23 | Artigos (home) | UI | Sem thumb, a tag aparece duas vezes empilhada (capa + linha de tag) | Baixo | P | `components/article-card/index.tsx` | `1e326d4` |
 | A24 | Projetos / Stack | Bug | `animate-fade-in-up` no card **e** no wrapper — animação dobrada | Baixo | P | `project-card/`, `skill-card/`, `projects/`, `skills/` |  |
 | A25 | Global | Consistência | `Button` usa `focus:`; `Link` e os cards usam `focus-visible:` — o anel aparece no clique de mouse | Baixo | P | `components/button/index.tsx` |  |
 | A26 | Console | Bug | `WELCOME_LOG_MESSAGE` começa com `U+FFFD` (bytes `EF BF BD`) e é só em português | Baixo | P | `src/shared/constants.ts` |  |
 | A27 | Global | Limpeza | Chaves `articles.items.*` mortas nos dois locales; `relative` duplicado; `mr-7` solto | Baixo | P | vários |  |
 | A28 | `<head>` | Performance | Google Fonts como `<link rel=stylesheet>` de terceiro, bloqueando render | Médio | M | `index.html` |  |
+| A29 | Global | SEO / Arquitetura | Rota por hash faz os 8 artigos serem a mesma URL que a home para o buscador; o sitemap declara 9 `<loc>` que colapsam em 1 | Alto | G | `useHashRoute/`, `scripts/content/build-feeds.js`, `vite.config.ts` |  |
 
 ---
 
@@ -548,7 +550,7 @@ para medir antes e depois com o build que já existe.
 10. **A05** — foco no menu modal: mover, prender, devolver
 11. **A08 + A09** — `<a>` no lugar de `window.open`, com `rel` correto
 
-**Etapa 3 — SEO e conversão**
+**Etapa 3 — SEO e conversão** — ✅ concluída (A16 suspenso por A29)
 
 12. **A15** — `useSEO` atualiza em vez de acrescentar; estáticas em inglês
 13. **A16** — canonical para o próprio site
@@ -613,6 +615,104 @@ problemas acima, e é fácil desfazê-las sem querer numa refatoração.
   passados e o raciocínio que levou à solução atual.
 
 ---
+
+### A29 — Rota por hash apaga os artigos do buscador · Alto · G
+
+Investigação pedida na Etapa 3. **Não implementado**; é a decisão que destrava
+A16.
+
+#### O diagnóstico se confirma, e é pior do que parecia
+
+`ARTICLE_ROUTE = "#/artigos/"`, e não há router de path em lugar nenhum — as
+ocorrências de `BrowserRouter` no `grep` são trechos de código **dentro dos
+artigos**, não do site. O fragmento (`#...`) não é enviado ao servidor e não faz
+parte da identidade de uma URL para o buscador, então as oito páginas de artigo
+são, para ele, a mesma URL da home.
+
+A confirmação está no próprio `public/sitemap.xml`:
+
+```
+<loc> declarados:                          9
+URLs distintas ignorando o fragmento:      1  ->  https://davysz.com/
+```
+
+O sitemap declara nove endereços que colapsam em um. O `rss.xml` tem o mesmo
+problema, e todo `og:url` de artigo (`${SITE}/#/artigos/${slug}`) aponta, na
+prática, para a home — é por isso que o canonical do próprio site não resolveria
+nada hoje, e A16 fica suspenso.
+
+Efeito colateral: como todo link compartilhado resolve para a home, qualquer
+scraper que não execute JS mostra o cartão da home para os oito artigos. O
+`useSEO` corrige isso **depois** que o JS roda, o que serve ao usuário mas não a
+quem só lê o HTML servido.
+
+#### Hospedagem: indefinida
+
+Não há nada no repositório que indique onde o site é publicado — sem
+`vercel.json`, `netlify.toml`, `_redirects`, `firebase.json`, `Dockerfile`,
+`wrangler.toml` nem workflow de CI. Consta como decisão em aberto desde a task
+00 do experience.
+
+Isso importa porque **rota de path exige rewrite**: sem `/artigos/* →
+/index.html`, abrir um link direto devolve 404. Onde cada opção está:
+
+| Hospedagem | Rewrite de SPA | Pré-render no build |
+| --- | --- | --- |
+| Vercel / Netlify / Cloudflare Pages | nativo, uma linha de config | sim |
+| GitHub Pages | **não tem rewrite** (só o truque do `404.html`) | sim |
+| S3 + CloudFront | via *custom error response* ou função de edge | sim |
+| Qualquer VPS com nginx | `try_files $uri /index.html` | sim |
+
+GitHub Pages é a única da lista que atrapalha de verdade — e é a mais provável
+para um portfólio pessoal. Confirmar isto é o primeiro passo.
+
+#### Proposta
+
+Duas mudanças independentes, que só entregam valor juntas:
+
+**1. Rota de path.** `#/artigos/<slug>` → `/artigos/<slug>`. `useArticleRoute`
+passa a ler `location.pathname` e a navegar por `history.pushState`, ouvindo
+`popstate` em vez de `hashchange`. O resto (View Transitions, âncora de seção,
+vizinhos) continua igual. **Esforço: M.**
+
+**2. Pré-render no build.** Três opções, da mais barata à mais completa:
+
+| | O que faz | Esforço | Limite |
+| --- | --- | --- | --- |
+| **C1 — shells de metadado** | Um script pós-build copia o `index.html` por rota, trocando `title`, `description`, `canonical` e OG. Body continua vazio. | **P/M** | Crawler sem JS vê o cartão certo, mas não o texto |
+| **C2 — SSG com `react-dom/server`** | Renderiza a home e cada artigo para HTML no build e hidrata com o mesmo bundle | **M/G** | Exige que nada no primeiro render toque `window` |
+| **C3 — `vite-react-ssg` ou similar** | O mesmo que C2, mas por plugin | **M** | Dependência nova e acoplamento à convenção do plugin |
+
+**C1 resolve o problema real desta auditoria** — identidade de URL, canonical e
+cartão de compartilhamento — pelo menor custo, e aproveita que o HTML dos
+artigos já é gerado no build pelo `plugins/markdown.ts`. C2 só se passar a
+importar indexação do *corpo* do texto.
+
+#### Riscos
+
+- **Links antigos com hash.** Os quatro artigos publicados no Medium apontam
+  para cá, e o que já foi compartilhado em LinkedIn tem `#/artigos/...`.
+  Mitigação: no boot, se `location.hash` começar com `#/artigos/`, trocar por
+  `history.replaceState` para o path equivalente. São poucas linhas e ficam para
+  sempre — remover reabre o problema.
+- **Hospedagem sem rewrite** transforma todo link direto em 404. É um bloqueio,
+  não um detalhe: decidir a hospedagem vem antes de migrar.
+- **`sitemap.xml` e `rss.xml`** precisam ser regerados com os endereços novos
+  (`scripts/content/build-feeds.js`), e o RSS já foi consumido por leitores com
+  os links antigos — os `<guid>` mudam.
+- **Janela de reindexação.** Sair de uma URL para nove é ganho, mas leva semanas
+  e passa por um período em que nada está consolidado.
+
+#### O que muda em A15 e A16 depois disso
+
+- **A15 continua correto e vira menos crítico.** Com shells pré-renderizadas, o
+  HTML servido já chega com o metadado certo por rota; o `useSEO` deixa de ser a
+  única fonte e passa a cuidar só da troca de idioma em runtime.
+- **A16 vira implementável.** Só com URL real o canonical do próprio site
+  significa alguma coisa. Aí a escolha entre apontar para `davysz.com` ou para o
+  Medium volta a ser uma decisão de estratégia — hoje ela é decidida pela
+  arquitetura, que não deixa alternativa.
+
 
 ## Achados durante a implementação
 
@@ -712,3 +812,34 @@ a conferência visual:
 
 O layout continua sendo faixas horizontais de duas colunas no desktop e cards
 empilhados no mobile, sem numeração e sem setas.
+
+### I10 — Data do artigo erra um dia a oeste de UTC
+
+`new Date("2026-09-21")` é interpretado como meia-noite **UTC**, e
+`Intl.DateTimeFormat` formata no fuso local. Em Manaus e em São Paulo o
+resultado sai um dia atrás:
+
+```
+UTC               -> 21 de setembro de 2026
+America/Manaus    -> 20 de setembro de 2026
+America/Sao_Paulo -> 20 de setembro de 2026
+```
+
+Afeta `pages/article/index.tsx`, que mostra a data completa. O card novo
+(A17) mostra só mês e ano, então só erraria em data de dia 01 — nenhuma das
+oito atuais. A correção é ler a data como local (`new Date(y, m - 1, d)`) ou
+formatar com `timeZone: "UTC"`.
+
+### I11 — `twitter:url` não acompanha a rota
+
+O `useSEO` atualiza `og:url` por página, mas `twitter:url` ficou só no
+`index.html`, fixo em `https://davysz.com/`. Hoje isso não muda nada, porque
+com rota de hash todas as URLs são a home (A29) — passa a importar quando A29
+for resolvido.
+
+### I12 — `theme-color` duplicado sem motivo
+
+O `index.html` declara `theme-color` duas vezes, uma para
+`prefers-color-scheme: light` e outra para `dark`, **com o mesmo `#7947DF`**.
+Duas declarações que fazem a mesma coisa; uma sem `media` basta. É a única meta
+duplicada que sobrou depois de A15, e é inofensiva.
