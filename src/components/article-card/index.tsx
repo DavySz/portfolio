@@ -1,4 +1,5 @@
 import { FaMedium } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import { articleHref } from "../../hooks/useHashRoute/use-hash-route";
 import { Text } from "../text";
 import { ResponsiveImage } from "../responsive-image";
@@ -17,6 +18,16 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
   text,
   labels,
 }) => {
+  const { i18n } = useTranslation();
+
+  /* Mês e ano bastam numa listagem: o dia exato só importa dentro do artigo,
+     onde a data completa já aparece. O `dateTime` leva o ISO, então quem lê a
+     marcação recebe a data precisa de qualquer forma. */
+  const published = new Intl.DateTimeFormat(i18n.language, {
+    month: "short",
+    year: "numeric",
+  }).format(new Date(article.date));
+
   return (
     <div
       className="group relative flex h-full flex-col overflow-hidden rounded-[20px] bg-white shadow-lg
@@ -46,8 +57,15 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
       )}
 
       <div className="flex flex-1 flex-col gap-3 p-6">
-        <p className="font-poppins text-body-sm uppercase tracking-wider text-primary-600">
-          {text.tag}
+        {/* Com thumb, a tag precisa aparecer aqui. Sem thumb, a capa
+            tipográfica acima já é a tag — repetir empilhava a mesma palavra
+            duas vezes. */}
+        <p className="flex flex-wrap items-center gap-x-2 font-poppins text-body-sm uppercase tracking-wider text-primary-600">
+          {article.thumb && <span>{text.tag}</span>}
+          {article.thumb && <span aria-hidden="true">·</span>}
+          <time dateTime={article.date} className="normal-case tracking-normal text-gray-600">
+            {published}
+          </time>
         </p>
 
         <Text
