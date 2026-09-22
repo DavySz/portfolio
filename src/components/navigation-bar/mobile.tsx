@@ -10,6 +10,11 @@ import { AiOutlineClose } from "react-icons/ai";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import { useActiveSection } from "../../hooks/useActiveSection/use-active-section";
+import {
+  onMenuLinkClick,
+  sectionHref,
+  useIsHome,
+} from "../../hooks/useRoute/use-route";
 
 const MENU_ID = "mobile-menu";
 const TRIGGER_ID = "mobile-menu-trigger";
@@ -73,10 +78,11 @@ const restoreScroll = (lock: ScrollLock): void => {
 export const MobileNavigationBar: React.FC = () => {
   const { t } = useTranslation("component");
   const [isVisible, setIsVisible] = useState(false);
+  const isHome = useIsHome();
   /* O mesmo scroll-spy do desktop. Antes isto era um `useState("/")` que só
      guardava o último clique: começava num valor que nenhum link casa e
      ficava desatualizado assim que a pessoa rolava a página. */
-  const active = useActiveSection(SECTION_IDS);
+  const active = useActiveSection(SECTION_IDS, isHome);
   const panelRef = useRef<HTMLDivElement>(null);
 
   const toggleOptions = (): void => {
@@ -89,6 +95,17 @@ export const MobileNavigationBar: React.FC = () => {
 
   const handleSelectOption = (): void => {
     toggleOptions();
+  };
+
+  /* Fechar o painel E navegar. O `onMenuLinkClick` precisa vir primeiro:
+     estando fora da home ele cancela o clique e troca a rota pelo roteador,
+     em vez de deixar um `<a href="/#self">` recarregar o site inteiro. */
+  const handleLinkClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ): void => {
+    onMenuLinkClick(event, href);
+    handleSelectOption();
   };
 
   // Esc fecha o menu: é o atalho que todo mundo tenta primeiro num painel.
@@ -240,18 +257,20 @@ export const MobileNavigationBar: React.FC = () => {
                   <a
                     href={link.href}
                     aria-current={
-                      link.href === `#${active}` ? "true" : undefined
+                      active !== null && link.href === sectionHref(active)
+                        ? "true"
+                        : undefined
                     }
-                    onClick={handleSelectOption}
+                    onClick={(event) => handleLinkClick(event, link.href)}
                     className={clsx(
                       "flex items-center px-6 py-4 text-base font-medium transition-all duration-200",
                       "hover:bg-accent/10 hover:text-accent-strong",
                       "border-l-4 transition-all duration-200",
                       {
                         "border-primary-500 bg-accent/10 text-accent-strong":
-                          link.href === `#${active}`,
+                          active !== null && link.href === sectionHref(active),
                         "border-transparent text-ink-secondary hover:border-primary-200":
-                          link.href !== `#${active}`,
+                          active === null || link.href !== sectionHref(active),
                       }
                     )}
                   >

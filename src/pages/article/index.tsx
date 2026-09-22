@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaMedium } from "react-icons/fa";
 import { MdArrowBack } from "react-icons/md";
@@ -7,7 +7,13 @@ import { Button } from "../../components/button";
 import { Loading } from "../../components/loading";
 import { useSEO } from "../../hooks";
 import type { Language } from "../../i18n";
-import { articleHref, goToSection } from "../../hooks/useRoute/use-route";
+import {
+  articleHref,
+  goToSection,
+  isAppRoute,
+  isPlainLeftClick,
+  navigate,
+} from "../../hooks/useRoute/use-route";
 import { ArticleLink } from "../../components/article-link";
 import { absoluteUrl, articleUrl } from "../../shared/site";
 import { useReducedMotion } from "../../hooks/useReducedMotion/use-reduced-motion";
@@ -31,6 +37,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
   const text = meta?.[language];
   const { previous, next } = findNeighbours(slug);
   const [content, setContent] = useState<ArticleContent | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
   const reducedMotion = useReducedMotion();
 
@@ -76,6 +83,44 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
       cancelled = true;
     };
   }, [slug, language]);
+
+  /**
+   * Faz os links internos do texto navegarem pela SPA.
+   *
+   * O HTML do artigo é gerado no build e não passa pelo React, então os
+   * `[outro artigo](/artigos/<slug>)` viravam `<a href>` cru: cada um
+   * recarregava o site inteiro — bundle, i18n, canvas e tudo — para trocar de
+   * texto. A delegação é um listener só no contêiner, em vez de um por link.
+   *
+   * Sai de fora tudo que não é rota da SPA: externo, `mailto:`, download,
+   * `target` próprio, âncora da própria página e caminho servido por arquivo.
+   */
+  useEffect(() => {
+    const container = contentRef.current;
+    if (!container) return;
+
+    const onClick = (event: MouseEvent) => {
+      if (!isPlainLeftClick(event)) return;
+
+      const target = event.target as Element | null;
+      const anchor = target?.closest?.("a");
+      if (!(anchor instanceof HTMLAnchorElement)) return;
+      if (anchor.target && anchor.target !== "_self") return;
+      if (anchor.hasAttribute("download")) return;
+
+      const url = new URL(anchor.href, window.location.href);
+      if (url.origin !== window.location.origin) return;
+      // Só o fragmento mudou: é âncora desta página, e o navegador resolve.
+      if (url.pathname === window.location.pathname) return;
+      if (!isAppRoute(url.pathname)) return;
+
+      event.preventDefault();
+      navigate(`${url.pathname}${url.search}${url.hash}`);
+    };
+
+    container.addEventListener("click", onClick);
+    return () => container.removeEventListener("click", onClick);
+  }, [content]);
 
   /**
    * Acrescenta um botão de copiar à barra de cada bloco de código.
@@ -256,6 +301,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
 
       {content ? (
         <div
+          ref={contentRef}
           /* Os artigos são escritos em português, mesmo com a interface em
              inglês: marcar o idioma aqui é o que faz leitor de tela e tradutor
              do navegador tratarem o texto corretamente. */
@@ -270,9 +316,13 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({ slug, heading }) => {
       )}
 
       {/* Sem isto o artigo termina no vazio: o único caminho era o botão
-          "Voltar" lá no topo. */}
+          "Voltar" lá no topo.
+
+          O nome era "Todos os artigos", que é o rótulo daquele botão e o
+          destino da LISTA. Aqui dentro só há o anterior e o próximo, e quem
+          pula de landmark em landmark ouvia a promessa errada. */}
       <nav
-        aria-label={t("article.allArticles")}
+        aria-label={t("article.moreArticles")}
         className="mt-16 grid gap-4 border-t border-line pt-8 sm:grid-cols-2"
       >
         {previous ? (

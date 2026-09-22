@@ -15,6 +15,11 @@ export interface ArticleRoute {
   heading: string | null;
 }
 
+/** O que guardamos na entrada do histórico para o Voltar devolver o lugar. */
+interface HistoryScroll {
+  scrollY?: number;
+}
+
 /**
  * A âncora de uma seção do artigo vive DENTRO da rota dele:
  * `/artigos/<slug>#<heading>`.
@@ -26,6 +31,48 @@ export interface ArticleRoute {
  */
 export const articleHref = (slug: string, heading?: string): string =>
   heading ? `${articlePath(slug)}#${heading}` : articlePath(slug);
+
+/**
+ * Link para uma seção da home, a partir de QUALQUER rota.
+ *
+ * O menu e o rodapé apontavam para `#self`, `#contact` e companhia. Um
+ * fragmento puro é relativo ao documento atual: dentro de um artigo, o mesmo
+ * link virava `/artigos/<slug>#contact`, que é uma seção inexistente daquele
+ * artigo — o clique não fazia nada, e o CTA principal do site ficava morto nas
+ * oito páginas de leitura. Com a raiz escrita, o destino é sempre a home.
+ */
+export const sectionHref = (id: string): string => `/#${id}`;
+
+/** True quando o caminho atual é a home. */
+export const isHomePath = (pathname?: string): boolean =>
+  (pathname ?? window.location.pathname).replace(/\/+$/, "") === "";
+
+/**
+ * Caminhos que a SPA sabe renderizar.
+ *
+ * Qualquer outro — `/pdfs/...`, `/rss.xml`, um `/artigos` sem slug — é do
+ * servidor, e interceptar o clique nele trocaria um download ou uma 404 de
+ * verdade por uma tela de "artigo não encontrado".
+ */
+export const isAppRoute = (pathname: string): boolean =>
+  isHomePath(pathname) || parseRoute(pathname).slug !== null;
+
+/**
+ * O clique que é nosso para interceptar.
+ *
+ * Botão primário, sem modificador e ainda não tratado por outro handler.
+ * Qualquer outra combinação pertence ao navegador: sem esta checagem, um
+ * Ctrl+clique abriria a aba nova E navegaria a aba atual.
+ */
+export const isPlainLeftClick = (
+  event: React.MouseEvent | MouseEvent
+): boolean =>
+  event.button === 0 &&
+  !event.metaKey &&
+  !event.ctrlKey &&
+  !event.shiftKey &&
+  !event.altKey &&
+  !event.defaultPrevented;
 
 /**
  * Lê a rota do caminho atual.
@@ -96,11 +143,138 @@ type DocumentWithTransition = Document & {
   startViewTransition?: (callback: () => void) => unknown;
 };
 
+/** A URL atual inteira, do jeito que o histórico a guarda. */
+const currentHref = (): string =>
+  `${window.location.pathname}${window.location.search}${window.location.hash}`;
+
 /** Navega para um caminho interno, como um link faria. */
 export const navigate = (path: string): void => {
-  if (path === `${window.location.pathname}${window.location.hash}`) return;
-  window.history.pushState(null, "", path);
+  if (path === currentHref()) return;
+
+  /* Antes de sair, a entrada que fica para trás recebe a posição de leitura.
+     É o que faz o Voltar devolver a pessoa ao ponto da home de onde ela abriu
+     o artigo, em vez de jogá-la no topo. */
+  window.history.replaceState(
+    { scrollY: window.scrollY } satisfies HistoryScroll,
+    "",
+    currentHref()
+  );
+  window.history.pushState({ scrollY: 0 } satisfies HistoryScroll, "", path);
   window.dispatchEvent(new PopStateEvent("popstate"));
+};
+
+/**
+ * Persegue uma posição até o layout parar de crescer.
+ *
+ * As seções da home são `lazy`: logo depois de uma troca de rota o alvo ainda
+ * não está no DOM, e o navegador desiste de rolar. Aqui a gente tenta uma vez
+ * de imediato, espera a altura do documento ficar quieta e tenta de novo. Os
+ * dois temporizadores se encerram sozinhos, então isto não depende de ciclo de
+ * vida de componente.
+ *
+ * Só existe uma perseguição por vez: a nova cancela a anterior, senão duas
+ * navegações rápidas brigariam pelo scroll.
+ */
+let cancelChase: (() => void) | null = null;
+
+const chase = (land: () => void): (() => void) => {
+  cancelChase?.();
+
+  let settleTimer = 0;
+  let observer: ResizeObserver | null = null;
+
+  const stop = () => {
+    window.clearTimeout(settleTimer);
+    window.clearTimeout(deadline);
+    observer?.disconnect();
+    observer = null;
+    if (cancelChase === stop) cancelChase = null;
+  };
+
+  const arrive = () => {
+    land();
+    stop();
+  };
+
+  const waitForQuiet = () => {
+    window.clearTimeout(settleTimer);
+    settleTimer = window.setTimeout(arrive, SETTLE_DELAY);
+  };
+
+  const deadline = window.setTimeout(stop, ANCHOR_TIMEOUT);
+
+  observer = new ResizeObserver(waitForQuiet);
+  observer.observe(document.body);
+  waitForQuiet();
+
+  cancelChase = stop;
+  // Melhor esforço imediato: se o alvo já existe, a chegada não espera 150ms.
+  land();
+
+  return stop;
+};
+
+/** Rola até uma seção assim que ela existir e o layout parar de crescer. */
+const landWhenSettled = (id: string): (() => void) =>
+  chase(() => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "instant" });
+  });
+
+/** Devolve uma posição de scroll guardada, quando a página terminar de montar. */
+const restoreWhenSettled = (scrollY: number): (() => void) =>
+  chase(() => window.scrollTo({ top: scrollY, behavior: "instant" }));
+
+/**
+ * Sai do artigo e cai numa seção da home.
+ *
+ * Diferente de clicar no menu, que de um artigo vai para o topo e pronto:
+ * quem clica em "Todos os artigos" quer a lista, então aqui a seção é
+ * perseguida de propósito.
+ */
+export const goToSection = (id: string): void => {
+  navigate(sectionHref(id));
+  landWhenSettled(id);
+};
+
+/**
+ * Clique num link do menu ou do rodapé — `/` ou `/#<seção>`.
+ *
+ * Na home o navegador já resolve a âncora sozinho, com o `scroll-behavior`
+ * do CSS; fora dela o link precisa trocar de página antes de perseguir a
+ * seção, e um `<a href="/#self">` faria isso recarregando o site inteiro.
+ *
+ * O caso de "Início" estando na home é o que parece bobo e não é: clicar num
+ * link para a URL em que já se está faz o navegador **recarregar** a página.
+ */
+export const onMenuLinkClick = (
+  event: React.MouseEvent<HTMLAnchorElement>,
+  href: string
+): void => {
+  if (!isPlainLeftClick(event)) return;
+
+  const separator = href.indexOf("#");
+  const id = separator < 0 ? "" : href.slice(separator + 1);
+
+  if (!isHomePath()) {
+    event.preventDefault();
+    if (id) goToSection(id);
+    else navigate("/");
+    return;
+  }
+
+  // Âncora da própria página: é exatamente o que o navegador faz melhor.
+  if (id) return;
+
+  event.preventDefault();
+  if (window.location.hash) {
+    window.history.pushState(
+      { scrollY: 0 } satisfies HistoryScroll,
+      "",
+      "/"
+    );
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  }
+  window.scrollTo({ top: 0 });
 };
 
 /**
@@ -118,35 +292,54 @@ export const useArticleRoute = (): ArticleRoute => {
       ? { slug: null, heading: null }
       : parseRoute(window.location.pathname, window.location.hash)
   );
+  /* O estado anterior é lido de um ref, não do updater do `setRoute`: decidir
+     ali dentro significaria rolar a página e abrir uma View Transition de
+     dentro de uma função que o React pode chamar mais de uma vez — é o que o
+     StrictMode faz em desenvolvimento. */
+  const routeRef = useRef(route);
 
   useEffect(() => {
-    const onNavigate = () => {
+    const apply = (next: ArticleRoute) => {
+      routeRef.current = next;
+      setRoute(next);
+    };
+
+    const onNavigate = (event: Event) => {
       const next = parseRoute(window.location.pathname, window.location.hash);
+      const current = routeRef.current;
 
-      setRoute((current) => {
-        // Pular entre seções do MESMO artigo não é troca de página: nada de
-        // voltar ao topo nem de animar a transição. Só o destino muda.
-        if (current.slug && current.slug === next.slug) return next;
+      // Mesma página, só o fragmento mudou: nem topo nem transição. Vale para
+      // dois pontos do mesmo artigo E para as âncoras da home — que antes
+      // caíam no ramo de troca de página e disparavam uma View Transition a
+      // cada clique no menu.
+      if (current.slug === next.slug) {
+        apply(next);
+        return;
+      }
 
-        // Sair de um artigo devolve a página inteira: começar do topo é o
-        // único ponto de partida previsível para o que vem depois.
-        if (!next.slug && !window.location.hash) {
-          window.scrollTo({ top: 0, behavior: "instant" });
-        }
+      const state = (event as PopStateEvent).state as HistoryScroll | null;
+      const saved = typeof state?.scrollY === "number" ? state.scrollY : null;
 
-        // View Transitions onde existe; onde não existe, troca direta. O
-        // navegador tira o retrato da tela antes do callback e cruza para o
-        // depois — daí a troca de estado precisar acontecer dentro dele.
-        const doc = document as DocumentWithTransition;
-        if (typeof doc.startViewTransition === "function") {
-          doc.startViewTransition(() => {
-            flushSync(() => setRoute(next));
-          });
-          return current;
-        }
+      // Sair de um artigo devolve a página inteira. Se o histórico guardou de
+      // onde a pessoa saiu, é para lá que ela volta; sem isso, o topo é o
+      // único ponto de partida previsível.
+      if (!next.slug && !window.location.hash) {
+        if (saved && saved > 0) restoreWhenSettled(saved);
+        else window.scrollTo({ top: 0, behavior: "instant" });
+      }
 
-        return next;
-      });
+      // View Transitions onde existe; onde não existe, troca direta. O
+      // navegador tira o retrato da tela antes do callback e cruza para o
+      // depois — daí a troca de estado precisar acontecer dentro dele.
+      const doc = document as DocumentWithTransition;
+      if (typeof doc.startViewTransition === "function") {
+        doc.startViewTransition(() => {
+          flushSync(() => apply(next));
+        });
+        return;
+      }
+
+      apply(next);
     };
 
     window.addEventListener("popstate", onNavigate);
@@ -163,53 +356,31 @@ export const useArticleRoute = (): ArticleRoute => {
 };
 
 /**
- * Rola até uma seção assim que ela existir e o layout parar de crescer.
+ * Observa apenas SE a rota atual é a home.
  *
- * As seções da home são `lazy`: logo depois de uma troca de rota o alvo ainda
- * não está no DOM, e o navegador desiste de rolar. Aqui a gente espera a
- * altura do documento ficar quieta e rola uma vez. Os dois temporizadores se
- * encerram sozinhos, então isto não depende de ciclo de vida de componente.
+ * O menu precisa saber disso para decidir se uma âncora é da própria página,
+ * e chamar `useArticleRoute` de novo não serve: cada instância dispara a sua
+ * própria View Transition, e duas transições aninhadas cancelam uma à outra.
  */
-const landWhenSettled = (id: string): (() => void) => {
-  let settleTimer = 0;
-  let observer: ResizeObserver | null = null;
+export const useIsHome = (): boolean => {
+  const [home, setHome] = useState(
+    () => typeof window === "undefined" || isHomePath()
+  );
 
-  const stop = () => {
-    window.clearTimeout(settleTimer);
-    window.clearTimeout(deadline);
-    observer?.disconnect();
-    observer = null;
-  };
+  useEffect(() => {
+    const sync = () => setHome(isHomePath());
 
-  const land = () => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "instant" });
-    stop();
-  };
+    sync();
+    window.addEventListener("popstate", sync);
+    window.addEventListener("hashchange", sync);
 
-  const waitForQuiet = () => {
-    window.clearTimeout(settleTimer);
-    settleTimer = window.setTimeout(land, SETTLE_DELAY);
-  };
+    return () => {
+      window.removeEventListener("popstate", sync);
+      window.removeEventListener("hashchange", sync);
+    };
+  }, []);
 
-  const deadline = window.setTimeout(stop, ANCHOR_TIMEOUT);
-
-  observer = new ResizeObserver(waitForQuiet);
-  observer.observe(document.body);
-  waitForQuiet();
-
-  return stop;
-};
-
-/**
- * Sai do artigo e cai numa seção da home.
- *
- * Diferente de clicar no menu, que de um artigo vai para o topo e pronto:
- * quem clica em "Todos os artigos" quer a lista, então aqui a seção é
- * perseguida de propósito.
- */
-export const goToSection = (id: string): void => {
-  navigate(`/#${id}`);
-  landWhenSettled(id);
+  return home;
 };
 
 /**
@@ -228,21 +399,26 @@ export const goToSection = (id: string): void => {
  *   errado. Quem quer perseguir pede por `goToSection`.
  */
 export const useAnchorScroll = (enabled: boolean): void => {
-  // Congela o hash de abertura: o que vier depois é navegação, não entrada.
-  const [entryHash] = useState(() =>
-    typeof window === "undefined" ? "" : window.location.hash
+  /* Congela a ENTRADA inteira — hash e rota. Congelar só o hash deixava um
+     `/artigos/<slug>#alguma-secao` aberto direto virar uma perseguição na
+     home assim que a pessoa saísse do artigo: o alvo era um título daquele
+     texto, que não existe mais na página em que ela acabou de chegar. */
+  const [entry] = useState(() =>
+    typeof window === "undefined"
+      ? { hash: "", enabled: false }
+      : { hash: window.location.hash, enabled }
   );
   const handled = useRef(false);
 
   useEffect(() => {
-    if (!enabled || handled.current) return;
+    if (!entry.enabled || handled.current) return;
     handled.current = true;
 
-    if (!entryHash) return;
+    if (!entry.hash) return;
 
-    const id = decodeURIComponent(entryHash.slice(1));
+    const id = decodeURIComponent(entry.hash.slice(1));
     if (!id || document.getElementById(id)) return;
 
     return landWhenSettled(id);
-  }, [enabled, entryHash]);
+  }, [entry]);
 };

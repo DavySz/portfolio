@@ -49,8 +49,17 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
-          const copy = response.clone();
-          caches.open(STATIC_CACHE).then((cache) => cache.put(event.request, copy));
+          // Só guarda o que vale a pena reencontrar offline. `cache.put`
+          // REJEITA uma resposta redirecionada (e `/artigos/<slug>/` vira um
+          // 308 para a forma sem barra), e guardar um 404 faria a página de
+          // erro reaparecer offline no lugar da que existe.
+          if (response.ok && !response.redirected) {
+            const copy = response.clone();
+            caches
+              .open(STATIC_CACHE)
+              .then((cache) => cache.put(event.request, copy))
+              .catch(() => {});
+          }
           return response;
         })
         .catch(() => caches.match(event.request).then((cached) => cached || caches.match('/index.html')))
@@ -79,12 +88,12 @@ self.addEventListener('fetch', (event) => {
 
             // Cache images, fonts, and scripts
             if (
+              !response.redirected &&
               event.request.url.match(/\.(jpg|jpeg|png|gif|webp|svg|woff2|woff|ttf|js|css)$/)
             ) {
               caches.open(CACHE_NAME)
-                .then((cache) => {
-                  cache.put(event.request, responseToCache);
-                });
+                .then((cache) => cache.put(event.request, responseToCache))
+                .catch(() => {});
             }
 
             return response;

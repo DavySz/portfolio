@@ -1,4 +1,4 @@
-import { navigate } from "../../hooks/useRoute/use-route";
+import { isPlainLeftClick, navigate } from "../../hooks/useRoute/use-route";
 import type { ArticleLinkProps } from "./types";
 
 /**
@@ -19,11 +19,7 @@ export const ArticleLink: React.FC<ArticleLinkProps> = ({
   onNavigate,
 }) => {
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    const isPrimary = event.button === 0;
-    const hasModifier =
-      event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
-
-    if (!isPrimary || hasModifier || event.defaultPrevented) return;
+    if (!isPlainLeftClick(event)) return;
 
     event.preventDefault();
     navigate(href);

@@ -6,11 +6,13 @@ export const Link: React.FC<LinkProps> = ({
   active = false,
   children,
   href,
+  onClick,
 }) => {
   return (
     <div className="group relative">
       <a
         href={href}
+        onClick={onClick}
         aria-current={active ? "true" : undefined}
         className="rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4"
       >

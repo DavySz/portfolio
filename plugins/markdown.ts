@@ -46,7 +46,38 @@ const LANGUAGE_NAMES: Record<string, string> = {
   sql: "SQL",
 };
 
-const createMarked = (headings: ArticleHeading[]) => {
+/**
+ * Os textos que a marcação gerada precisa dizer, nos dois idiomas.
+ *
+ * O aviso de "abre em nova aba" estava só no React; os links dos artigos, que
+ * saem daqui, abriam noutra aba sem avisar ninguém. E o rótulo da âncora de
+ * título era português fixo, inclusive dentro dos artigos em inglês — num
+ * site cuja regra é que nenhum texto visível nasce escrito no componente.
+ */
+type Language = "en" | "pt";
+
+const LABELS: Record<Language, { anchor: string; newTab: string }> = {
+  pt: { anchor: "Link para", newTab: "abre em nova aba" },
+  en: { anchor: "Link to", newTab: "opens in new tab" },
+};
+
+/** O idioma vive no nome do arquivo: `<slug>.<lang>.md`. */
+const languageOf = (file: string): Language =>
+  /\.en\.md$/.test(file) ? "en" : "pt";
+
+const createMarked = (headings: ArticleHeading[], language: Language) => {
+  const labels = LABELS[language];
+  /* Dois títulos com o mesmo texto geram o mesmo slug, e dois elementos com o
+     mesmo `id` fazem toda âncora cair no primeiro — o sumário passaria a
+     mentir em silêncio. O sufixo mantém cada destino único. */
+  const usedIds = new Map<string, number>();
+
+  const uniqueId = (base: string): string => {
+    const seen = usedIds.get(base) ?? 0;
+    usedIds.set(base, seen + 1);
+    return seen === 0 ? base : `${base}-${seen + 1}`;
+  };
+
   const marked = new Marked({ gfm: true, breaks: false });
 
   marked.use({
@@ -77,7 +108,7 @@ const createMarked = (headings: ArticleHeading[]) => {
         // protege o caso de algum artigo futuro começar com "#".
         const level = Math.max(2, depth);
         const plain = stripTags(text);
-        const id = slugify(plain);
+        const id = uniqueId(slugify(plain));
 
         // Só h2 e h3 entram no sumário; mais fundo que isso vira ruído.
         if (level <= 3) headings.push({ id, text: plain, level });
@@ -85,21 +116,31 @@ const createMarked = (headings: ArticleHeading[]) => {
         // Âncora copiável ao lado do título, como em docs técnicas.
         return (
           `<h${level} id="${id}" class="article-heading">${text}` +
-          `<a href="#${id}" class="article-anchor" aria-label="Link para: ${plain}">#</a>` +
+          `<a href="#${id}" class="article-anchor" aria-label="${escapeHtml(
+            `${labels.anchor}: ${plain}`
+          )}">#</a>` +
           `</h${level}>`
         );
       },
       link({ href, title, tokens }) {
         const text = this.parser.parseInline(tokens);
         const external = /^https?:\/\//.test(href);
+        // `href` e `title` vêm do markdown sem passar por escape nenhum: uma
+        // aspa no meio de qualquer um dos dois fechava o atributo e o resto
+        // da URL virava marcação.
         const attrs = [
-          `href="${href}"`,
-          title ? `title="${title}"` : "",
+          `href="${escapeHtml(href)}"`,
+          title ? `title="${escapeHtml(title)}"` : "",
           external ? 'target="_blank" rel="noreferrer noopener"' : "",
         ]
           .filter(Boolean)
           .join(" ");
-        return `<a ${attrs}>${text}</a>`;
+        // O aviso entra como texto de verdade, não `aria-label`: assim ele
+        // SOMA ao nome do link em vez de substituir o que está escrito.
+        const notice = external
+          ? `<span class="sr-only"> (${escapeHtml(labels.newTab)})</span>`
+          : "";
+        return `<a ${attrs}>${text}${notice}</a>`;
       },
     },
   });
@@ -135,7 +176,7 @@ export const markdownArticles = (): Plugin => {
       const source = readFileSync(id, "utf8");
       // um coletor por arquivo: o parser é reusado, a lista não pode ser
       const headings: ArticleHeading[] = [];
-      const html = await createMarked(headings).parse(source);
+      const html = await createMarked(headings, languageOf(id)).parse(source);
 
       const words = stripTags(source).split(/\s+/).filter(Boolean).length;
       const module: ArticleModule = {
