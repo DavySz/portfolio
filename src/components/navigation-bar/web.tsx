@@ -5,10 +5,18 @@ import { Toggle } from "../toggle";
 import { ThemeToggle } from "../theme-toggle";
 import { getLinks, SECTION_IDS } from "./constants";
 import { useActiveSection } from "../../hooks/useActiveSection/use-active-section";
+import {
+  onMenuLinkClick,
+  sectionHref,
+  useIsHome,
+} from "../../hooks/useRoute/use-route";
 
 export const WebNavigationBar: React.FC = () => {
   const { t } = useTranslation("component");
-  const active = useActiveSection(SECTION_IDS);
+  const isHome = useIsHome();
+  // Dentro de um artigo nenhuma seção da home está montada: procurar por elas
+  // ali é trabalho que nunca termina.
+  const active = useActiveSection(SECTION_IDS, isHome);
 
   return (
     <nav
@@ -25,7 +33,8 @@ export const WebNavigationBar: React.FC = () => {
         <Link
           href={link.href}
           key={link.href}
-          active={link.href === `#${active}`}
+          onClick={(event) => onMenuLinkClick(event, link.href)}
+          active={active !== null && link.href === sectionHref(active)}
         >
           {link.label}
         </Link>

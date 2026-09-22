@@ -8,6 +8,7 @@ import { ExternalLink } from "../../../components/external-link";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import { useGravityMode } from "../../../hooks/useGravityMode/use-gravity-mode";
+import { onMenuLinkClick } from "../../../hooks/useRoute/use-route";
 
 export const Footer: React.FC = () => {
   const { t } = useTranslation("home");
@@ -71,13 +72,23 @@ export const Footer: React.FC = () => {
       </div>
       <div className="w-full h-[0.5px] bg-surface-raised mb-12" />
       <div className="flex items-center justify-between flex-wrap gap-8">
-        <div className="flex gap-8 flex-wrap">
+        {/* `<nav>` com nome: são links de navegação, e sem isso a lista era
+            um amontoado de âncoras que o leitor de tela não sabia pular. */}
+        <nav
+          aria-label={tc("a11y.footerNavigation")}
+          className="flex gap-8 flex-wrap"
+        >
           {getLinks(t).map((link) => (
-            <Link href={link.href} key={link.href} variant="secondary">
+            <Link
+              href={link.href}
+              key={link.href}
+              variant="secondary"
+              onClick={(event) => onMenuLinkClick(event, link.href)}
+            >
               {link.label}
             </Link>
           ))}
-        </div>
+        </nav>
         <div className="flex items-center gap-6">
           {/* Discreto, não escondido: é um botão de verdade, alcançável por
               teclado e anunciado por leitor de tela. Some com reduced motion. */}

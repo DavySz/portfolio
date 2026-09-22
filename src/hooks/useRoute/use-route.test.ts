@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { legacyHashToPath, parseRoute } from "./use-route";
+import {
+  isAppRoute,
+  isHomePath,
+  legacyHashToPath,
+  parseRoute,
+  sectionHref,
+} from "./use-route";
 
 describe("parseRoute", () => {
   it("lê o slug de um caminho de artigo", () => {
@@ -81,5 +87,41 @@ describe("legacyHashToPath", () => {
 
   it("devolve nulo para o prefixo sem slug", () => {
     expect(legacyHashToPath("#/artigos/")).toBeNull();
+  });
+});
+
+describe("sectionHref", () => {
+  /* O caso que motivou a função: o menu é servido dentro dos artigos, e um
+     `#contact` puro ali apontava para uma seção daquele texto — que não
+     existe. Com a raiz escrita, o destino é a home de qualquer rota. */
+  it("escreve a raiz junto com o fragmento", () => {
+    expect(sectionHref("contact")).toBe("/#contact");
+    expect(sectionHref("self")).toBe("/#self");
+  });
+});
+
+describe("isHomePath", () => {
+  it("reconhece a home, com e sem barra final", () => {
+    expect(isHomePath("/")).toBe(true);
+    expect(isHomePath("//")).toBe(true);
+  });
+
+  it("não confunde artigo com home", () => {
+    expect(isHomePath("/artigos/micro-frontends")).toBe(false);
+  });
+});
+
+describe("isAppRoute", () => {
+  it("aceita a home e as rotas de artigo", () => {
+    expect(isAppRoute("/")).toBe(true);
+    expect(isAppRoute("/artigos/micro-frontends")).toBe(true);
+  });
+
+  /* Interceptar estes cliques trocaria um download ou uma 404 de verdade por
+     uma tela de "artigo não encontrado" servida com status 200. */
+  it("recusa o que é do servidor", () => {
+    expect(isAppRoute("/pdfs/curriculo.pdf")).toBe(false);
+    expect(isAppRoute("/rss.xml")).toBe(false);
+    expect(isAppRoute("/artigos")).toBe(false);
   });
 });

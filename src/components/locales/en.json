@@ -25,11 +25,13 @@
     "previous": "Previous",
     "next": "Next",
     "allArticles": "All articles",
+    "moreArticles": "More articles",
     "onlyInPortuguese": "This article has not been translated yet — the text below is in Portuguese."
   },
   "a11y": {
     "skipToContent": "Skip to main content",
     "mainNavigation": "Main navigation",
+    "footerNavigation": "Footer navigation",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "menuTitle": "Menu",

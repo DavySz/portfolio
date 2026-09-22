@@ -25,11 +25,13 @@
     "previous": "Anterior",
     "next": "Próximo",
     "allArticles": "Todos os artigos",
+    "moreArticles": "Mais artigos",
     "onlyInPortuguese": "Este artigo ainda não foi traduzido — o texto abaixo está em português."
   },
   "a11y": {
     "skipToContent": "Pular para o conteúdo principal",
     "mainNavigation": "Navegação principal",
+    "footerNavigation": "Navegação do rodapé",
     "openMenu": "Abrir menu",
     "closeMenu": "Fechar menu",
     "menuTitle": "Menu",

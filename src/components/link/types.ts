@@ -4,4 +4,5 @@ export interface LinkProps {
   active?: boolean;
   children: React.ReactNode;
   href: string;
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 }
