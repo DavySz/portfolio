@@ -10,6 +10,55 @@
     "description": "I started in mobile, with React Native and native Android integration — embedding a React Native app inside an existing Kotlin/Java application is still one of the hardest problems I've solved. Then came real financial products: fuel payments, cashback, cards and credit. Today I work in Fretebras' fintech unit, across products: 9 Micro Frontends, 6 BFFs owned by the frontend team, and a 4-developer pool I helped found — from the operating model to guidelines and technical prioritization. I'm the team's main technical reference for architecture, RFCs, code review and mentoring. What interests me is the system around the code: standards, platforms, observability and developer experience. Solving a problem once, in the right place, and shipping that solution to every application that needs it.",
     "download": "Download CV"
   },
+  "career": {
+    "title": "Career",
+    "description": "Two companies, three roles, and the shift from shipping features to designing the ecosystem around them.",
+    "more": "More details",
+    "labels": {
+      "products": "Products and areas",
+      "challenges": "Challenges",
+      "stack": "Stack"
+    },
+    "items": {
+      "fretebras": {
+        "company": "Fretebras",
+        "role": "Mid-level Frontend → Senior Frontend",
+        "period": "Jun 2024 – Present",
+        "summary": "Brought in-house as a mid-level engineer on credit and banking products, then promoted to Senior working across the whole fintech unit — from features to architecture, platform and ecosystem standards.",
+        "products": {
+          "pool": "The fintech Frontend Pool: I founded the idea and helped define its operating model, responsibilities, processes, documentation and guidelines. The pilot model was later adopted by the Marketplace as well.",
+          "credit": "B2B Credit and B2C Credit, working across BaaS and Payments at the same time.",
+          "banking": "Corporate internet banking: digital account, debit, credit, statements, PIX, cards and TED.",
+          "platform": "Shared platform: Toolkit SDK, Tracking SDK, Error Notifier SDK, and rolling out the Fretebras Design System across the applications."
+        },
+        "challenges": {
+          "pool": "Getting the Pool off the ground: a new team model needs criteria for what it takes on, how work is distributed and how technical debt is prioritized before it becomes routine — and someone holding that up through code review, RFCs/ADRs and mentoring.",
+          "duplication": "Entity rules duplicated in every Micro Frontend: CPF, CNPJ, documents, dates. I centralized them in the Toolkit SDK, which now also ships in the templates for new MFEs. When alphanumeric CNPJ arrived in 2026, the change happened in one place.",
+          "tracking": "Tracking costs that no longer held up with the off-the-shelf solution. The Tracking SDK became the orchestrator between applications and the collector, with batching, retry with backoff, failure persistence in IndexedDB and context enrichment, handing events to a BFF and from there to Kafka.",
+          "federation": "Module Federation charges rent in production: I worked through runtime issues, cross-remote communication via context and events, and chunk loading.",
+          "bff": "Making the case that frontend should own its own BFFs — and then building them from scratch: architecture, templates, endpoints, authentication and authorization (including DPoP) and observability."
+        },
+        "stack": "React · TypeScript · Node.js · NestJS · React Native · Webpack · Module Federation · MongoDB · Kafka · Grafana · Rancher"
+      },
+      "loldesign": {
+        "company": "Loldesign",
+        "role": "Mid-level Full Stack",
+        "period": "Feb 2022 – Jun 2024",
+        "summary": "Allocated mainly to Fretebras, with React Native on mobile and React/TypeScript in the back office. Where I learned to sit with a genuinely hard technical problem.",
+        "products": {
+          "network": "Rede Credenciada, later Redes e Benefícios: fuel stations and refuelling.",
+          "payments": "Payments, cashback, insurance and assistance.",
+          "banking": "Occasional work on banking features: PIX, cards and TED."
+        },
+        "challenges": {
+          "bridge": "Integrating a React Native application into an existing native Android app in Kotlin/Java, with a bridge between the two environments. It is the hardest technical project of my early career.",
+          "gradle": "Gradle and dependency compatibility across both worlds, in a white-label platform embedded into the existing Android application.",
+          "foundation": "First hands-on experience with plugin architecture, Design Systems, Clean Code, design patterns, testing and frontend architectural organization."
+        },
+        "stack": "React Native · React · TypeScript · Kotlin · Java"
+      }
+    }
+  },
   "services": {
     "title": "Expertise",
     "description": "The four areas I work across today: from frontend system architecture to the platforms other teams build on.",
@@ -75,7 +124,8 @@
       "services": "Expertise",
       "skills": "Stack",
       "projects": "Case studies",
-      "articles": "Articles"
+      "articles": "Articles",
+      "career": "Career"
     }
   },
   "seo": {
