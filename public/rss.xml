@@ -3,7 +3,7 @@
   <channel>
     <title>Davy de Souza Assunção — Artigos</title>
     <link>https://davysz.com/</link>
-    <description>Artigos sobre frontend, arquitetura, fintech e a realidade do desenvolvimento de software.</description>
+    <description>Artigos sobre frontend, arquitetura, plataformas e observabilidade — o que aprendi construindo e sustentando sistemas em produção.</description>
     <language>pt-BR</language>
     <lastBuildDate>Mon, 21 Sep 2026 12:00:00 GMT</lastBuildDate>
     <atom:link href="https://davysz.com/rss.xml" rel="self" type="application/rss+xml" />

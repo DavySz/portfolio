@@ -1,73 +1,73 @@
 {
   "hero": {
     "me": "Davy de Souza Assunção",
-    "role": "Frontend Engineer & Fintech Specialist",
-    "description": "Part of the team that brought Fretepago fintech to market. I transform financial complexity into intuitive interfaces that people trust.",
+    "role": "Senior Frontend Engineer focused on architecture, platforms and frontend at scale",
+    "description": "I build and evolve frontend ecosystems that outgrow a single application — Micro Frontends, BFFs, shared SDKs and observability. Currently in Fretebras' fintech unit, supporting credit, BaaS and payments products.",
     "download": "Download CV"
   },
   "self": {
     "title": "About me",
-    "description": "I'm a Frontend Engineer specialized in Fintech, with real-world experience building financial products at Fretepago. I master the modern frontend ecosystem and have expertise in creating interfaces that handle critical transactions, sensitive data, and high performance. If you're looking for someone who combines clean code, robust design systems, and deep understanding of financial flows, let's connect.",
+    "description": "I started in mobile, with React Native and native Android integration — embedding a React Native app inside an existing Kotlin/Java application is still one of the hardest problems I've solved. Then came real financial products: fuel payments, cashback, cards and credit. Today I work in Fretebras' fintech unit, across products: 9 Micro Frontends, 6 BFFs owned by the frontend team, and a 4-developer pool I helped found — from the operating model to guidelines and technical prioritization. I'm the team's main technical reference for architecture, RFCs, code review and mentoring. What interests me is the system around the code: standards, platforms, observability and developer experience. Solving a problem once, in the right place, and shipping that solution to every application that needs it.",
     "download": "Download CV"
   },
   "services": {
     "title": "Expertise",
-    "description": "Specialized in modern frontend with focus on high-criticality financial applications.",
+    "description": "The four areas I work across today: from frontend system architecture to the platforms other teams build on.",
     "items": {
       "mobile": {
-        "title": "Mobile-First Development",
-        "description": "Responsive and performant apps with React Native. Experience creating mobile interfaces that handle financial transactions and offline sync."
+        "title": "Frontend Architecture",
+        "description": "React, TypeScript, Micro Frontends and Module Federation. Building remotes, wiring cross-MFE communication through context and events, and evolving an ecosystem of nine applications in production."
       },
       "web": {
-        "title": "Frontend Engineering",
-        "description": "React, TypeScript, and Next.js to build scalable SPAs and SSR apps. Design Systems, micro-frontends, and modern architectures that support growth."
+        "title": "Frontend Platforms",
+        "description": "Shared SDKs, Design Systems, templates and guidelines. I built the Toolkit SDK, which centralizes entities and rules that used to be duplicated in every Micro Frontend — when alphanumeric CNPJ arrived, the change happened in a single place."
       },
       "design": {
-        "title": "UI/UX Implementation",
-        "description": "Transform designs into pixel-perfect code. Expertise in accessibility, performance, and seamless experiences that convert users into customers."
+        "title": "BFF & Backend Integration",
+        "description": "Node.js, NestJS and TypeScript. I've built BFFs from scratch, defining architecture, patterns and templates: endpoints, authentication and authorization, and integration with distributed systems — owned by the frontend team."
       },
       "backend": {
-        "title": "Backend Integration",
-        "description": "Node.js and TypeScript for BFFs and RESTful APIs. Experience integrating frontends with complex financial systems and third-party services."
+        "title": "Observability & Engineering",
+        "description": "Tracking and error monitoring through in-house SDKs, traceable events aligned with OpenTelemetry, Kafka, Grafana and Rancher. The Tracking SDK decoupled applications from the collector and brought product tracking costs down."
       }
     }
   },
   "skills": {
     "title": "Stack",
-    "description": "Technologies I master to build world-class frontend products, focused on performance, scalability, and developer experience."
+    "description": "Tools and technologies I use to build, evolve and keep frontend ecosystems running in production."
   },
   "projects": {
     "title": "Case studies",
-    "description": "Personal projects where I explore new technologies, architectural patterns, and best practices from the frontend ecosystem.",
+    "description": "Personal projects where I experiment with architecture, engineering patterns and different approaches to building software.",
     "items": {
       "quezzy": {
-        "title": "Quezzy - Gamified app making learning interactive and engaging."
+        "title": "Quezzy - Gamified mobile app that makes learning more interactive."
       },
       "poker": {
-        "title": "Planning Poker - Gamified app for task estimation in Agile teams."
+        "title": "Planning Poker - Estimation tool for agile teams, exploring real-time collaboration."
       },
       "rentx": {
-        "title": "Rentx - Car booking app with an optimistic interface and Offline First implementation."
+        "title": "Rentx - Car rental app exploring Offline First and optimistic interfaces."
       },
       "finances": {
-        "title": "Go Finances - Financial control app for managing transactions and tracking income and expenses."
+        "title": "Go Finances - Mobile finance app for managing transactions, income and expenses."
       }
     }
   },
   "articles": {
     "title": "Articles",
-    "description": "Sharing insights about frontend, architecture, and the reality of software development beyond the code.",
+    "description": "I write about frontend, architecture and observability — what I've learned building and maintaining systems in production.",
     "seeMore": "See all articles"
   },
   "contact": {
     "title": "Contact",
-    "description": "Three ways to reach me. Email and phone stay right here; LinkedIn opens in a new tab.",
+    "description": "If you want to talk about frontend engineering, architecture, platforms or an interesting opportunity, this is where to find me.",
     "copy": "Copy",
     "copied": "Email address copied",
     "failed": "Could not copy — use the link instead"
   },
   "footer": {
-    "description": "Frontend Engineer specialized in Fintech. Currently building the future of payments at Fretepago. Open to challenging opportunities and conversations about technology, frontend architecture, and financial innovation.",
+    "description": "Senior Frontend Engineer focused on architecture, platforms and scalable frontend systems. Currently in Fretebras' fintech unit, working across Micro Frontends, BFFs and observability. Open to conversations about engineering, architecture and good opportunities.",
     "copyright": "© Built with React, TypeScript and ☕",
     "links": {
       "home": "Home",
@@ -79,8 +79,8 @@
     }
   },
   "seo": {
-    "title": "Davy de Souza Assunção | Frontend Engineer & Fintech Specialist",
-    "description": "Frontend Engineer specialized in Fintech. I build high-performance financial interfaces with React, TypeScript and Next.js.",
-    "keywords": "frontend engineer, fintech developer, react specialist, typescript expert, nextjs, frontend architecture, design systems, mobile-first, financial applications, davy souza, davy assuncao"
+    "title": "Davy de Souza Assunção | Senior Frontend Engineer — Architecture & Platforms",
+    "description": "Senior Frontend Engineer focused on frontend architecture, platforms, Micro Frontends, BFFs and observability. Currently in Fretebras' fintech unit.",
+    "keywords": "senior frontend engineer, frontend architecture, react, typescript, micro frontends, module federation, bff, nestjs, frontend platform, observability, design systems, fretebras, davy souza, davy assuncao"
   }
 }
