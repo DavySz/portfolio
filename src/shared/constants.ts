@@ -23,23 +23,24 @@ export const PT_CV_PATH = "/pdfs/davy-de-souza-assuncao-curriculum-pt.pdf";
  *
  * Estava só em português num site que abre em inglês, começava com um
  * caractere corrompido (os bytes EF BF BD, o U+FFFD de substituição, onde
- * deveria haver um emoji) e anunciava Next.js — que é a stack do trabalho,
- * não a deste site, feito em Vite.
+ * deveria haver um emoji) e anunciava Next.js — que não é a stack deste site,
+ * feito em Vite, nem a do ecossistema de trabalho, que roda Webpack +
+ * Module Federation.
  */
 export const WELCOME_LOG_MESSAGE = `%c👋 Hey there, curious dev!
 
     %c🔍 Reading the source? Love that.
 
-    %cI'm Davy, a Frontend Engineer specialized in Fintech.
-I build interfaces people trust to move money.
+    %cI'm Davy, a Senior Frontend Engineer working on architecture and platforms.
+Micro Frontends, BFFs, shared SDKs and observability.
 
     💡 This site: React + TypeScript + Vite + three.js
-    🏢 Work: Fretepago
+    🏢 Work: Fretebras — fintech
 
     %c👉 Want the code behind this portfolio?
     🔗 github.com/davysz
 
-    %c💬 Up for a chat about frontend, fintech or architecture?
+    %c💬 Up for a chat about frontend architecture, platforms or observability?
     💌 linkedin.com/in/davy-de-souza-assuncao-0b7483180
 
     %cThanks for stopping by! ☕🚀`;

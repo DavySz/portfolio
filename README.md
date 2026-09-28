@@ -1,12 +1,12 @@
 # 🚀 Portfolio - Davy de Souza Assunção
 
-> Frontend Engineer especializado em Fintech | React • TypeScript • Next.js
+> Senior Frontend Engineer focado em arquitetura e plataformas frontend | React • TypeScript • Vite
 
 Portfolio profissional desenvolvido com as melhores práticas de desenvolvimento frontend, otimizado para performance, SEO e acessibilidade.
 
 ## 🎯 Sobre o Projeto
 
-Este portfolio serve como um **super currículo digital**, apresentando minha expertise como Frontend Engineer com especialização em aplicações Fintech. Desenvolvido com foco em:
+Este portfolio serve como um **super currículo digital**, apresentando minha atuação como Senior Frontend Engineer em arquitetura frontend, plataformas, Micro Frontends, BFFs e observabilidade. Desenvolvido com foco em:
 
 - ⚡ **Performance otimizada** - Code splitting, lazy loading e Service Worker
 - 🎨 **Design moderno** - Interface limpa e profissional com Tailwind CSS
@@ -18,11 +18,11 @@ Este portfolio serve como um **super currículo digital**, apresentando minha ex
 ### Seções
 
 - **Hero**: Apresentação com CTA para conexão
-- **Sobre**: Experiência real em Fintech na Fretepago
+- **Sobre**: Trajetória do mobile à arquitetura e plataformas frontend
 - **Expertise**: Áreas de especialização técnica
 - **Stack**: Tecnologias e ferramentas que domino
 - **Cases de Estudo**: Projetos pessoais para exploração técnica
-- **Artigos**: Reflexões sobre frontend, arquitetura e desenvolvimento
+- **Artigos**: Reflexões sobre frontend, arquitetura e observabilidade
 - **Footer**: Contatos e redes sociais
 
 ## 🛠️ Stack Técnica
@@ -200,7 +200,7 @@ Arquitetura baseada em componentes reutilizáveis com tipagem TypeScript complet
 ## 📫 Contato
 
 **Davy de Souza Assunção**  
-Frontend Engineer & Fintech Specialist
+Senior Frontend Engineer — Arquitetura e Plataformas Frontend
 
 - 🌐 Portfolio: [davysz.com](https://davysz.com)
 - 💼 LinkedIn: [Davy de Souza Assunção](https://www.linkedin.com/in/davy-de-souza-assun%C3%A7%C3%A3o-0b7483180)

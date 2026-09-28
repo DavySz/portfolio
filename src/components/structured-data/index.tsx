@@ -22,8 +22,8 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
       alternateName: "DavySz",
       description:
         locale === "pt-BR"
-          ? "Desenvolvedor Full Stack especializado em React, React Native, TypeScript e Node.js"
-          : "Full Stack Developer specializing in React, React Native, TypeScript and Node.js",
+          ? "Senior Frontend Engineer focado em arquitetura frontend, plataformas, Micro Frontends, BFFs e observabilidade"
+          : "Senior Frontend Engineer focused on frontend architecture, platforms, Micro Frontends, BFFs and observability",
       url: SITE_ORIGIN,
       image: {
         "@type": "ImageObject",
@@ -39,11 +39,11 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
       ],
       jobTitle:
         locale === "pt-BR"
-          ? "Desenvolvedor Full Stack"
-          : "Full Stack Developer",
+          ? "Senior Frontend Engineer"
+          : "Senior Frontend Engineer",
       worksFor: {
         "@type": "Organization",
-        name: "Freelancer",
+        name: "Fretebras",
       },
       address: {
         "@type": "PostalAddress",
@@ -55,38 +55,40 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
       telephone: CONTACTS.PHONE,
       knowsAbout: [
         "React",
-        "React Native",
         "TypeScript",
         "JavaScript",
+        "Micro Frontends",
+        "Module Federation",
+        "Frontend Architecture",
+        "Design Systems",
+        "Backend For Frontend",
         "Node.js",
-        "Next.js",
-        "Tailwind CSS",
-        "Mobile Development",
-        "Web Development",
+        "NestJS",
+        "Observability",
+        "React Native",
         "Frontend Development",
-        "Backend Development",
-        "Full Stack Development",
       ],
       hasOccupation: {
         "@type": "Occupation",
         name:
           locale === "pt-BR"
-            ? "Desenvolvedor de Software"
-            : "Software Developer",
+            ? "Engenheiro de Software Frontend"
+            : "Frontend Software Engineer",
         occupationLocation: {
           "@type": "Country",
           name: "Brazil",
         },
         skills: [
           "React",
-          "React Native",
           "TypeScript",
-          "JavaScript",
+          "Micro Frontends",
+          "Module Federation",
+          "Frontend Architecture",
+          "Design Systems",
+          "Backend For Frontend",
           "Node.js",
-          "Frontend Development",
-          "Backend Development",
-          "Mobile Development",
-          "Web Development",
+          "NestJS",
+          "Observability",
         ],
       },
     };
@@ -101,8 +103,8 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
           : "Davy de Souza Assunção - Portfolio",
       description:
         locale === "pt-BR"
-          ? "Portfolio pessoal de Davy de Souza Assunção, desenvolvedor Full Stack especializado em React, React Native, TypeScript e Node.js"
-          : "Personal portfolio of Davy de Souza Assunção, Full Stack developer specializing in React, React Native, TypeScript and Node.js",
+          ? "Portfólio pessoal de Davy de Souza Assunção, Senior Frontend Engineer focado em arquitetura frontend, plataformas, Micro Frontends e BFFs"
+          : "Personal portfolio of Davy de Souza Assunção, Senior Frontend Engineer focused on frontend architecture, platforms, Micro Frontends and BFFs",
       url: SITE_ORIGIN,
       author: {
         "@type": "Person",
@@ -131,12 +133,12 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
       "@id": `${SITE_ORIGIN}/#service`,
       name:
         locale === "pt-BR"
-          ? "Serviços de Desenvolvimento de Software"
-          : "Software Development Services",
+          ? "Engenharia e Arquitetura Frontend"
+          : "Frontend Engineering and Architecture",
       description:
         locale === "pt-BR"
-          ? "Desenvolvimento de aplicações web e mobile, frontend e backend"
-          : "Web and mobile application development, frontend and backend",
+          ? "Arquitetura de sistemas frontend, plataformas compartilhadas, Micro Frontends, BFFs e observabilidade"
+          : "Frontend system architecture, shared platforms, Micro Frontends, BFFs and observability",
       provider: {
         "@type": "Person",
         "@id": `${SITE_ORIGIN}/#person`,
@@ -146,13 +148,14 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
         name: "Brazil",
       },
       serviceType: [
-        "Web Development",
-        "Mobile Development",
-        "Frontend Development",
-        "Backend Development",
-        "Full Stack Development",
+        "Frontend Architecture",
+        "Frontend Platform Engineering",
+        "Micro Frontends",
+        "Module Federation",
+        "Backend For Frontend",
+        "Design Systems",
+        "Frontend Observability",
         "React Development",
-        "React Native Development",
         "TypeScript Development",
         "Node.js Development",
       ],
@@ -160,19 +163,21 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
         "@type": "OfferCatalog",
         name:
           locale === "pt-BR"
-            ? "Serviços de Desenvolvimento"
-            : "Development Services",
+            ? "Frentes de atuação"
+            : "Areas of work",
         itemListElement: [
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
               name:
-                locale === "pt-BR" ? "Desenvolvimento Web" : "Web Development",
+                locale === "pt-BR"
+                  ? "Arquitetura Frontend"
+                  : "Frontend Architecture",
               description:
                 locale === "pt-BR"
-                  ? "Desenvolvimento de aplicações web modernas usando React, TypeScript e tecnologias atuais"
-                  : "Development of modern web applications using React, TypeScript and current technologies",
+                  ? "Arquitetura e evolução de ecossistemas frontend com React, TypeScript, Micro Frontends e Module Federation"
+                  : "Architecture and evolution of frontend ecosystems with React, TypeScript, Micro Frontends and Module Federation",
             },
           },
           {
@@ -181,12 +186,12 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
               "@type": "Service",
               name:
                 locale === "pt-BR"
-                  ? "Desenvolvimento Mobile"
-                  : "Mobile Development",
+                  ? "Plataformas Frontend"
+                  : "Frontend Platforms",
               description:
                 locale === "pt-BR"
-                  ? "Criação de aplicativos móveis nativos e cross-platform com React Native"
-                  : "Creation of native and cross-platform mobile applications with React Native",
+                  ? "SDKs compartilhados, Design Systems, BFFs em Node.js e NestJS e observabilidade de eventos e erros"
+                  : "Shared SDKs, Design Systems, BFFs in Node.js and NestJS, and event and error observability",
             },
           },
         ],

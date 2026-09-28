@@ -39,7 +39,7 @@ const SITE = "https://davysz.com";
 const AUTHOR = "Davy de Souza Assunção";
 const TITLE = `${AUTHOR} — Artigos`;
 const DESCRIPTION =
-  "Artigos sobre frontend, arquitetura, fintech e a realidade do desenvolvimento de software.";
+  "Artigos sobre frontend, arquitetura, plataformas e observabilidade — o que aprendi construindo e sustentando sistemas em produção.";
 
 const escapeXml = (value) =>
   value

@@ -80,7 +80,7 @@ describe.skipIf(!temDist)("saída do pré-render", () => {
 
     // título e descrição não podem ficar com o texto da home
     const titulo = /<title>([^<]*)<\/title>/.exec(head)?.[1] ?? "";
-    expect(titulo).not.toMatch(/Frontend Engineer & Fintech Specialist$/);
+    expect(titulo).not.toMatch(/Senior Frontend Engineer — Architecture &amp; Platforms$/);
     expect(titulo.length).toBeGreaterThan(10);
   });
 
