@@ -10,6 +10,9 @@ import { useLocales } from "../../hooks/useLocales/use-locales";
 const Self = lazy(() =>
   import("./self").then((module) => ({ default: module.Self })),
 );
+const Career = lazy(() =>
+  import("./career").then((module) => ({ default: module.Career })),
+);
 const Services = lazy(() =>
   import("./services").then((module) => ({ default: module.Services })),
 );
@@ -59,6 +62,9 @@ export const Home: React.FC = () => {
       <Hero />
       <Suspense fallback={<LoadingFallback />}>
         <Self />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>
+        <Career />
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
         <Services />

@@ -12,6 +12,7 @@ import { sectionHref } from "../../../hooks/useRoute/use-route";
 export const getLinks = (t: TFunction<"home", undefined>) => [
   { label: t("footer.links.home"), href: "/" },
   { label: t("footer.links.about"), href: sectionHref("self") },
+  { label: t("footer.links.career"), href: sectionHref("career") },
   { label: t("footer.links.services"), href: sectionHref("services") },
   { label: t("footer.links.skills"), href: sectionHref("skills") },
   { label: t("footer.links.projects"), href: sectionHref("projects") },

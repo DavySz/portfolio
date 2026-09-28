@@ -4,6 +4,7 @@ import { sectionHref } from "../../hooks/useRoute/use-route";
 /** Seções observadas pelo scroll-spy, na ordem do documento. */
 export const SECTION_IDS = [
   "self",
+  "career",
   "services",
   "skills",
   "projects",
@@ -25,6 +26,10 @@ export const getLinks = (t: TFunction<"component", undefined>) => [
   {
     href: sectionHref("self"),
     label: t("navigation-bar.about"),
+  },
+  {
+    href: sectionHref("career"),
+    label: t("navigation-bar.career"),
   },
   {
     href: sectionHref("services"),
